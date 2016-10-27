@@ -1,0 +1,46 @@
+{
+  "name": "cms-json",
+  "version": "0.0.1",
+  "author": "Antoine Melki",
+  "license": "MIT",
+  "description": "A lightweight CMS loading and saving its data from/to a json file",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amelki/cms-json.git"
+  },
+  "bugs": {
+    "email": "antoine@onemore.company"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "bin": {
+    "cms-json": "./run.js"
+  },
+  "scripts": {
+    "build-css": "node-sass --include-path sass sass/cms.scss public/css/cms.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "browserify": "browserify scripts/app.js -o public/js/all.js --debug",
+    "watchify": "watchify scripts/app.js -o public/js/all.js --debug",
+    "test": "node test/test.js"
+  },
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "browserify": "^13.1.1",
+    "compass": "^0.1.1",
+    "es5-shim": "^4.5.9",
+    "jquery": "^3.1.1",
+    "node-sass": "^3.10.1",
+    "nodemon": "^1.11.0",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "angular-cookies": "^1.5.8",
+    "angular-sanitize": "^1.5.8",
+    "body-parser": "^1.15.2",
+    "colors": "^1.1.2",
+    "commander": "^2.9.0",
+    "express": "^4.14.0"
+  }
+}

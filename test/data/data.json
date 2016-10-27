@@ -1,0 +1,875 @@
+{
+  "site": {
+    "text": {
+      "copyright_text": "© 2016 One More Company, Inc.\r\n",
+      "page_title": "Senders (sende.rs) | Caller ID for Email",
+      "signup_button": "Get Started",
+      "meta_description": "Senders brings email innovation to the cloud. Learn more about your colleagues and customers without leaving your email. No downloads. And it’s free.",
+      "meta_keywords": "senders, sende.rs, sender, gmail, google app, email, email intelligence, tracking, tracker, privacy, security, protection, inbox, contacts, recipient, information, contact"
+    },
+    "header": [
+      {
+        "name": "Security",
+        "url": "/security"
+      },
+      {
+        "name": "How It Works",
+        "url": "/how-it-works"
+      },
+      {
+        "name": "About Us",
+        "url": "/about",
+        "target": ""
+      },
+      {
+        "name": "Help",
+        "url": "http://help.sende.rs",
+        "target": "_blank"
+      }
+    ],
+    "pages": [
+      {
+        "slug": "card",
+        "heading": "",
+        "text_body": "",
+        "text_body_html": "",
+        "search_enabled": "",
+        "seo_title": "Senders Card",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "seo_image": "",
+        "template": "/templates/site/card.html"
+      },
+      {
+        "slug": "dashboard",
+        "heading": "",
+        "text_body": "",
+        "text_body_html": "",
+        "search_enabled": "",
+        "seo_title": "Dashboard",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "seo_image": "",
+        "template": "/templates/app/dashboard.html"
+      },
+      {
+        "slug": "settings",
+        "heading": "",
+        "text_body": "",
+        "text_body_html": "",
+        "search_enabled": "",
+        "seo_title": "Settings",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "seo_image": "",
+        "template": "/templates/app/settings.html"
+      },
+      {
+        "slug": "_root",
+        "seo_title": "Caller ID for Email",
+        "seo_description": "Senders brings email innovation to the cloud. Learn more about your colleagues and customers without leaving your email. No downloads. And it’s free.",
+        "seo_keywords": "senders, sende.rs, sender, gmail, google app, email, email intelligence, tracking, tracker, privacy, security, protection, inbox, contacts, recipient, information, contact",
+        "search_enabled": "",
+        "seo_url": "https://sende.rs",
+        "seo_image": "https://storage.googleapis.com/omc-public/images/senders-og-image-600.jpeg",
+        "heading": "",
+        "text_body": "",
+        "text_body_html": "",
+        "template": "/templates/site/home.html"
+      },
+      {
+        "heading": "Security",
+        "slug": "security",
+        "text_body": "",
+        "seo_title": "Security",
+        "text_body_html": "Users trust us with access to their emails. So we take data security and user privacy very seriously. So much so that our first product, <a href=\"https://trackbuster.com\" target=\"_blank\">Trackbuster™</a>, was focused squarely on email privacy. With Senders™, you never have to worry about your personal data.",
+        "search_enabled": "1",
+        "seo_image": "",
+        "template": "/templates/site/security.html",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "slug": "how-it-works",
+        "search_enabled": "1",
+        "seo_image": "",
+        "heading": "",
+        "seo_title": "How It Works",
+        "text_body": "",
+        "text_body_html": "",
+        "template": "/templates/site/how-it-works.html",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "heading": "About Us",
+        "slug": "about",
+        "text_body": "<p><a href=\"https://sende.rs/\">Senders™</a> is a contextual intelligence email service offered by One More Company, Inc, the company behind <a href=\"https://trackbuster.com\">Trackbuster™</a>, which offered the same email untracking features now available as part of Senders. </p>\n<p>When you use our services, you trust us with your information. In addition to telling you, in our <a href=\"https://sende.rs/privacy\">privacy policy</a>, exactly what we will and won’t do with that information, here’s more about who we are. </p>\n<p>We are focused on enhancing the email experience for individuals and businesses by helping users filter the messaging signal from the noise and providing relevant information on the fly, in an open way. We provide simple, intuitive services around messaging and the cloud. We are driven by a digital ethics based on consumer control, privacy, and transparency. Our users are our customers and their interests are paramount. Our business model is not based on selling ads, or collecting and selling data.</p>\n<p>At One More Company, Inc., creating a positive consumer experience is our highest priority, and our <em>raison d’être</em>. Our products are designed to make life easier. We can’t do that without ensuring user privacy and the security of personal information. So, we think about privacy and security from the beginning, and throughout the product design process; in other words, <a href=\"https://sende.rs/privacy\">privacy by design</a>. </p>\n<p>One More Company, Inc is a U.S. corporation founded by seasoned executives with decades of experience in Silicon Valley, at places like Google, Facebook, Twitter, and IBM. It has offices in New York and Paris.\nSenders™ is a patent-pending service designed and securely hosted in the USA.</p>",
+        "seo_title": "About Us",
+        "text_body_html": "",
+        "search_enabled": "1",
+        "seo_image": "",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "template": "/templates/site/about.html"
+      },
+      {
+        "slug": "about-email-tracking",
+        "seo_image": "",
+        "heading": "About Email Tracking",
+        "seo_title": "About Email Tracking",
+        "text_body": "",
+        "text_body_html": "",
+        "search_enabled": "1",
+        "template": "/templates/site/about-email-tracking.html",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "slug": "test",
+        "heading": "Michael's card (michael.thomson@tyrell.com)",
+        "seo_title": "Michael's card (michael.thomson@tyrell.com)",
+        "text_body": "",
+        "text_body_html": "<table>\r\n<tr><td width=\"600\">\r\n<img src=\"https://sende.rs/images/desktop/hiw/4.png\"/></td>\r\n<td>\r\nWonder how this card appeared in your mailbox?\r\nCheck out our <a href=\"#\">video</a> or our <a href=\"#\">how it works</a> section.\r\n</td>\r\n</tr>\r\n</table>\r\n\r\n<p>\r\nWhen a Sende.rs user receives an email from Michael, h/er <b>card</> is appended at the end of the email. See <a href=\"#\">How It Works</a>.\r\n</p>\r\n\r\n<div style=\"text-align:center\">\r\n<a href=\"#\" class=\"btn orange\" id=\"signup\">Sign Up as Michael</a>\r\n<hr>\r\n<form class=\"signup-callout\">\r\n<div class=\"input-cell\">\r\n<input type=\"email\" placeholder=\"Enter your email\">\r\n</div>\r\n<div class=\"button-cell\"><a href=\"#\" class=\"btn\" id=\"signup\">Get Started</a></div>\r\n</form>\r\n</div>\r\n\r\n<br>\r\n<br>\r\n<p style=\"font-size:14px\">\r\nIf you are Michael (michael.thompson@tyrell.com) and you do not wish to sign up yet, you can just <a href=\"#\" style=\"font-size:14px\">edit</a> your card so that Senders user get the proper information when they receive emails from you.\r\n</p>\r\n"
+      },
+      {
+        "slug": "pages",
+        "heading": "Pages (for test only)",
+        "seo_title": "Pages (for test only)",
+        "text_body": "",
+        "text_body_html": "<h3>Site</h3>\r\n<ul>\r\n\t<li>\r\n\t\t<a href=\"/\" target=\"_blank\">Home</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/get\" target=\"_blank\">Landing</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/get?source=facebook\" target=\"_blank\">Landing (FB)</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/get?source=twitter\" target=\"_blank\">Landing (Twitter)</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/get?source=trackbuster\" target=\"_blank\">Landing (Trackbuster)</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/auth-info\" target=\"_blank\">We need your authorization</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/security\" target=\"_blank\">Security</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/how-it-works\" target=\"_blank\">How It Works</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/about\" target=\"_blank\">About Us</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/terms\" target=\"_blank\">Terms</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/privacy\" target=\"_blank\">Privacy</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/about-email-tracking\" target=\"_blank\">About Trackers</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/slack/install\" target=\"_blank\">Slack Install</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/slack/success\" target=\"_blank\">Slack Success</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/slack/error\" target=\"_blank\">Slack Error</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/404\" target=\"_blank\">404</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/oops\" target=\"_blank\">Oops</a>\r\n\t</li>\r\n</ul>\r\n<h3>App</h3>\r\n<ul>\r\n\t<li>\r\n\t\t<a href=\"/dashboard\" target=\"_blank\">Dashboard</a>\r\n\t</li>\r\n\t<li>\r\n\t\t<a href=\"/settings\" target=\"_blank\">Settings</a>\r\n\t</li>\r\n</ul>\r\n"
+      },
+      {
+        "slug": "oops",
+        "heading": "Oops!",
+        "seo_title": "Oops!",
+        "text_body": "<center><p>\nSomething went wrong. Please try to <a href=\"/\">reconnect</a> later.\n<br>If does not get any better, please send us an email at <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a>\n</p></center>",
+        "text_body_html": ""
+      },
+      {
+        "slug": "slack/error",
+        "heading": "Slack App Installation Aborted",
+        "seo_title": "Slack App Installation Aborted",
+        "text_body": "<p>The Sende.rs Slack App was not installed.</p>",
+        "text_body_html": "",
+        "seo_image": "https://storage.googleapis.com/omc-public/images/slackbot-og.jpg",
+        "search_enabled": "",
+        "template": "/templates/site/slack.html",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "slug": "slack/success",
+        "heading": "Slack App Installation Done!",
+        "seo_title": "Slack App — Success",
+        "text_body": "<p class=\"success\"><b>Congratulations!</b></p>\n<p class=\"success\">The Sende.rs app is now installed for your team!</p>",
+        "text_body_html": "",
+        "seo_image": "https://storage.googleapis.com/omc-public/images/slackbot-og.jpg",
+        "search_enabled": "",
+        "template": "/templates/site/slack.html",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "slug": "slack/install",
+        "heading": "Slack App Integration Instructions",
+        "seo_title": "Slack — Install",
+        "text_body": "<p>Senders provides public, professional information for any email address. It's email intelligence at your fingertips, right in Slack.</p>",
+        "text_body_html": "",
+        "seo_image": "https://storage.googleapis.com/omc-public/images/slackbot-og.jpg",
+        "search_enabled": "1",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "https://slack.sende.rs",
+        "template": "/templates/site/slack.html"
+      },
+      {
+        "slug": "slack/support",
+        "heading": "Slack App Support",
+        "seo_title": "Slack App — Support",
+        "text_body": "<p>This is the Slack App support page. For now please send email to <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a>.\n<br>Although this is not an official product and we can’t make any promises, we will do our best to answer support requests.</p>",
+        "seo_image": "https://storage.googleapis.com/omc-public/images/slackbot-og.jpg",
+        "text_body_html": "",
+        "seo_description": "",
+        "seo_keywords": "",
+        "search_enabled": "",
+        "seo_url": "",
+        "template": "/templates/site/slack.html"
+      },
+      {
+        "heading": "We need your authorization",
+        "slug": "auth-info",
+        "text_body": "<p>Senders needs to securely access your Google account to allow us to enhance your emails</p>",
+        "seo_title": "We need your authorization",
+        "text_body_html": "",
+        "template": "/templates/site/auth-info.html",
+        "search_enabled": "",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "seo_image": ""
+      },
+      {
+        "heading": "You've been removed from our mailing list",
+        "slug": "unregister",
+        "text_body": "<center>\nYour email has been removed from the mailing-list properly.\n</center>",
+        "seo_title": "You've been removed from our mailing list"
+      },
+      {
+        "heading": "We're about to get started!",
+        "slug": "signup-confirmation",
+        "text_body": "<div style=\"text-align: center\"><p>Senders will now begin to enhance new emails with additional information about the sender.</p>\n\n<i>\n<p class=\"small\">\n</br></br>Note: Senders works only with Gmail and Google Apps email accounts on IMAP.\n</p>\n</i></div>",
+        "seo_title": "About to get started",
+        "template": "/templates/site/signup-confirmation.html",
+        "text_body_html": "",
+        "search_enabled": "",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "seo_image": ""
+      },
+      {
+        "heading": "404: We couldn’t find what you’re looking for",
+        "slug": "404",
+        "text_body": "<p>The page you were looking for doesn’t exist.</p>\n<p>Were you trying to learn more about Senders? <a href=\"https://sende.rs/\">Visit our website</a> to find out more!</p>",
+        "seo_title": "Not Found",
+        "text_body_html": "",
+        "search_enabled": "",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": "",
+        "seo_image": "",
+        "template": "/templates/site/404.html"
+      },
+      {
+        "heading": "Privacy Policy",
+        "text_body": "<p>Last updated: April 2, 2016.</p>\n<p>Thank you for visiting Sende.rs. Please read our <a href=\"https://sende.rs/terms\">Terms of Service</a> and this Privacy Policy carefully, as you must agree to both in order to use our Services. </p>\n<p>One More Company, Inc. (“One More Company”, “we,” “us,” or “our”) provides its Services (described below) to you through its website located at <a href=\"https://sende.rs/\">sende.rs</a> (the “Site”) and through its related services, subject to the following Privacy Policy. Since our original mission—going back to <a href=\"https://trackbuster.com/\">Trackbuster</a>—was and is protecting your email inbox privacy, it goes without saying that we take user privacy very seriously. </p>\n<p>“Service” or “Senders” refers to the services that we provide through our Site and its related services, including our e-mail enhancement and untracking service and our Site itself. “User” or “you” refers to anyone who uses our Service, including general visitors to our Site.</p>\n<p>“Services” refers to the services that we provide through our Site and its related services, including our email sender information and email untracking service “Senders,” and our Site itself. “User” or “you” refers to anyone who uses our Service, including general visitors to our Site.</p>\n<p>Our Service accesses your email address and the email addresses of your email contacts in order to gather publicly available, non-sensitive information from various online sources so that we may insert this information in email messages that correspond to a given email address. As we explain below, we do not store email messages, nor will we share your email address with any third party outside of your own email contacts. </p>\n<p>By using the Site or the Services, you signify your acceptance of this Privacy Policy.  If you do not agree to the terms of this Privacy Policy, please do not use the Site or the Services.  Your continued use of the Site or the Services following the posting of changes to these terms will mean that you accept those changes.\nWe value your comments about our privacy statement and invite you to email us with inquiries, suggestions and complaints at: <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a></p>\n<hr />\n<h2>The very short version</h2>\n<ul>\n<li>We do not store or share the content of your emails. </li>\n<li>In the process of untracking your emails, our servers scan the body of your emails but we do not read the content of your emails except in the very limited circumstances described below. </li>\n<li>We do not sell your private data or sell access to your personal information. </li>\n<li>We do not currently sell ads, or display ads in our products. If we do in the future, we will not share with advertisers your email address or other personal data you provide to us. </li>\n<li>We will never send spam or any sort of unsolicited commercial emails.</li>\n<li>We obviously do not add tracking code to our emails to you.</li>\n</ul>\n<p>The only data we collect is to make sure we can perform and improve the Service or other offerings we may provide from time to time.</p>\n<hr />\n<h1>The Long version</h1>\n<h2>What Information we collect</h2>\n<p><u>Personal Data</u></p>\n<p>We collect personally identifiable information (“Personal Data”) from you when you voluntarily provide such information, such as when you contact us with inquiries or register for access to the Services. For example, when you register with the Service, we may collect the following Personal Data:</p>\n<ul>\n<li>Name</li>\n<li>Email address</li>\n<li>Your email authentication credentials, so that our service has the API access necessary to analyze incoming emails. These credentials are always a revocable, app-specific token and not your actual email password. For example, Gmail uses OAuth.</li>\n<li>Employer, title</li>\n<li>Short bio</li>\n<li>Social media profiles and credentials, blog feeds</li>\n<li>Data you give us permission to access (for example Gmail locale, your name). Note that your Gmail locale is not your precise location but merely a way to establish things like your preferred time zone and local language. </li>\n</ul>\n<p>We will make it clear when you provide us this information. You can delete this information anytime either individually or by removing your account.</p>\n<p>By providing us with Personal Data, you are consenting to our use of it in accordance with this Privacy Policy. If you provide Personal Data to the Services, you acknowledge and agree that such Personal Data may be transferred from your current location to the offices and servers of One More Company and the authorized third parties referred to herein located in the United States.</p>\n<p><u>Non-Identifying Information</u></p>\n<p>Whenever you visit our Site or use the Services, we may receive information from you, such as your IP address, referring URL, browser, operating system, and relevant cookie information (“Log Data”). We may use Log Data and pool it with other information to track, for example, the total number of visitors to our Site and to understand the use of our Services. We will either delete Log Data or remove any common account identifiers, such as your username, full IP address, or email address, after a maximum of 18 months.</p>\n<p><u>Aggregated Personal Data</u></p>\n<p>In an ongoing effort to better understand and serve the users of the Services, we may conduct research on our customer demographics, interests and behavior based on the Personal Data and other information provided to us. This research may be compiled and analyzed on an anonymized, aggregate basis, and we may share this aggregate data with our affiliates, agents and business partners. This aggregate information does not identify you personally. We may also disclose aggregated user statistics in order to describe our services to current and prospective business partners, and to other third parties for other lawful purposes.</p>\n<p><strong>How we use your personal information</strong></p>\n<p>We will never use or access your Personal Data for any purpose other than providing and improving our Services. We use your email address to communicate with you and to authenticate you toward our third party products integrated with our system. For example, we may use third party vendors for support, feedback, and online help desk functions. </p>\n<p>Note that in order to process your emails through the Services, we will analyze your emails to determine where to place the Senders Card and remove any trackers appearing in your emails. This is automated and does not mean that our employees are viewing the content of emails processed through the Services. However, on rare occasions, a small number of trusted engineers may access certain emails when they have a legitimate reason, like providing technical support or for diagnostic purposes, or to comply with applicable law. However, this is the exception, not the rule, and we have strict internal policies and technical access controls that prohibit employee access except in these rare circumstances.</p>\n<p>When you use the Senders Service, you agree that One More Company may scan (1) your email headers so that we may then obtain publicly available information about the sender and other email recipients, including, but not limited to, employer and job title, employer headquarters, Twitter account and LinkedIn profile; and (2) the body of your emails in order to insert the additional contextual information that is part of our Services, and remove any trackers.  Some information on email senders will be provided in your email account, and some information will be provided via the web. Email senders may choose not to share their personal information through Senders by editing and removing their information in the Service after verifying their email address.</p>\n<p>We may also use your information to:</p>\n<ul>\n<li>Enhance or improve your experience, our Site, or our Services.</li>\n<li>Send emails and updates about Senders, including our electronic newsletter (although you can always opt out of those).</li>\n<li>Perform any other function that we believe in good faith is necessary to protect the security and proper functioning of our Site or Services.</li>\n</ul>\n<hr />\n<h2>Third-Party Service Providers</h2>\n<p>We use several third-party services to help provide our Services, such as hosting our Services and Site, and to help us understand and improve the use of our Services.  One More Company also uses third party vendors and hosting partners to provide the necessary hardware, software, networking, storage, and related technology required to run the Services.  These third-party service providers may collect information sent by your browser as part of a web page request, such as cookies or your IP address. For example, Google Analytics uses cookies to help us analyze how users use the Site and enhance your experience when you use the Services. For more information on how Google uses this data, go to <a href=\"google.com/policies/privacy/partners/\">google.com/policies/privacy/partners/</a>.  </p>\n<hr />\n<h2>Data Security</h2>\n<p>The security of your private data is our top priority; it goes right to the heart of our mission to give our users control over their information, including their emails. We have implemented security measures designed to prevent unauthorized access to your data in secure physical locations. We use Secure Socket Layer (SSL) to encrypt all external traffic. </p>\n<hr />\n<h2>Your information belongs to you</h2>\n<p>You own the data associated with your account. At any time, you can securely remove your data from our servers by logging into your account and deleting your account. Backup copies will be purged in the normal course of backup rotation. </p>\n<p>Upon cancellation of your subscription, we securely delete all information on our servers associated with your account so new emails will look exactly like they did before you signed up with Senders. Existing emails will remain in their untracked state, and retain the small Senders Card. </p>\n<p>If for any reason, One More Company decides to discontinue Senders, all active users will be contacted by email and their account information will be securely deleted from our servers in a timely manner.</p>\n<hr />\n<h2>Accessing and Modifying Your Information</h2>\n<p>We provide tools and settings permitting anyone to claim, access, correct, delete and modify the information associated with email addresses they own or control. </p>\n<p>If you create an account on Senders you can delete your account at any time. Deleting your account via your settings will result in your Google credentials, settings and list of email contacts being deleted immediately (although it may take several hours for this change to propagate across our servers). </p>\n<p>Keep in mind that your information may continue to be present as part of the Senders Card in the archived email addresses of your personal contacts, even after you have deleted it from the Service. </p>\n<hr />\n<h2>Third Party Access to Your Information</h2>\n<p>As noted above, we are not in the business of selling your information. We consider this information to be a vital part of our relationship with you. There are, however, certain circumstances in which we may share your Personal Data with certain third parties without further notice to you, as set forth below: </p>\n<p><strong>Business Transfers:</strong> As we develop our business, we might sell or buy businesses or assets. In the event of a corporate sale, merger, reorganization, dissolution or similar event, Personal Data may be part of the transferred assets. We will require any such successor business entity to honor the terms of this Privacy Policy.</p>\n<p><strong>Affiliated Companies:</strong> We may also share your Personal Data with our affiliated companies (e.g., subsidiaries) for purposes consistent with this Privacy Policy. </p>\n<p><strong>Agents, Consultants and Related Third Parties:</strong> One More Company, like many businesses, sometimes hires other individuals or companies to perform certain business-related functions. Examples of such functions include mailing information, maintaining databases and processing payments. When we employ another entity to perform a function of this nature, we only provide them with the information that they need to perform their specific function, and consistent with this policy.</p>\n<p><strong>Legal Requirements:</strong> We may disclose your Personal Data if required to do so by law or in the good faith belief that such action is necessary to (i) comply with a legal obligation, (ii) protect and defend the rights or property of One More Company, (iii) act in urgent circumstances to protect the personal safety of users of the Services or the public, or (iv) protect against legal liability. </p>\n<hr />\n<h2>Commercial and Non-Commercial Communications</h2>\n<p>By providing information to the Site that forms the basis of communications with you, such as contact information, you agree to receive communications from us. You may unsubscribe from certain communications by notifying One More Company that you no longer wish to receive emails or information.</p>\n<hr />\n<h2>Cookies</h2>\n<p>When you visit our Site or use the Services, we may send one or more cookies to your computer. Cookies are small text files containing a string of alphanumeric characters. This enables us to uniquely identify your browser and lets our website helps you log in faster and enhance your navigation through the site. We use cookies in order to operate the Site, and to track authentication and other session information in your browser. These cookies are not shared with other sites. You can reset your web browser to refuse all cookies or to indicate when a cookie is being sent. However, some features of the Site and the Services may not function properly if the ability to accept cookies is disabled.</p>\n<hr />\n<h2>Referrals/Links</h2>\n<p>The Services may contain links to third-party websites that may offer information of interest, such as links to information about email senders provided through the Senders Service. This Privacy Policy does not apply to those linked websites, and we recommend reviewing those websites’ privacy policies individually.</p>\n<hr />\n<h2>Your Role in Protecting Your Privacy</h2>\n<p>You are responsible for maintaining the confidentiality of your Senders account password.  Never share your password with anyone you don’t want accessing your account.  You agree that any user of your password is bound by the terms set forth in this Privacy Policy and the Terms of Service.  It is your sole responsibility to inform One More Company of any need to deactivate a password.  You are responsible for all use of the Services under your account. Senders account holders agree to keep their account credentials and passwords secret to prevent unauthorized access and use of their accounts. </p>\n<hr />\n<h2>Children’s Privacy</h2>\n<p><strong>Under Age 13:</strong>  Our website and our service are not directed toward anyone under 13. In the event that we learn that we have collected personal information from a child under age 13 without verification of parental consent, we will remove such information and terminate the child’s account. If you believe that we might have any information from or about a child under 13, please contact us at <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a></p>\n<p><strong>Under Age 18:</strong>  Minors under 18 years of age may have the Personal Data that they have provided to us through the Site and the Services deleted by sending an email to <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a> requesting deletion.  Please note that, while we make reasonable efforts to comply with such requests, deletion of your personal information does not ensure complete and comprehensive removal of that data from all systems. </p>\n<hr />\n<h2>Policy changes</h2>\n<p>From time to time, we might change and update this Privacy Policy as we add new features and services, as laws change, and as industry privacy and security best practices evolve. We display an effective date on this Privacy Policy so that it will be easier for you to know when there has been a change.  We will notify you of such changes by posting the updated Privacy Policy on our website, and by email for materially substantive changes. You should check this page periodically to review any changes and check the effective date. You will be bound by any such changes to this Privacy Policy after those changes have been posted.  Small changes or changes that do not significantly affect individual privacy interests may be made at any time and without prior notice.</p>\n<p><strong>Effective: April 2, 2016</strong></p>\n<hr />\n<h2>Contact information:</h2>\n<p>For any question, we can always be reached at <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a> or physically at:</p>\n<p>One More Company, Inc.<br />\n19 W 34th Street, Suite 1000<br />\nNew York, NY, 10001  </p>",
+        "slug": "privacy",
+        "seo_title": "Privacy Policy",
+        "text_body_html": "",
+        "search_enabled": "1",
+        "seo_image": "",
+        "template": "/templates/site/privacy.html",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "heading": "Terms of Service",
+        "text_body": "<p>Last updated: April 2, 2016</p>\n<p>Thank you for visiting Sende.rs. One More Company, Inc. (“One More Company”, “we,” “us,” or “our”) provides its Services (described below) to you through its website located at <a href=\"https://sende.rs/\">sende.rs</a> (the “Site”) and through its related services, subject to the following Terms of Service (as amended from time to time, this “TOS”). Please read this TOS and our <a href=\"https://sende.rs/privacy\">Privacy Policy</a> carefully, as you must agree to both in order to use our Service. Throughout this TOS, we may use certain words or phrases, and it is important that you understand the meaning of them. “Services” refers to the services that we provide through our Site and all related services, including our “Senders” email information and untracking service, and our Site itself. Finally, “User” or “you” refers to anyone who uses our Services, including general visitors to our Site.</p>\n<hr />\n<h2>Acceptance of Terms of Service</h2>\n<p>(By signing up to our Services you understand and accept these following Terms of Service.)</p>\n<p>By accessing and using the Services, you accept and agree to be bound by the terms and provision of this TOS. In addition, when using this website’s particular services, you shall be subject to any posted guidelines or rules applicable to such services, which may be posted and modified from time to time. All such guidelines or rules are hereby incorporated by reference into the TOS. ANY PARTICIPATION IN THIS SITE OR OTHER USE OF THE SERVICE WILL CONSTITUTE ACCEPTANCE OF THIS TOS. IF YOU DO NOT AGREE TO ABIDE BY THE ABOVE, PLEASE DO NOT USE THE SERVICE. IF YOU ARE ACCEPTING THIS TOS ON BEHALF OF AN ENTITY, THIS TOS WILL CONSTITUTE A LEGALLY BINDING AGREEMENT BETWEEN ONE MORE COMPANY AND SUCH ENTITY AND YOU REPRESENT AND WARRANT THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY TO THIS TOS (AND ANY OTHER REFERENCES TO “YOU” OR “USER” WILL INCLUDE SUCH ENTITY).</p>\n<hr />\n<h2>Description and Use of the Service</h2>\n<p>(Senders intelligently scans your emails to provide publicly available information about email senders and other contextual information, and removes hidden trackers from your emails.)</p>\n<p>The Service is a great way to see public professional information about people who send you emails, right in your inbox. Because we add the information right inside the email message, it works regardless of what email client you use. The Service also helps you to identify and eliminate hidden trackers hidden in the emails you receive.</p>\n<p>When you use our Senders Service, you agree that One More Company may scan (1) your email headers so that we may then obtain publicly available information about the sender and other email recipients, including, but not limited to, employer and job title, employer headquarters, Twitter account and LinkedIn profile; and (2) the body of your emails in order to insert the additional contextual information that is party of our Services.  Some information on email senders will be provided in your email account, and some information will be provided via the web.  Email senders may choose not to share their personal information through Senders by editing and removing their information in the Service after verifying their email address.</p>\n<p>Senders is not an email client aimed at sending or receiving messages. Senders only monitors your inbox to augment message by adding contextual information and removing trackers. The User, and not One More Company, is responsible for maintaining appropriate backups of the email accounts used in connection with the Service. Software will never be perfect and we strongly advise you to have your email backed up. The presence of a ‘backup’ folder in your inbox doesn’t mean we are doing backups for you. All your emails remain stored on your email server.</p>\n<p>Please also note that the Service will untrack emails that you have previously agreed with a third party can be tracked (e.g., newsletters), and you hereby consent to such untracking.</p>\n<p>We will use commercially reasonable efforts to keep the Service up to date with the latest email tracking technologies. However, it is possible that the occasional tracking code may slip through momentarily while we research and add support for it.</p>\n<p><strong>Conditions for Use of the Services:</strong> In order to use our Service, you must meet a number of conditions, including but not limited to:</p>\n<ul>\n<li>You must be the minimum age required to enter into a contract in the area in which you reside, and, in any event, must not be less than 18 years of age.</li>\n<li>You must provide us with personal information and other information that we deem necessary to provide you with our Service. You agree to provide and maintain true, accurate, current and complete information about yourself.</li>\n<li>You must be a human. Accounts registered by &quot;bots&quot; or other automated methods are not permitted.</li>\n</ul>\n<p>One More Company may refuse to offer the Service to any person or entity at any time and may change its eligibility criteria, at any time, in its sole discretion. </p>\n<p><strong>Availability:</strong> We try to make Senders available 24 hours a day, 7 days a week, except for planned down-time for maintenance. One More Company reserves the right at any time and from time to time to modify or discontinue, temporarily or permanently, the Services (or any part thereof) with or without notice.</p>\n<hr />\n<h2>Sending Us Suggestions</h2>\n<p>(By giving us feedback, you are granting us with the right to use it however we please.)</p>\n<p>If you submit suggestions to One More Company through feedback or otherwise, you acknowledge and agree that:</p>\n<p>(i) your suggestions do not contain confidential or proprietary information;\n(ii) One More Company is not under any obligation of confidentiality with respect to the suggestions;\n(iii) One More Company shall be entitled to use or disclose (or choose not to use or disclose) such suggestions;\n(iv) One More Company may have something similar to the suggestions already under consideration; and\n(v) you are not entitled to any compensation or reimbursement of any kind from One More Company under any circumstances with respect to such suggestions or any implementation thereof.</p>\n<p>We accept web form support questions 24 hours per day, 7 days per week at help.sende.rs and email support questions at <a href=\"mailto:help@sende.rs\">help@sende.rs</a>. We attempt to respond to support questions as fast as we can. However, we do not promise or guarantee any specific response time.\nIn addition, if you have any question regarding our TOS, do not hesitate to contact us at: <a href=\"mailto:feedback.sende.rs\">feedback@sende.rs</a></p>\n<hr />\n<h2>Termination and Cancellation</h2>\n<p>(We may stop providing the Services to you at any time without notice, but we will try to provide a timely explanation.)</p>\n<p>You acknowledge and agree that One More Company may stop (permanently or temporarily) providing the Services (or any folders within the Services) to you at One More Company’s sole discretion, without prior notice to you, for any reason or no reason. However, we will strive to provide a timely explanation in most cases.  Nonetheless, to be clear, any suspension or termination of the Services will not affect your ability to access your email account.</p>\n<hr />\n<h2>Data and Privacy</h2>\n<p>(We respect the privacy of our users and follow the terms of our <a href=\"https://sende.rs/privacy\">Privacy Policy</a>.)</p>\n<p>One More Company respects the privacy of its users and follows the privacy guidelines defined in our <a href=\"https://sende.rs/privacy\">Privacy Policy</a>, which is hereby incorporated into this TOS.  We will not use, or allow anyone else to use, your personal information other than as described in our <a href=\"https://sende.rs/privacy\">Privacy Policy</a>.</p>\n<hr />\n<h2>Prohibited Uses</h2>\n<p>(Please, simply use our Services for their intended purposes.)</p>\n<p>You must not:</p>\n<ul>\n<li>Attempt to probe, scan, or test the vulnerability of One More Company’s systems or any related system or network or breach any privacy, security or authentication measures;</li>\n<li>Hack, crack, phish, SQL inject, or otherwise compromise the security or integrity of the  Site, the Services, or its Users’ computers;</li>\n<li>Reverse-engineer or attempt to discover the underlying source code or algorithms of the Services;</li>\n<li>Interfere with, or attempt to interfere with, the access of any user, host or network, including, without limitation, sending a virus, overloading, flooding, spamming, or mail-bombing One More Company’s systems or providers;</li>\n<li>Violate the laws of the United States, its states, or any foreign political entity having jurisdiction over this Agreement, whether or not the foreign political entity is a country or a subdivision (such as a state or province) or municipality (such as a city, town, county, or region) of a foreign country;</li>\n<li>Post or send anything violent, threatening, pornographic, racist, hateful, or otherwise objectionable according to the opinion of One More Company;</li>\n<li>Infringe on anyone’s intellectual property rights, defame anyone, impersonate anyone, or otherwise violate the rights of a third party; or</li>\n<li>Do anything else that could bring One More Company into disrepute or violate the rights of any person.</li>\n</ul>\n<p>If you are blocked by us from accessing the Services (including by blocking your IP address), you agree not to implement any measures to circumvent such blocking (e.g., by masking your IP address or using a proxy IP address). </p>\n<p>One More Company will have the right to investigate and prosecute violations of any of the above, including intellectual property rights infringement and security-related issues, to the fullest extent of the law. One More Company may involve and cooperate with law enforcement authorities in prosecuting users who violate this TOS. You acknowledge that One More Company has no obligation to monitor your access to or use of the One More Company’s Services, but has the right to do so for the purpose of operating the Services, to ensure your compliance with these TOS, or to comply with applicable law or the order or requirement of a court, administrative agency, or other governmental body.</p>\n<hr />\n<h2>Disclaimer of Warranties</h2>\n<p>(We do not provide any warranty for the use of the Services. Your use of our Services is  at your own risk.)</p>\n<p>THE SERVICES (INCLUDING THE SITE) ARE PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED. WITHOUT LIMITING THE FOREGOING, ONE MORE COMPANY EXPLICITLY DISCLAIMS ALL WARRANTIES, INCLUDING ANY WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT. ONE MORE COMPANY MAKES NO WARRANTY THAT THE SERVICES WILL MEET YOUR REQUIREMENTS OR WILL BE AVAILABLE ON AN UNINTERRUPTED, SECURE, OR ERROR-FREE BASIS, OR THAT THE RESULTS OF THE USE OF THE SERVICES WILL BE ACCURATE OR RELIABLE. YOUR USE OF THE SERVICES IS AT YOUR OWN RISK.</p>\n<h2>Indemnification</h2>\n<p>You agree to release, defend, indemnify, and hold harmless One More Company and its affiliates, and their officers, directors, employees and agents, from and against any claims, liabilities, damages, losses, and expenses, including, without limitation, reasonable legal and accounting fees, arising out of or in any way connected with your access to or use of the Services, or your violation of this TOS or any rights of another. If you are a California resident, you waive California Civil Code Section 1542, which says: “A general release does not extend to claims which the creditor does not know or suspect to exist in his favor at the time of executing the release, which if known by him must have materially affected his settlement with the debtor.” If you are a resident of another jurisdiction, you waive any comparable statute or doctrine.</p>\n<h2>Limitation of Liability</h2>\n<p>YOU EXPRESSLY UNDERSTAND AND AGREE THAT ONE MORE COMPANY WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY DAMAGES, OR DAMAGES FOR LOSS OF PROFITS, INCLUDING, BUT NOT LIMITED TO, DAMAGES FOR LOSS OF GOODWILL, USE, DATA OR OTHER INTANGIBLE LOSSES (EVEN IF ONE MORE COMPANY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES), WHETHER BASED ON CONTRACT, TORT, NEGLIGENCE, STRICT LIABILITY OR OTHERWISE, RESULTING FROM: (I) THE USE OR THE INABILITY TO USE THE SERVICES; (II) THE COST OF PROCUREMENT OF SUBSTITUTE GOODS AND SERVICES; (III) UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR TRANSMISSIONS OR DATA; (IV) STATEMENTS OR CONDUCT OF ANY THIRD PARTY ON THE SERVICES; OR (V) ANY OTHER MATTER RELATING TO THE SERVICES. IN NO EVENT WILL ONE MORE COMPANY’S TOTAL LIABILITY TO YOU FOR ALL DAMAGES, LOSSES OR CAUSES OF ACTION EXCEED ONE HUNDRED DOLLARS ($100).</p>\n<p>SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES. ACCORDINGLY, SOME OF THE ABOVE LIMITATIONS SET FORTH ABOVE MAY NOT APPLY TO YOU. IF YOU ARE DISSATISFIED WITH ANY PORTION OF THE SERVICES OR WITH THIS TOS, YOUR SOLE AND EXCLUSIVE REMEDY IS TO DISCONTINUE USE OF THE SERVICES.</p>\n<h2>Dispute Resolution</h2>\n<p>Any controversy or claim between the parties or arising out of this TOS or any use of the Site or the Services shall be determined by one disinterested arbitrator in binding arbitration pursuant to the Commercial Arbitration Rules and the Supplementary Procedures for Online Arbitration of the American Arbitration Association (the “AAA”). The arbitrator shall be experienced in agreements for information technology services, either as an attorney or as an information technology professional. If the parties fail to appoint an arbitrator within forty-five (45) days of the institution of the arbitration, the AAA shall select the arbitrator promptly thereafter. Any requests for accelerated, emergency or preliminary relief shall be submitted pursuant to the AAA’s Optional Rules for Emergency Measures of Protection. If any such requests are made before an arbitration panel is empanelled, then the AAA shall appoint one disinterested arbitrator as an arbitration panel to immediately hear and decide such request. The arbitration panel shall have the right to grant interim awards. Testimony shall be permitted by telephone, video conference and other forms of real-time telecommunications. If the arbitrator requires in-person hearings, the hearings shall be held in New York, New York. The arbitral award will be final and binding, and may be entered and enforced in any court of competent jurisdiction.</p>\n<h2>Waiver of Jury Trial and Class Actions</h2>\n<p>BY ENTERING INTO THESE TERMS OF USE, YOU AND ONE MORE COMPANY ACKNOWLEDGE AND AGREE TO WAIVE CERTAIN RIGHTS TO LITIGATE DISPUTES IN COURT, TO RECEIVE A JURY TRIAL OR TO PARTICIPATE AS A PLAINTIFF OR AS A CLASS MEMBER IN ANY CLAIM ON A CLASS OR CONSOLIDATED BASIS OR IN A REPRESENTATIVE CAPACITY. YOU AND ONE MORE COMPANY BOTH AGREE THAT ANY ARBITRATION WILL BE CONDUCTED ON AN INDIVIDUAL BASIS AND NOT A CONSOLIDATED, CLASS-WIDE OR REPRESENTATIVE BASIS AND THE ARBITRATOR SHALL HAVE NO AUTHORITY TO PROCEED WITH AN ARBITRATION ON A CLASS OR REPRESENTATIVE BASIS. THE ARBITRATOR MAY AWARD INJUNCTIVE RELIEF ONLY IN FAVOR OF THE INDIVIDUAL PARTY SEEKING RELIEF AND ONLY TO THE EXTENT NECESSARY TO PROVIDE RELIEF WARRANTED BY THAT PARTY’S INDIVIDUAL CLAIM. IF FOR ANY REASON THE ARBITRATION CLAUSE SET FORTH IN THIS TOS IS DEEMED INAPPLICABLE OR INVALID, OR TO THE EXTENT THE ARBITRATION CLAUSE ALLOWS FOR LITIGATION OF DISPUTES IN COURT, YOU AND ONE MORE COMPANY BOTH WAIVE, TO THE FULLEST EXTENT ALLOWED BY LAW, ANY RIGHT TO PURSUE OR TO PARTICIPATE AS A PLAINTIFF OR AS A CLASS MEMBER IN ANY CLAIM ON A CLASS OR CONSOLIDATED BASIS OR IN A REPRESENTATIVE CAPACITY.</p>\n<h2>IP and Copyright; Third Party Content and Services</h2>\n<p>You acknowledge and agree that the Services may contain content or features (“Service Content”) that are protected by copyright, patent, trademark, trade secret or other proprietary rights and laws. It is permissible to link to Service Content as long as the original source is clearly stated, but the copying or modification of Service Content is not permitted. Trackbuster, Senders and One More Company and any related logos are marks used by us, to uniquely identify our Site, Services, and business. Additionally, you agree not to use our trade dress, or copy the look and feel of the Services. Exceptions are granted only if you receive prior written consent from One More Company.</p>\n<p>We may revoke our consent for your use of our intellectual property, or any other permission granted to you under this Agreement, at any time. You agree that if we so request, you must take immediate action to remove any usage of our intellectual property that you may have engaged in, even if it would cause a loss to you. If One More Company discovers that you have used its copyrighted or other protected intellectual property in contravention of the terms described above, One More Company may bring legal proceedings against you, seeking monetary damages and an injunction against you. You could also be ordered to pay legal fees and costs. Under no circumstances will we be liable in any way for any content or materials of any third parties (including Users), including, but not limited to, for any errors or omissions in any content, or for any loss or damage of any kind incurred as a result of the use of any such content. You agree that you must evaluate, and bear all risks associated with, the use of any content, including any reliance on the accuracy, completeness, or usefulness of such content. The Services may provide, or third parties may provide, links or other access to other sites and resources on the Internet. We have no control over such sites and resources and we are not responsible for and do not endorse such sites and resources. We will not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with use of or reliance on any content, events, goods or services available on or through any such site or resource. Any dealings you have with third parties found while using the Services are between you and the third party, and you agree that we are not liable for any loss or claim that you may have against any such third party. In addition, you will be required to enable or log in to the Services via third party services, such as Gmail or Google Apps (“Third Party Services”). We will ask you to authenticate, register for or log into Third Party Services on the websites of their respective providers. As part of such integration, the Third Party Services will provide us with access to certain information that you have provided to such Third Party Services, and we will use, store and disclose such information in accordance with our Privacy Policy. However, please remember that the manner in which Third Party Services use, store and disclose your information is governed solely by the policies of such third parties, and we shall have no liability or responsibility for the privacy practices or other actions of any third party site or service that may be enabled within the Service.</p>\n<h2>User Content</h2>\n<p>With respect to any comments or other content or materials you share through the Services (collectively, “User Content”), you represent and warrant that you own all right, title and interest in and to such User Content, including, without limitation, all copyrights and rights of publicity contained therein. By uploading any User Content you hereby grant One More Company and its affiliated companies a nonexclusive, worldwide, royalty-free, fully paid up, transferable, sublicensable, perpetual, irrevocable license to copy, display, upload, perform, distribute, store, modify and otherwise use your User Content in connection with the operation of the Services or the promotion, advertising or marketing thereof in any form, medium or technology now known or later developed.</p>\n<h2>Governing Law and Jurisdiction</h2>\n<p>This TOS shall be governed, construed, and enforced in accordance with the laws of the State of New York, without regard to its conflict of laws rules. The exclusive jurisdiction and venue of any action with respect to the subject matter of this TOS will be the state and federal courts located in and around New York City, New York and you hereby consent to and waive any objection to jurisdiction and venue in such courts.</p>\n<h2>Changes to This Agreement</h2>\n<p>One More Company reserves the right to modify this TOS at any time. We do so by posting and drawing attention to the updated terms on our Site. Your decision to continue to visit and make use of the Service after such changes have been made constitutes your formal acceptance of the new TOS. Therefore, we ask that you check and review this TOS for such changes periodically. Should you not agree to any provision of this TOS or any changes we make to this TOS, you may not use or continue to access any portion of the Service (including the Site).</p>\n<h2>Severability and Waiver</h2>\n<p>In the event that any provision of this TOS is held to be invalid or unenforceable, the remaining provisions of this TOS will remain in full force and effect.</p>\n<p>The failure of One More Company to enforce any right or provision of this TOS will not be deemed a waiver of such right or provision. Any waiver by One More Company of any provision of this TOS must be in writing, signed by an authorized representative of One More Company.</p>\n<hr />\n<h2>Email</h2>\n<p>We take spam very seriously. One More Company is compliant with the CAN-SPAM Act of 2003.</p>\n<h2>Contact Information</h2>\n<p>For any questions, we can always be reached at <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a> or physically at:</p>\n<p>One More Company<br />\n19W 34th Street, Suite 1000<br />\nNew York, NY, 10001   </p>\n<hr />\n<h2>Survival</h2>\n<p>The provisions of this TOS entitled “Disclaimer of Warranties,” “Indemnification,” “Limitation of Liability,” “Dispute Resolution,” “Waiver of Jury Trial and Class Actions,” “Governing Law and Jurisdiction” and “General Provisions” will survive the termination of this Agreement.</p>\n<h2>General Provisions</h2>\n<p>This TOS constitutes the entire agreement between you and One More Company and governs your use of the Services, superseding any prior agreements between you and One More Company with respect to the Service. You agree that regardless of any statute or law to the contrary, any claim or cause of action arising out of or related to use of the Service or this TOS must be filed within one (1) year after such claim or cause of action arose or be forever barred. A printed version of this TOS and of any notice given in electronic form will be admissible in judicial or administrative proceedings based upon or relating to this TOS to the same extent and subject to the same conditions as other business documents and records originally generated and maintained in printed form. You may not assign this TOS without the prior written consent of One More Company, but One More Company may assign or transfer this TOS, in whole or in part, without restriction. The section titles in this TOS are for convenience only and have no legal or contractual effect. Notices to you may be made via either email or regular mail. The Service may also provide notices to you of changes to this TOS or other matters by displaying notices or links to notices generally on the Services.</p>",
+        "slug": "terms",
+        "seo_title": "Terms of Service",
+        "text_body_html": "",
+        "search_enabled": "1",
+        "seo_image": "",
+        "template": "",
+        "seo_description": "",
+        "seo_keywords": "",
+        "seo_url": ""
+      },
+      {
+        "slug": "alpha-agreement (deprecated)",
+        "heading": "Alpha Agreement",
+        "seo_title": "Alpha Agreement",
+        "text_body": "<div id=\"alpha\" class=\"agreement\">\n<p class=\"big\">\nThis is an invite-only, <em>confidential</em> alpha website for a new product from [One More Company] tentatively called <i>Senders</i>.  \n</p>\n<p class=\"big\">\nThe focus of this alpha is on the enhanced email footer; this website exists only to authenticate your Google account and offer you some essential account settings. The final website will look completely different so <i>please just focus on the footer content and features for this alpha</i>. \n<p/>\n<div class=\"scroll\">\n<p class=\"small\">\nIf you've been invited to participate you will be admitted to the alpha after you have agreed to the above and connected your Google account. If you have not been invited to the alpha for Senders then we will place you on a waitlist of people interested in the product and notify you when we open up to the public. \n</p>\n<p class=\"small\">\nBy participating in this early alpha, as more fully explained in the <a href=\"/terms\">terms</a>, you agree to the following: \n</p>\n<ul class=\"small\">\n<li>\n<em>It’s confidential.</em> Please keep this confidential for now. We’ve chosen you as an alpha tester because of your discretion, and your product savvy. \n</li>\n<li>\n<em>Bugs.</em> The software is alpha—not even beta yet. So, in addition to the design and interface being in a very preliminary stage, it may not work properly, and may contain bugs. \n</li>\n<li>\n<em>Limited support.</em> Although we will be in regular contact with many of you, and will try to accommodate all support requests, because it’s a pre-release product, we make no promises about providing support (although any downtime on our side will not affect the functioning of your email in any way). \n</li>\n<li>\n<em>Feedback.</em> As an alpha tester, we hope you submit feedback, a lot of feedback if you want. We would love to hear your thoughts on ease of use, performance, missing features, and bugs. We may incorporate your feedback into the product, as further described in the long version of these terms. \n</li>\n<li>\n<em>Testimonials.</em> Also, if we like what you say about the service, we may ask you if we can quote you in our promotional materials, such as the website and emails to users. \n</li>\n</ul>\n<p class=\"small\">\nThere’s no guarantee that we will continue to offer the service after the alpha period, although that is certainly our intent. Also, there’s no charge for the alpha product, and most of the existing features will continue to be free when we launch. \n</p>\n<p class=\"small\">\nThank you for helping us improve our product! \n</p>\n<p class=\"small\">\nYou have also read and agree to the detailed legalese version of these terms, which is located <a href=\"/terms\">here</a>. \n</p>\n</div>\n</div>",
+        "text_body_html": ""
+      },
+      {
+        "slug": "faq (deprecated)",
+        "heading": "Senders FAQ",
+        "seo_title": "Senders FAQ",
+        "text_body": "",
+        "text_body_html": "<p><i>Senders</i> by One More Company, Inc. is currently in a <em>confidential</em>, invite-only alpha testing phase. As we explained when you signed up with the alpha, there may be bugs.</p>\r\n\r\n<hr>\r\n\r\n<h3>What is Senders?</h3>\r\n\r\n<p>\r\nSenders is a great way to see public professional information about people who send you emails, right in your inbox. Because we add the information right inside the email message, it works regardless of what email client you use. Once you join, you will start to see new information inserted into the bottom of some email messages showing essential information about the sender.\r\n</p>\r\n\r\n<hr>\r\n\r\n<h3>What happened to Trackbuster?</h3>\r\n\r\n<p>\r\nTrackbuster is part of Senders now. Information about trackers will be included in the new Senders footer. You can also turn this off via your Senders <a href=\"/settings\">settings page</a>. For the duration of pre-release testing, we will continue to operate Trackbuster and Senders side-by-side. But once we release Senders later this year we will transition all email accounts and discontinue the Trackbuster website. \r\n</p>\r\n<p>\r\nIn Senders, only personal email messages will be untracked. Your newsletters and other mass email messages will no longer be stripped of tracking information. We made this change because it results in a simpler, more efficient product experience for users and the bulk of email privacy violations take place when an individual sender adds custom trackers to your personal emails. \r\n</p>\r\n\r\n<hr>\r\n\r\n<h3>What happens to my existing Trackbuster account?</h3> \r\n\r\n<p>\r\nIf you used the same email address to sign up with Senders, you will need to pause your existing Trackbuster account via your <a href=\"https://trackbuster.com/settings\">Trackbuster settings</a> to avoid having both Trackbuster and Senders footers added to your email messages. Having both services connected may also introduce processing errors. \r\n</p>\r\n<p>\r\nOnce you do, you will start to see the Senders enhanced footer information, which includes the Trackbuster untracking information you are used to seeing.\r\n</p>\r\n\t\t\r\n<hr>\r\n<h3>What information do you include?</h3> \r\n\r\n<p>\r\nWe only include non-sensitive information that you’ve made publicly available. The focus is on professional career information (think LinkedIn) and not private information (e.g., not things you post on Facebook, which we don’t have access to in any case).\r\n</p>\r\n\r\n<hr>\r\n<h3>Where do you get your information?</h3>\r\n\r\n<p>\r\nWe gather information from social media and other public sources.\r\n</p>\r\n\r\n<hr>\r\n<h3>What if I don’t want my personal information shown to your users?</h3>\r\n\r\n<p>\r\nIn the final product, we will offer anyone who visits the Senders website the ability to edit their information directly or opt-out of inclusion altogether. For now, please notify us directly of any inaccurate information. You can contact your company representative or email us at <a href=\"mailto:feedback@sende.rs\">feedback@sende.rs</a>\r\n</p>\r\n"
+      }
+    ],
+    "press_logos": [
+      {
+        "key": "buzzfeed",
+        "url": "https://www.buzzfeed.com/carolineodonovan/heres-how-i-can-tell-if-someone-read-my-email?utm_term=.tje1Q1289#.nmVxkxPdG",
+        "picture": ""
+      },
+      {
+        "key": "phunt",
+        "url": "https://www.producthunt.com/tech/senders",
+        "picture": ""
+      },
+      {
+        "key": "techcrunch",
+        "url": "http://techcrunch.com/2016/04/06/senders-wants-you-to-know-everything-about-your-email-recipients/",
+        "picture": ""
+      },
+      {
+        "key": "nyt",
+        "url": "http://www.nytimes.com/2015/11/19/technology/personaltech/foiling-electronic-snoops-in-email.html",
+        "picture": ""
+      },
+      {
+        "url": "http://www.forbes.com/sites/katevinton/2015/07/28/50-of-your-emails-are-tracked-and-trackbuster-want-to-stop-it/",
+        "picture": "",
+        "key": "forbes"
+      }
+    ],
+    "counters": [
+      {
+        "name": "Emails Processed",
+        "starting_value": "50000000",
+        "speed": "1200"
+      },
+      {
+        "name": "Emails Enhanced",
+        "starting_value": "1000000",
+        "speed": "2400"
+      }
+    ],
+    "security": [
+      {
+        "key": "server",
+        "title": "Your emails are secure + private",
+        "text": "Your emails remain on your servers throughout the Senders enhancement process. Within milliseconds, we embed a unique card for each sender and scan the content of the email to remove any encrypted tracking. We never save your emails on our servers."
+      },
+      {
+        "key": "lock",
+        "title": "We don’t save your email password",
+        "text": "While we need you to authenticate through your Google account to access and enhance your email, your credentials are protected using state-of-the-art encryption technology and are housed on a secure server that isn’t available through the public internet."
+      },
+      {
+        "key": "staff",
+        "title": "Servers + staff",
+        "text": "Our carefully selected data centers are located in secure buildings located away from major cities and outfitted with extensive perimeter controls. Our staff is rigorously vetted and only a handful of our senior engineers have access to system servers. Access to all resources requires two-factor authentication."
+      }
+    ],
+    "team": [
+      {
+        "key": "florian",
+        "name": "Florian Seroussi",
+        "position": "CEO",
+        "bio": "<p>Florian is a cofounder with a global investing and advisory track record (over 30 tech investments, including Weebly, Pixowl, Gorgias, Open Garden, and Shade.io). Prior to OMC, Florian co-founded Labotec and Global Roaming. </p>\n<p>Holding a Masters from Tel Aviv University, Florian is guiding strategy with a deep understanding of market dynamics across web and mobile and a personal passion to solve information overload.</p>",
+        "linkedin": "https://il.linkedin.com/in/florianseroussi",
+        "twitter": "https://twitter.com/florianseroussi",
+        "medium": "https://medium.com/@Florians",
+        "photo": ""
+      },
+      {
+        "key": "nitsan",
+        "name": "Nitsan Seniak",
+        "position": "CTO",
+        "bio": "<p>Nitsan is a cofounder with 20 years of experience in R&amp;D. He is a passionate coder. His experience ranges from single-handedly developing new products to running large international teams. Prior to OMC, Nitsan worked at ccGenie, IBM and ILOG, where he led the development of JRules, one of the first applications of Artificial Intelligence in the enterprise.\n<br/>\n<br/>\nNitsan holds a PhD in Computer Science from the University Pierre et Marie Curie (France).</p>",
+        "linkedin": "https://fr.linkedin.com/in/nitsanseniak",
+        "twitter": "",
+        "medium": "",
+        "photo": ""
+      },
+      {
+        "key": "chad",
+        "name": "Chad Woodford",
+        "position": "Head of Product & Chief Privacy Officer",
+        "bio": "<p>Chad is responsible for product development and design at OMC. As a former software engineer and lawyer, he tempers his passion for technology with an eye toward consumer interests and consumer privacy. Prior to OMC, he worked at Twitter, Google, Dolby Labs, and IBM, as well as Fenwick &amp; West. </p>\n<p>Chad has a JD from the University of Colorado School of Law, where he was production editor on the law review. He also has a BS in computer engineering from Clarkson University, where he did two years of graduate work in artificial intelligence.</p>",
+        "linkedin": "https://www.linkedin.com/in/cwoodford",
+        "twitter": "https://twitter.com/chd",
+        "medium": "https://medium.com/@cjam",
+        "photo": ""
+      },
+      {
+        "key": "antoine",
+        "name": "Antoine Melki",
+        "position": "VP of Engineering",
+        "bio": "<p>Antoine has 15 years of experience developing and designing digital products. He worked in software, at ILOG and IBM, as a developer and team leader in the JRules R&amp;D. He also founded ccGenie, a collaborative platform based on email. Prior to OMC, he was the CTO of the eCommerce unit at Keyrus, collaborating to several large-scale eCommerce projects.</p>\n<p>Antoine has been developing web apps since 2000. He is passionate about web frameworks, user experience, and high scalability. When he’s not coding, he loves biking in the city and playing loud rock music.</p>",
+        "linkedin": "https://fr.linkedin.com/in/amelki",
+        "twitter": "",
+        "medium": "",
+        "photo": ""
+      },
+      {
+        "key": "cecily",
+        "name": "Cecily Haubner",
+        "position": "Lead Designer",
+        "bio": "<p>Cecily brings 6+ years of design experience from various industries and has worked with creative agencies, media giants and start-ups including NBC, Time Inc, MEC Global, L2 Inc., Recombine and Oliver. She approaches design with a humanist lens and believes that technology should increase the quality of life of everyone it touches.</p>\n<p>Cecily has a BFA in Design and Product Development from Stephens College--the second oldest women’s college in the United States.</p>",
+        "linkedin": "https://www.linkedin.com/in/cecilyh",
+        "twitter": "",
+        "medium": "",
+        "photo": ""
+      },
+      {
+        "key": "joan",
+        "name": "Joan Gonzalez",
+        "position": "Designer",
+        "bio": "<p>Joan is the new kid on the block and breathes fresh air into the projects he touches. He loves UI/UX design and thinks big picture solutions. He is wildly curious and applies his knowledge from various mediums into his work. He’s eager to learn, grow, and is always looking for ways to improve his work.</p>\n<p>He has a degree in creative writing from Florida State University. Joan also enjoys writing, watching film/tv, exercising, and consuming copious amounts of music.</p>",
+        "linkedin": "https://www.linkedin.com/in/joangonzalez27",
+        "twitter": "",
+        "medium": "",
+        "photo": ""
+      },
+      {
+        "key": "bsh",
+        "photo": "https://storage.googleapis.com/senders-images/photos/bsh.JPG",
+        "name": "Boubakar Saim Haddache",
+        "position": "Senior Software Engineer",
+        "bio": "<p>Boubakar is our performance and scalability expert.\n<br>He has 18 years of experience developing and designing digital products. He worked as a software architect, at Voyages-Sncf (the most visited e-commerce site in France), Coface and DGFIP.\n<br>In early 2000, he invented a highly performant algorithm for <a href=\"https://www.google.com/patents/WO2002003245A1?cl=en&hl=fr&dq=Boubakar+saim+haddache\">storing XML data in relational databases</a>.</p>\n<p>When he’s not coding, he enjoys literature, and learns phytotherapy.</p>",
+        "linkedin": "https://fr.linkedin.com/in/boubakar-saim-haddache-8113846",
+        "twitter": "",
+        "medium": ""
+      },
+      {
+        "key": "hoa",
+        "photo": "https://storage.googleapis.com/senders-images/photos/hoa.jpg?v=2",
+        "name": "Hoà V. Dinh",
+        "position": "Advisor",
+        "bio": "<p>Hoà is an experienced software engineer with a strong UX background. He's obsessed with email and highly detailed-oriented when it comes to user interface design.</p>\n<p>He co-founded <a href=\"http://www.wikiwand.com/en/Sparrow_(email_client)\">Sparrow</a> — a modern email client — in 2010, which was acquired by Google in 2012. He has worked at Google, Apple, and Amazon. He is a frequent contributor to open-source projects, including MailCore 2 and  libetpan.\n<br>Hoà currently works at Facebook.</p>",
+        "linkedin": "",
+        "twitter": "https://twitter.com/dinhvh",
+        "medium": ""
+      }
+    ],
+    "trackers": [
+      {
+        "key": "welcome",
+        "picture": "",
+        "title": "",
+        "text": "<p>One of the benefits of Senders is removing hidden tracking code from the emails people send you. In fact, you probably arrived at this page because you saw a message in an email message from us explaining that we have removed a tracking code. We are committed to giving users control over their email and untracking is part of that. To be clear, we're not tracking your emails; we're removing trackers from your emails.</p>\n<p>Here is more information about how email trackers work and why they're a privacy risk.</p>",
+        "url": ""
+      },
+      {
+        "key": "privacy",
+        "title": "How does it work and why is it a privacy risk?",
+        "text": "<p>If you thought you were anonymous while reading your email, think again. Email trackers can reveal, among other things, your geographic location, your email activity (whether you opened it, clicked on it, forwarded it), your device configuration, and the software you are using.</p>\n<p>Traditionally reserved for sophisticated emailing systems used by marketers, email tracking technologies are now easily accessible to anyone, often for free. They allow senders to spy on your email activity without your knowledge or consent.</p>\n<p>According to our research, at least 50% of emails you receive are being tracked without you being aware of it. Marketers, clients, friends, and family can essentially spy on you without you knowing it. It’s a growing privacy risk in a world where email is a foundational medium for communication.</p>",
+        "picture": "",
+        "url": ""
+      },
+      {
+        "key": "care",
+        "title": "Why should you care?",
+        "text": "<p>Privacy is on everyone's minds these days. In our current climate, privacy is more important than ever. Without a solution that gives you information and control, your privacy and security are at risk. Even if you’re not obsessed with privacy the current email climate should concern you. Email is supposed to be private. </p>\n<p>But you are not anonymous when you read your email. Although you’re not aware of it, just by opening, clicking or forwarding an email you can reveal critical private information like your location (country, city), your IP address, the type of device you’re using, the type of software you’re reading email from and more.</p>\n<p>Every day hundreds of millions of tracked emails are sent without users’ awareness or consent. No one can afford to ignore this, the same way that Windows users years ago could not risk operating without an antivirus software solution.</p>",
+        "picture": "abc.png",
+        "url": "http://abc13.com/technology/free-software-allows-anyone-to-track-your-emails/507042/"
+      },
+      {
+        "key": "track",
+        "title": "Why would people track you?",
+        "text": "<p>If you thought you were anonymous while reading your email, think again. Email trackers can reveal, among other things, your geographic location, your your email activity (whether you opened it, clicked on it, forwarded it), your device configuration, and the software you are using.</p>\n<p>Many times, email tracking is used for legitimate reasons: marketers want to know if their email has been read, and whether you took some action in response. Many marketers think that including consent language in their online terms of service is enough to obtain your consent.</p>\n<p>So in what cases can email tracking be used against you? Here are a few common scenarios:</p>"
+      },
+      {
+        "key": "bullets",
+        "title": "",
+        "text": "<ul>\n<li>a salesperson hoping to qualify more leads</li>\n<li>a real estate agent eager to close a deal more quickly</li>\n<li>a recruiter in search of motivated candidates</li>\n<li>an employer tracking an employee out of his office during working hours</li>\n<li>PR firms trying to get coverage in a publication tracking a journalist</li>\n<li>an entrepreneur pitching a potential investor or journalist by email</li>\n<li>someone you know personally who is curious about your whereabouts</li>\n<li>a teacher tracking his students</li>\n<li>an organization or governments tracking private individuals</li>\n</ul>",
+        "picture": "iphone.png"
+      },
+      {
+        "key": "me",
+        "title": "Am I protected?",
+        "text": "<p>Probably not. Our research shows that well over 50% of all emails are being tracked. Email providers like Gmail have no built-in mechanisms to prevent your email from being tracked efficiently. Some providers offer the ability to turn off images, but this approach may or may not remove tracking and the result in a suboptimal aesthetic experience. Anti-virus and anti-spam and ad blocking software is intended to catch malicious code and web tracking, not prevent email tracking.</p>"
+      },
+      {
+        "key": "how",
+        "title": "How does email tracking work?",
+        "text": "<p>Wikipedia offers a good explanation of email tracking:</p>\n<p>Email tracking is a method for monitoring the email delivery to intended recipient. Most tracking technologies use some form of digitally time-stamped record to reveal the exact time and date that an email was received or opened, as well the IP address of the recipient.</p>\n<p>Email tracking is useful when the sender wants to know if the intended recipient actually received the email, or if they clicked the links. However, due to the nature of the technology, email tracking cannot be considered an absolutely accurate indicator that a message was opened or read by the recipient.</p>\n<p>That said, technologies used for tracking are varied and evolve all the time and this is why Trackbuster security team keeps up with the latest developments.</p>"
+      }
+    ],
+    "landing": [
+      {
+        "key": "twitter",
+        "title": "You love keeping up with people on Twitter",
+        "text_1": "<p>Now you can get Tweets and Twitter profiles right in your email (public accounts only—no anonymous Twitter accounts).</p>\r\n\r\n<p>Introducing Senders: short, public profiles and personal updates for your email.</p>\r\n",
+        "text_2": "It’s free and works everywhere"
+      },
+      {
+        "key": "home",
+        "title": "Caller ID for Email",
+        "text_1": "Get more information about who's emailing you without leaving your inbox, so you can make decisions quickly. Your emails, passwords, and personal information are safe.",
+        "text_2": "It's free and works everywhere."
+      },
+      {
+        "key": "get",
+        "title": "Caller ID for Email",
+        "text_1": "Get more information about who's emailing you without leaving your inbox, so you can make decisions quickly. Your emails, passwords, and personal information are safe.",
+        "text_2": "It's free and works everywhere."
+      },
+      {
+        "key": "trackbuster",
+        "title": "Trackbuster™ is now <span id=\"senders-logo\">Senders</span>",
+        "text_1": "<p>Senders adds an informational signature to incoming email messages so you can learn about your email contacts at a glance.</p>\r\n\r\n<p>You can always turn off the new features and use Senders just like Trackbuster. Signing up will automatically pause your Trackbuster account.</p>\r\n",
+        "text_2": "It’s free and works everywhere."
+      },
+      {
+        "key": "facebook",
+        "title": "You like keeping up with people on Facebook",
+        "text_1": "Now you can keep up with friends, family and colleagues directly in your email too. Introducing Senders: short, public profiles and personal updates for your email.",
+        "text_2": "It’s free and works everywhere."
+      },
+      {
+        "key": "florian",
+        "title": "Hello Florian",
+        "text_1": "<p>I hope all is well. Since you're travelling to Paris next week, why don't you bring my new Mac in your suitcase?\r\n</p>\r\n",
+        "text_2": "Thanks!"
+      }
+    ],
+    "card_tutorial": [
+      {
+        "key": "step1",
+        "body": "This is what Senders users will see when they receive emails from {0}.",
+        "placement": "card",
+        "card": "self"
+      },
+      {
+        "key": "step2",
+        "body": "Senders adds a similar Card to all personal emails users receive.",
+        "placement": "card",
+        "card": "self"
+      },
+      {
+        "key": "step3",
+        "body": "This is an example of a fully-formed Senders Card (thanks, Gandhi).",
+        "placement": "card",
+        "card": "gandhi"
+      },
+      {
+        "key": "step4",
+        "body": "Cards are a simple collection of public profiles and recent updates for a person based on email address.",
+        "placement": "card",
+        "card": "gandhi"
+      },
+      {
+        "key": "step5",
+        "body": "Senders also (optionally) removes privacy-invasive email trackers. To learn more <a href=\"/about-email-tracking\" target=\"_blank\">click here</a>.",
+        "placement": "tracker",
+        "card": "gandhi"
+      },
+      {
+        "key": "step6",
+        "body": "Senders gives you more information about who’s emailing you right in your inbox, so that it works in any app.",
+        "placement": "cta",
+        "card": "self"
+      }
+    ]
+  },
+  "footer": [
+    {
+      "name": "Add To Slack",
+      "url": "https://slack.sende.rs",
+      "target": "_blank"
+    },
+    {
+      "name": "About Us",
+      "url": "/about",
+      "target": ""
+    },
+    {
+      "name": "About Trackers",
+      "url": "/about-email-tracking",
+      "target": ""
+    },
+    {
+      "name": "Privacy",
+      "url": "/privacy"
+    },
+    {
+      "name": "Terms",
+      "url": "/terms"
+    },
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/sendersinfo",
+      "target": "_blank"
+    },
+    {
+      "name": "Twitter",
+      "url": "https://twitter.com/sendersinfo",
+      "target": "_blank"
+    },
+    {
+      "name": "Blog",
+      "url": "http://blog.sende.rs",
+      "target": "_blank"
+    }
+  ],
+  "app": {
+    "app_header": [
+      {
+        "name": "Dashboard",
+        "url": "/",
+        "target": ""
+      },
+      {
+        "name": "Settings",
+        "url": "/settings",
+        "target": ""
+      },
+      {
+        "name": "Help",
+        "url": "http://help.sende.rs",
+        "target": "_blank"
+      },
+      {
+        "name": "Sign Out",
+        "url": "/signout",
+        "target": ""
+      }
+    ],
+    "app_text": {
+      "welcome_heading": "Welcome to Senders %user_name%",
+      "welcome_sub_heading": "This is the Senders dashboard. Looks a little empty right now. More to come soon...",
+      "copyright_text": "<div>© 2015 One More Company, Inc.</div>\r\n\t\t\t\t\t<div>Designed and hosted in the USA</div>"
+    },
+    "user_settings": [
+      {
+        "label": "Senders Cards",
+        "description": "Insert a Card containing information about senders into emails you receive.",
+        "key": "senders"
+      },
+      {
+        "key": "sendersLabel",
+        "label": "GMail Label",
+        "description": "Mark emails enhanced with senders information with a <em>{sender}</em> <a href=\"https://support.google.com/inbox/answer/6067566?hl=en\" target=\"_blank\">label</a>."
+      },
+      {
+        "label": "Tracked Emails",
+        "description": "Prevent individual senders from tracking your emails (i.e., learning whether and when you open emails, locating where you are when you open emails, as well as what device you’re using.) Click <a href=\"/about-email-tracking\">here</a> to learn more.",
+        "key": "untracking"
+      },
+      {
+        "key": "untrackedLabel",
+        "label": "GMail Label",
+        "description": "Mark untracked emails  with an <em>{untracked}</em> <a href=\"https://support.google.com/inbox/answer/6067566?hl=en\" target=\"_blank\">label</a>."
+      },
+      {
+        "label": "Display untracking info",
+        "description": "Select to include tracker information in the email footer.",
+        "key": "untrackingFooter"
+      },
+      {
+        "label": "Untrack all emails",
+        "description": "<div>In addition to untracking personal emails, untrack all other emails (e.g., newsletters, marketing emails, and other promotional emails). More information about <a href=\"/about-email-tracking\">tracking</a>.</div>",
+        "key": "untrackAll"
+      },
+      {
+        "label": "Disappearing Cards",
+        "description": "Display cards as ephemeral images instead of an HTML block. The images will disappear in reply / forwards.",
+        "key": "ephemeral"
+      },
+      {
+        "label": "Weekly Report",
+        "description": "Each week, we send you a report with a summary of how many emails you received, how many new senders you have, and how many email messages we untracked.",
+        "key": "weeklyReport"
+      }
+    ],
+    "messages": [
+      {
+        "key": "dontShowAgain_key",
+        "value": "Don't show this again"
+      },
+      {
+        "key": "untrackedCountPersonalMonthly_key",
+        "value": "Personal emails untracked in the past month"
+      },
+      {
+        "key": "untrackedCountPersonalWeekly_key",
+        "value": "Personal emails untracked in the past week"
+      },
+      {
+        "key": "untrackedCountPersonal_key",
+        "value": "Personal emails untracked"
+      },
+      {
+        "key": "emptyContacts_key",
+        "value": "It looks like you just connected your account and haven't received any new personal emails yet. Once you do receive a few, you will see contact information for those senders displayed here"
+      },
+      {
+        "key": "emptyStats_key",
+        "value": "Your dashboard will populate weekly as you use Senders"
+      },
+      {
+        "key": "untrackedCount_key",
+        "value": "Untracked emails"
+      },
+      {
+        "key": "untrackedCountMonthly_key",
+        "value": "Emails untracked in the past month"
+      },
+      {
+        "key": "untrackedCountWeekly_key",
+        "value": "Emails untracked in the past week"
+      },
+      {
+        "key": "receivedCountMonthly_key",
+        "value": "Emails received in the past month"
+      },
+      {
+        "key": "receivedCountWeekly_key",
+        "value": "Emails received in the past week"
+      },
+      {
+        "key": "receivedCount_key",
+        "value": "Emails received"
+      },
+      {
+        "key": "sendersCount_key",
+        "value": "Senders"
+      },
+      {
+        "key": "sendersCountMonthly_key",
+        "value": "New senders in the past month"
+      },
+      {
+        "key": "sendersCountWeekly_key",
+        "value": "New senders in the past week"
+      }
+    ],
+    "dashboard_tutorial": [
+      {
+        "key": "step1",
+        "placement": "left",
+        "body": "This is your Senders Card. Other Senders users will see this embedded at the bottom of emails from you."
+      },
+      {
+        "key": "step2",
+        "placement": "left",
+        "body": "Similar Cards will appear in your personal emails, showing you information about the sender."
+      },
+      {
+        "key": "step3",
+        "placement": "edit",
+        "body": "Please review your Card. You can update it by clicking the “Edit” button."
+      }
+    ],
+    "share_dialog": {
+      "title": "Share this Card",
+      "body": "Click below to send your Card to your friends with a brief message",
+      "done_button": "Done",
+      "dismiss": "Don't show this again"
+    }
+  },
+  "tips": [
+    {
+      "key": "accountPaused_key",
+      "value": "Your account is currently paused. You can resume the service on the <a href=\"/settings\">settings</a> page.\r\n"
+    },
+    {
+      "key": "emailVerified_key",
+      "value": "Your email has been verified and you can now edit your Card."
+    },
+    {
+      "key": "confirmAndEditTip_key",
+      "value": "Once you have confirmed your email, you will be able to edit your Card."
+    },
+    {
+      "key": "verificationEmailSent_key",
+      "value": "We've sent an email to the address associated with this Card. Please click on the link in that email to verify ownership."
+    },
+    {
+      "key": "cardUpdated_key",
+      "value": "Your card has been updated."
+    },
+    {
+      "key": "myCard_key",
+      "value": "This is your Senders Card. Other Senders users will see this at the bottom of emails from you. Senders Cards are embedded right in your emails, and you will see a similar Card in your personal emails summarizing the sender's essential public information. You can always edit your Card."
+    }
+  ],
+  "alert_messages": [
+    {
+      "id": "slack_server_unavailable",
+      "title": "Slack App Installation Aborted",
+      "text": "An error occured during the installation of the Slack App. Can you try again? If the problem persists, please contact support@sende.rs."
+    },
+    {
+      "id": "slack_invalid_code",
+      "title": "Slack App Installation Aborted",
+      "text": "The Senders Slack App was not installed."
+    },
+    {
+      "id": "slack_invalid_link",
+      "title": "Slack App Installation Failed",
+      "text": "The invitation link you provided does not seem to be valid.\r\nPlease send an email to support@sende.rs to get another invite"
+    },
+    {
+      "id": "authentication_access_denied",
+      "title": "Authentication Aborted",
+      "text": "The connection to your Google account was cancelled.\r\nPlease send an email to feedback@sende.rs if you have any additional comments or questions."
+    },
+    {
+      "id": "slack_access_denied",
+      "title": "Slack App Installation Aborted",
+      "text": "The Senders Slack App was not installed."
+    },
+    {
+      "id": "service_paused",
+      "title": "Senders is now paused",
+      "text": "From now on, your account stopped being monitored until you resume the service."
+    },
+    {
+      "id": "service_started",
+      "title": "Senders is now resumed",
+      "text": "Senders is now monitoring your inbox to insert sender information and remove trackers."
+    },
+    {
+      "id": "email_report_paused",
+      "title": "Email report is now disabled",
+      "text": "From now we won't send you weekly reports until you resume."
+    },
+    {
+      "id": "email_report_started",
+      "title": "Email Report is now resumed",
+      "text": "From now we will send you weekly reports."
+    },
+    {
+      "id": "general_error",
+      "title": "Oops",
+      "text": "Something didn't work. Please try again."
+    },
+    {
+      "id": "account_deleted",
+      "title": "Your account has been deleted",
+      "text": "From now, you email account is no longer monitored. Should you change your mind, please create a new account on Senders."
+    },
+    {
+      "id": "invalid_email_syntax",
+      "title": "Invalid Email Address",
+      "text": "Please enter a valid email address."
+    },
+    {
+      "id": "first_signin",
+      "title": "Congratulations! Senders in now running",
+      "text": "Check your inbox or come back in a few minutes."
+    },
+    {
+      "id": "waiting_list_beta_closed",
+      "title": "You are on the waiting list!",
+      "text": "We are currently in a very limited early preview. We’ve made note of your interest and will notify you when we open the service up to more people. Thank you for your interest!"
+    },
+    {
+      "id": "waiting_list_not_gmail",
+      "title": "Welcome to our waiting list!",
+      "text": "Senders just opened and works only with Gmail and Google apps email accounts at the moment. We’ll soon open to more email providers and we will notify you when this is the case."
+    },
+    {
+      "id": "not_invited",
+      "title": "Not registered",
+      "text": "It seems that you are using an invalid invitation link.\r\nYou may try to enter your email in the signup form.\r\n"
+    }
+  ],
+  "paragraphs": [
+    {
+      "key": "about_title_2_key",
+      "body": "Meet the team"
+    },
+    {
+      "key": "about_title_1_key",
+      "body": "About One More Company"
+    },
+    {
+      "key": "404_2_key",
+      "body": "Were you trying to learn more about Senders? <a href=\"https://sende.rs/\" target=\"_blank\">Visit our website</a> to find out more!"
+    },
+    {
+      "key": "404_1_key",
+      "body": "The page you were looking for doesn’t exist."
+    }
+  ]
+}
