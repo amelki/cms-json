@@ -34,7 +34,7 @@ app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $lo
 		resolve: resolve
 	}).when('/item/:path*', {
 		templateUrl: '/templates/home.html',
-		controller: "FormController",
+		controller: "ItemController",
 		resolve: resolve
 	});
 	$locationProvider.html5Mode(true);

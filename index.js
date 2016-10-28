@@ -1,10 +1,17 @@
-#!/usr/bin/env node
 var express = require('express');
 var process = require('process');
 var fs = require('fs');
 var colors = require('colors');
 var bodyParser = require('body-parser');
 
+/**
+ * Run an Express server embedding a simple UI for editing the content of the given dataFile.
+ *
+ * @param modelFile
+ * @param dataFile
+ * @param port
+ * @returns {*} The express app
+ */
 module.exports.run = function(modelFile, dataFile, port) {
 
 	var app = express();

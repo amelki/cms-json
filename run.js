@@ -9,16 +9,10 @@ var server = require('./index');
 
 program
 	.version('0.0.1')
-	.option('-m, --model <file>', 'CMS Model file (json)')
-	.option('-d, --data <file>', 'CMS Data file (json)')
-	.option('-p, --port [port]', 'Optional server port. Default is 3000')
+	.option('-m, --model [file]', 'CMS Model file (json). Default is ./default/model.json')
+	.option('-d, --data [file]', 'CMS Data file (json). Default is ./default/data.json')
+	.option('-p, --port [port]', 'Server port. Default is 3000')
 	.parse(process.argv);
-
-if (!program.model || !program.data) {
-	program.outputHelp();
-	process.exit(0);
-	program.outputHelp(text => { colors.red(text); });
-}
 
 var port = program.port || 3000;
 var modelFile = program.model || 'default/model.json';

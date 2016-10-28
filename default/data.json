@@ -1,0 +1,17 @@
+{
+  "site_info": {
+    "name": "foo",
+    "favicon": "bar"
+  },
+  "nav": {
+    "footer": [
+      {
+        "name": "Slack",
+        "url": "https://slack.com",
+        "target": "_blank"
+      }
+    ],
+    "header": []
+  },
+  "pages": {}
+}

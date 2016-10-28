@@ -1,0 +1,36 @@
+{
+  "name": "Example Web Site",
+  "children": [
+    {
+      "name": "Site Info",
+      "fields": [ "name", "favicon", "logo", "copyright" ]
+    },
+    {
+      "name": "Nav",
+      "children": [
+        {
+          "name": "Header",
+          "list": true,
+          "fields": [ "name", "url" ]
+        },
+        {
+          "name": "Footer",
+          "list": true,
+          "fields": [ "name", "url", "target" ]
+        }
+      ]
+    },
+    {
+      "name": "Pages",
+      "list": true,
+      "fields": [
+        "key",
+        "heading",
+        { "name": "body", "type": "markdown" },
+        { "name": "search_enabled", "type": "boolean" },
+        "title",
+        "description"
+      ]
+    }
+  ]
+}

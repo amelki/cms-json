@@ -54,3 +54,31 @@ new Walker().init('file://test/data/model.json', 'file://test/data/data.json')
 	.catch(err => {
 		console.log(err);
 	});
+
+new Walker().init('file://default/model.json', 'file://default/data.json')
+	.then(walker => {
+		var path = "site_info".split('/');
+		var node = walker.findNode(path);
+		assert.equal(node.model.name, "Site Info");
+		assert.equal(node.model.fields[0], "name");
+		assert.equal(node.model.fields[1], "favicon");
+		assert.notEqual(node.data, null);
+		console.log("Test OK");
+	})
+	.catch(err => {
+		console.log(err);
+	});
+
+new Walker().init('file://default/model.json', 'file://default/data.json')
+	.then(walker => {
+		var path = "nav/footer".split('/');
+		var node = walker.findNode(path);
+		assert.equal(node.model.name, "Footer");
+		assert.equal(node.model.fields[0], "name");
+		assert.equal(node.model.fields[1], "url");
+		assert.notEqual(node.data, null);
+		console.log("Test OK");
+	})
+	.catch(err => {
+		console.log(err);
+	});

@@ -1,14 +1,20 @@
 'use strict';
 
 var request = require('request');
+var tree = require('./tree.js');
 var fs = require('fs');
 
 module.exports = function() {
 	this.findNode = function(path) {
-		var _this = this;
+		var model = this._findModel(this._model, path);
+		var data = tree.findData(this._data, path);
+		if (!data) {
+			tree.fillPath(this._data, path, model.list);
+			data = tree.findData(this._data, path);
+		}
 		return {
-			model: this._findModel(this._model, path),
-			data: this._findData(this._data, path)
+			model: model,
+			data: data
 		};
 	};
 	this._findModel = function (node, path) {
@@ -27,17 +33,7 @@ module.exports = function() {
 		}
 		return null;
 	};
-
-	this._findData = function (node, path) {
-		var key = path[0];
-		var found = Array.isArray(node) ? node[parseInt(key)] : node[key];
-		if (path.length == 1) {
-			return found;
-		} else {
-			return this._findData(found, path.slice(1));
-		}
-	};
-
+	
 	this.init = function (modelFile, dataFile) {
 		var _this = this;
 		return Promise.all([

@@ -8,7 +8,7 @@ A lightweight CMS loading and saving its data from/to a json file
 
 ## Run Web Server
 
-    $ node index.js --data <json data file> --model <json model file>
+    $ cms-json
 
 Then open your browser at:
 
