@@ -106,7 +106,7 @@ module.exports = function() {
 		var newPath = path + "/" + slugify(n.name);
 		out.println("<li>");
 		var prefix = (n.children || n.list) ? "/node" : "/item";
-		out.println("  <a href='" + prefix + newPath + "'>" + n.name + "</a>");
+		out.println("  <a data-path='"+ newPath +"' href='" + prefix + newPath + "'>" + n.name + "</a>");
 		if (n.children) {
 			out.println("  <ul>");
 			out.indent();

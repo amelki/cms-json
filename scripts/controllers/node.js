@@ -2,10 +2,14 @@
 
 var assert = require('assert');
 var init = require('./init');
+var $ = require('jquery');
 
-module.exports = function($scope, $routeParams, $http, WalkerService) {
-	init($scope, $http, WalkerService);
+module.exports = function($scope, $routeParams, $http, $sce, $timeout, WalkerService) {
+	init($scope, $http, $sce, WalkerService);
 	var path = $routeParams.path.split("/");
+	$timeout(function () {
+		$("#sidebar nav a[data-path='/" + $routeParams.path + "']").addClass('selected');
+	});
 	var node = WalkerService.findNode(path);
 	assert.notEqual(node.model, null, path);
 	assert.notEqual(node.data, null, path);
