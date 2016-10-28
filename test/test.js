@@ -2,7 +2,7 @@ var assert = require("assert");
 var fs = require("fs");
 var Walker = require('../scripts/services/walker.js');
 
-var generate = true;
+var generate = false;
 
 var expected = "test/expected.html";
 
