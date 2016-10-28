@@ -18,4 +18,4 @@ var port = program.port || 3000;
 var modelFile = program.model || 'default/model.json';
 var dataFile = program.data || 'default/data.json';
 
-server.run(modelFile, dataFile, port);
+server.run({ modelFile: modelFile, dataFile: dataFile, port: port});

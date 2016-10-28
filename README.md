@@ -61,15 +61,16 @@ Standard Options:
 
 <a name="run"></a>
 
-### run(modelFile, dataFile, port) ⇒ <code>\*</code>
+### run([options]) ⇒ <code>\*</code>
 Run an Express server embedding a simple UI for editing the content of the given dataFile.
 
 **Kind**: global function  
 **Returns**: <code>\*</code> - The express app  
 
-| Param |
-| --- |
-| modelFile | 
-| dataFile | 
-| port | 
+| Param | Type | Description |
+| --- | --- | --- |
+| [options] | <code>Object</code> |  |
+| [options.dataFile] | <code>Object</code> | A JSON file with the content. This parameter is mandatory. 		The	content authored from the web site will be saved with that path name. 		The structure of this JSON file must match the model. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/data.json |
+| [options.modelFile] | <code>Object</code> | A JSON file representing the model to support/ease authoring via the UI. This parameter is mandatory. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/model.json |
+| [options.port] | <code>Object</code> | The server port. 3000 by default |
 
