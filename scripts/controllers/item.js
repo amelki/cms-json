@@ -13,10 +13,14 @@ module.exports = function($scope, $routeParams, $http, $sce, $timeout, WalkerSer
 			matchingPath = path.slice(0, path.length-1);
 		}
 		matchingPath = "/" + matchingPath.join('/');
+		// Use that good old jquery to select the current node
 		$("#sidebar nav a[data-path='" + matchingPath + "']").addClass('selected');
 	});
 	$scope.name = function(field) {
-		return (typeof field == 'object') ? field.name : field;
+		return WalkerService.fieldName(field);
+	};
+	$scope.displayName = function(field) {
+		return WalkerService.fieldDisplayName(field);
 	};
 	$scope.type = function(field) {
 		if (typeof field == 'object') {
@@ -34,11 +38,10 @@ module.exports = function($scope, $routeParams, $http, $sce, $timeout, WalkerSer
 		}
 	};
 	$scope.value = function(item, field) {
-		var fieldName =  (typeof field == 'object') ? field.name : field;
-		return item[fieldName];
+		return item[WalkerService.fieldName(field)];
 	};
 	$scope.checked = function(item, field) {
-		var fieldName =  (typeof field == 'object') ? field.name : field;
+		var fieldName =  WalkerService.fieldName(field);
 		if (item[fieldName]) {
 			return "checked";
 		}

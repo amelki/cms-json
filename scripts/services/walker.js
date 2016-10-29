@@ -122,10 +122,18 @@ module.exports = function() {
 	this.defautFieldName = function(model) {
 		var field = model.fields[0];
 		if (typeof field == 'object') {
-			return field.name;
+			return slugify(field.name);
 		} else {
-			return field;
+			return slugify(field);
 		}
+	};
+	
+	this.fieldName = function(field) {
+		return (typeof field === 'string') ? slugify(field) : slugify(field.name);
+	};
+
+	this.fieldDisplayName = function(field) {
+		return (typeof field === 'string') ? field : field.name;
 	};
 	
 	function slugify(str) {

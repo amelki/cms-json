@@ -1,201 +1,40 @@
 {
-  "name": "Senders Web site",
+  "name": "My Web Site",
   "children": [
     {
-      "name": "Site",
+      "name": "Site Info",
+      "fields": [
+        "Favicon",
+        "Logo",
+        "Copyright"
+      ]
+    },
+    {
+      "name": "Nav",
       "children": [
-        {
-          "name": "Text",
-          "list": false,
-          "fields": [
-            "copyright_text",
-            "page_title",
-            "signup_button",
-            "meta_description",
-            "meta_keywords"
-          ]
-        },
         {
           "name": "Header",
           "list": true,
-          "fields": [
-            "name",
-            "url"
-          ]
+          "fields": [ "Label", "Url" ]
         },
         {
-          "name": "Pages",
+          "name": "Footer",
           "list": true,
-          "fields": [
-            "slug",
-            "heading",
-            {
-              "name": "text_body",
-              "type": "markdown"
-            },
-            {
-              "name": "text_body_html",
-              "type": "html"
-            },
-            {
-              "name": "search_enabled",
-              "type": "boolean"
-            },
-            "seo_title",
-            "seo_description",
-            "seo_keywords",
-            "seo_url",
-            "seo_image",
-            "template"
-          ]
-        },
-        {
-          "name": "Press Logos",
-          "list": true,
-          "fields": [
-            "key",
-            "url",
-            "picture"
-          ]
-        },
-        {
-          "name": "Counters",
-          "list": true,
-          "fields": [
-            "name",
-            {
-              "name": "starting_value",
-              "type": "number"
-            },
-            {
-              "name": "speed",
-              "type": "number"
-            }
-          ]
-        },
-        {
-          "name": "Security",
-          "list": true,
-          "fields": [
-            "key",
-            "title",
-            "text"
-          ]
-        },
-        {
-          "name": "Team",
-          "list": true,
-          "fields": [
-            "key",
-            "name",
-            "position",
-            {
-              "name": "bio",
-              "type": "html"
-            },
-            "linkedin",
-            "twitter",
-            "medium",
-            "photo"
-          ]
-        },
-        {
-          "name": "Trackers",
-          "list": true,
-          "fields": [
-            "key",
-            "picture",
-            "title",
-            {
-              "name": "text",
-              "type": "html"
-            },
-            "url"
-          ]
-        },
-        {
-          "name": "Landing",
-          "list": true,
-          "fields": [
-            "key",
-            "title",
-            {
-              "name": "text_1",
-              "type": "html"
-            },
-            {
-              "name": "text_2",
-              "type": "html"
-            }
-          ]
-        },
-        {
-          "name": "Card Tutorial",
-          "list": true,
-          "fields": [
-            "key",
-            {
-              "name": "body",
-              "type": "html"
-            },
-            "placement",
-            "card"
-          ]
+          "fields": [ "Label", "Url", "Target" ]
         }
       ]
     },
     {
-      "name": "Footer",
+      "name": "Pages",
       "list": true,
-      "fields": [ "name", "url", "target" ]
-    },
-    {
-      "name": "App",
-      "children": [
-        {
-          "name": "App Header",
-          "list": true,
-          "fields": [ "name", "url", "target" ]
-        },
-        {
-          "name": "App Text",
-          "fields": [ "welcome_heading", "welcome_sub_heading", { "name": "copyright_text", "type": "html" } ]
-        },
-        {
-          "name": "User Settings",
-          "list": true,
-          "fields": [ "label", {"name": "description", "type": "html"}, "key" ]
-        },
-        {
-          "name": "Messages",
-          "list": true,
-          "fields": [ "key", "value" ]
-        },
-        {
-          "name": "Dashboard Tutorial",
-          "list": true,
-          "fields": [ "key", "placement", "body" ]
-        },
-        {
-          "name": "Share Dialog",
-          "fields": [ "title", "body", "done_button", "dismiss" ]
-        }
+      "fields": [
+        "Key",
+        "Heading",
+        { "name": "Body", "type": "markdown" },
+        { "name": "Search Enabled", "type": "boolean" },
+        { "name": "Title", "description": "The SEO title of the page, for web crawlers" },
+        { "name": "Description", "description": "The SEO description of the page, for web crawlers" }
       ]
-    },
-    {
-      "name": "Tips",
-      "list": true,
-      "fields": [ "key", "value" ]
-    },
-    {
-      "name": "Alert Messages",
-      "list": true,
-      "fields": [ "id", "title", "text" ]
-    },
-    {
-      "name": "Paragraphs",
-      "list": true,
-      "fields": [ "key", {  "name": "body", "type": "html" } ]
     }
   ]
 }

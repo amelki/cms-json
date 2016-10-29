@@ -8,6 +8,7 @@ module.exports = function($scope, $routeParams, $http, $sce, $timeout, WalkerSer
 	init($scope, $http, $sce, WalkerService);
 	var path = $routeParams.path.split("/");
 	$timeout(function () {
+		// Use that good old jquery to select the current node
 		$("#sidebar nav a[data-path='/" + $routeParams.path + "']").addClass('selected');
 	});
 	var node = WalkerService.findNode(path);

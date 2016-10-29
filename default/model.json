@@ -1,9 +1,13 @@
 {
-  "name": "Example Web Site",
+  "name": "My Web Site",
   "children": [
     {
       "name": "Site Info",
-      "fields": [ "name", "favicon", "logo", "copyright" ]
+      "fields": [
+        "Favicon",
+        "Logo",
+        "Copyright"
+      ]
     },
     {
       "name": "Nav",
@@ -11,12 +15,12 @@
         {
           "name": "Header",
           "list": true,
-          "fields": [ "name", "url" ]
+          "fields": [ "Label", "Url" ]
         },
         {
           "name": "Footer",
           "list": true,
-          "fields": [ "name", "url", "target" ]
+          "fields": [ "Label", "Url", "Target" ]
         }
       ]
     },
@@ -24,12 +28,12 @@
       "name": "Pages",
       "list": true,
       "fields": [
-        "key",
-        "heading",
-        { "name": "body", "type": "markdown" },
-        { "name": "search_enabled", "type": "boolean" },
-        "title",
-        "description"
+        "Key",
+        "Heading",
+        { "name": "Body", "type": "markdown" },
+        { "name": "Search Enabled", "type": "boolean" },
+        { "name": "Title", "description": "The SEO title of the page, for web crawlers" },
+        { "name": "Description", "description": "The SEO description of the page, for web crawlers" }
       ]
     }
   ]

@@ -357,6 +357,12 @@ form label.inline > *, form .label.inline > * {
   *zoom: 1;
   *display: inline; }
 
+form label .type {
+  float: right;
+  font-size: 12px; }
+  form label .type a {
+    text-decoration: none; }
+
 form input.edit-submit, form a.delete {
   display: inline-block;
   vertical-align: middle;
