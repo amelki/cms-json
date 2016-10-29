@@ -1,8 +1,7 @@
 'use strict';
 
-require('es5-shim');
-
-require('jquery');
+// Embed the full ES-2015 runtime for 'old' browsers
+require("babel-polyfill");
 var angular = require('angular');
 require('angular-route');
 require('angular-sanitize');
