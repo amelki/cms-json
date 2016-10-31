@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom'
-import {App, NoMatch, Tree} from './app.js';
+import {App, NoMatch, Tree} from './theapp.js';
 import { Router, Route, Link, browserHistory } from 'react-router'
 
 render((

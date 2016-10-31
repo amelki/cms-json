@@ -25,9 +25,11 @@ cms.findNode = function(model, data, path) {
  * @returns {*}
  */
 cms.treePath = function (path) {
-	var p = path.split('/');
-	if (p.length > 0 && !Number.isNaN(parseInt(p[p.length - 1]))) {
-		return p.slice(0, p.length - 1).join('/');
+	if (path && path.length > 0) {
+		var p = path.split('/');
+		if (p.length > 0 && !Number.isNaN(parseInt(p[p.length - 1]))) {
+			return p.slice(0, p.length - 1).join('/');
+		}
 	}
 	return path;
 };

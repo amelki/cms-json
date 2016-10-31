@@ -14,6 +14,7 @@ export class App extends React.Component {
 		this.addItem = this.addItem.bind(this);
 		this.deleteItem = this.deleteItem.bind(this);
 		this.isStateValid = this.isStateValid.bind(this);
+		this.setValue = this.setValue.bind(this);
   }
   addItem(node) {
 		Cms.addItem(node);
@@ -21,6 +22,11 @@ export class App extends React.Component {
 	}
   deleteItem(node, index) {
 		Cms.deleteItem(node, index);
+		this.setState(this.state);
+	}
+  setValue(node, field, value) {
+		var name = Cms.fieldName(field);
+		node.data[name] = value;
 		this.setState(this.state);
 	}
 	isStateValid() {
@@ -39,10 +45,10 @@ export class App extends React.Component {
 				if (Array.isArray(node.data)) {
 					right = <List node={node} selection={selection} addItem={this.addItem} deleteItem={this.deleteItem}/>;
 				} else {
-					right = <Item node={node}/>;
+					right = <Item node={node} setValue={this.setValue}/>;
 				}
 			} else if (!node.model.children) {
-				right = <Item node={node}/>
+				right = <Item node={node} setValue={this.setValue}/>
 			}
 		}
 		return (

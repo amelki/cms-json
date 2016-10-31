@@ -7,7 +7,7 @@ export default class Item extends React.Component {
 		var node = this.props.node;
 		var fields = [];
 		for (let i = 0; i < node.model.fields.length; i++) {
-			fields.push(<Field key={i} data={node.data} field={node.model.fields[i]}/>);
+			fields.push(<Field key={i} node={node} field={node.model.fields[i]} setValue={this.props.setValue}/>);
 		}
 		return (
 			<form>
@@ -18,9 +18,16 @@ export default class Item extends React.Component {
 }
 
 class Field extends React.Component {
+	constructor(props) {
+		super(props);
+		this.setValue = this.setValue.bind(this);
+	}
+	setValue(event) {
+		this.props.setValue(this.props.node, this.props.field, event.target.value);
+	}
 	render() {
 		var field = this.props.field;
-		var data = this.props.data;
+		var data = this.props.node.data;
 		var name = Cms.fieldName(field);
 		var displayName = Cms.fieldDisplayName(field);
 		var value = data[name];
@@ -34,13 +41,13 @@ class Field extends React.Component {
 		switch (field.type) {
 			case 'textarea':
 			case 'markdown':
-				input = <textarea name={name}>{value}</textarea>;
+				input = <textarea name={name} onChange={this.setValue}>{value}</textarea>;
 				break;
 			case 'checkbox':
-				input = <input type="checkbox" name={name} value={value}/>;
+				input = <input type="checkbox" name={name} value={value} onChange={this.setValue}/>;
 				break;
 			default:
-				input = <input type="text" name={name} value={value}/>;
+				input = <input type="text" name={name} value={value} onChange={this.setValue}/>;
 		}
 		return (
 			<label>
