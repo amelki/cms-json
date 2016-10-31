@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom'
-import {App, NoMatch, Tree} from './theapp.js';
-import { Router, Route, Link, browserHistory } from 'react-router'
+import {App, NoMatch,} from './app';
+import { Router, Route, browserHistory } from 'react-router'
 
 render((
 	<Router history={browserHistory}>
@@ -10,4 +10,4 @@ render((
 			<Route path="*" component={NoMatch}/>
 		</Route>
 	</Router>
-), document.getElementById('root'))
+), document.getElementById('root'));
