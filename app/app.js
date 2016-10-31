@@ -17,38 +17,53 @@ export class App extends React.Component {
 		this.setValue = this.setValue.bind(this);
 		this.saveState = this.saveState.bind(this);
 		this.loadState = this.loadState.bind(this);
-		this.setState = this.setState.bind(this);
+		this.resetState = this.resetState.bind(this);
+		this.doSetState = this.doSetState.bind(this);
   }
+  doSetState() {
+		this.state.stale = true;
+		this.state.message = "";
+		this.setState(this.state);
+	}
   addItem(node) {
 		Cms.addItem(node);
-		this.state.stale = true;
-		this.setState(this.state);
+		this.doSetState();
 	}
   deleteItem(node, index) {
 		Cms.deleteItem(node, index);
-		this.state.stale = true;
-		this.setState(this.state);
+		this.doSetState();
 	}
   setValue(node, field, value) {
 		var name = Cms.fieldName(field);
 		node.data[name] = value;
-		this.state.stale = true;
-		this.setState(this.state);
+		this.doSetState();
 	}
 	isStateValid() {
 		return this.state.model && this.state.data;
 	}
 	saveState() {
 		if (this.state.stale) {
-			axios.post('/data.json', this.state.data).then(v => {
-				this.state.stale = false;
-				this.setState(this.state);
+			var _this = this;
+			axios.post('/data.json', this.state.data).then(response => {
+				_this.state.stale = false;
+				_this.state.message = "JSON data file saved on disk";
+				_this.setState(_this.state);
+			}).catch(err => {
+				_this.state.message = "Error: " + err;
 			});
 		}
 	}
-	loadState() {
+	resetState() {
+		this.loadState('Loaded CMS JSON data and model files');
+	}
+	loadState(message) {
 		Promise.all([ axios.get(`/model.json`), axios.get(`/data.json`) ]).then(values => {
-			this.setState({ model: values[0].data, data: values[1].data, stale: false });
+			this.setState({
+				model: values[0].data,
+				data: values[1].data,
+				stale: false,
+				message: message ? message : ''
+			});
 		});
 	}
 	componentDidMount() {
@@ -88,7 +103,8 @@ export class App extends React.Component {
 				<section id="content">
 					<div id="navbar">
 						<a href="#" className={saveBtnClass} onClick={this.saveState}>Save</a>
-						<a href="#" className={resetBtnClass} onClick={this.loadState}>Reset</a>
+						<a href="#" className={resetBtnClass} onClick={this.resetState}>Reset</a>
+						<div id="message">{this.state.message}</div>
 					</div>
 					<hr/>
 					{right}

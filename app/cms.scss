@@ -533,6 +533,12 @@ form .bottom {
 #content {
 	#navbar {
 		text-align: left;
+		#message {
+			font-size: 12px;
+			margin-left: 30px;
+			display: inline;
+			color: #888888;
+		}
 	}
 	hr {
 		background-color: #ccc;

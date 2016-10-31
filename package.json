@@ -1,19 +1,32 @@
 {
-  "name": "cms-json-react",
-  "version": "0.1.0",
-  "description": "A boilerplate for running a Webpack workflow in Node express",
-  "main": "server.js",
-  "keywords": [
-    "express",
-    "webpack",
-    "node"
-  ],
+  "name": "cms-json",
+  "version": "0.0.5",
   "author": "Antoine Melki",
   "license": "MIT",
+  "description": "A lightweight CMS loading and saving its data from/to a json file",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/amelki/cms-json.git"
+  },
+  "bugs": {
+    "email": "antoine@onemore.company"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "bin": {
+    "cms-json": "./server.js"
+  },
+  "main": "server.js",
+  "keywords": [
+    "cms",
+    "json",
+    "node"
+  ],
   "scripts": {
-    "test": "",
+    "test": "node test",
     "start": "node server",
-    "build": "rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
+    "build": "node build && rimraf dist && cross-env NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "eslint": "eslint .",
     "jscs": "jscs ."
   },

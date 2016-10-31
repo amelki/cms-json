@@ -1,3 +1,3 @@
 require('./test_md');
-require('./test_tree');
-require('./test_walker');
+require('./test_cms');
+require('./test_data');

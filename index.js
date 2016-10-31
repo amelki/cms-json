@@ -1,8 +1,14 @@
-var express = require('express');
-var process = require('process');
-var fs = require('fs');
-var colors = require('colors');
-var bodyParser = require('body-parser');
+/* eslint no-console: 0 */
+
+const path = require('path');
+const fs = require('fs');
+const express = require('express');
+const webpack = require('webpack');
+const webpackMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
+const config = require('./webpack.config.js');
+const bodyParser = require('body-parser');
+
 
 /**
  * Run an Express server embedding a simple UI for editing the content of the given dataFile.
@@ -21,6 +27,8 @@ var bodyParser = require('body-parser');
  */
 module.exports.run = function(options) {
 	options = options || {};
+	const isDeveloping = process.env.NODE_ENV !== 'production';
+//	const port = isDeveloping ? 3000 : process.env.PORT;
 	var port = options.port || 3000;
 	var modelFile = options.modelFile;
 	var dataFile = options.dataFile;
@@ -30,9 +38,9 @@ module.exports.run = function(options) {
 	if (!dataFile) {
 		throw "Data file not provided";
 	}
-	var app = express();
+
+	const app = express();
 	app.use(bodyParser.json());
-	app.use(express.static(__dirname + '/public'));
 
 	app.get('/model.json', function (req, res) {
 		fs.readFile(modelFile, 'utf-8', (err, json) => {
@@ -51,42 +59,43 @@ module.exports.run = function(options) {
 		fs.writeFile(dataFile, JSON.stringify(json, undefined, 2), function (err) {
 			if (err) console.log(err);
 			console.log("File " + dataFile + " saved");
+			res.send("OK");
 		});
 	});
 
-	app.get('/node/*', function (req, res) {
-		var options = {
-			root: __dirname + '/public/',
-			dotfiles: 'deny',
-			headers: {
-				'x-timestamp': Date.now(),
-				'x-sent': true
+	if (isDeveloping) {
+		const compiler = webpack(config);
+		const middleware = webpackMiddleware(compiler, {
+			publicPath: config.output.publicPath,
+			contentBase: 'src',
+			stats: {
+				colors: true,
+				hash: false,
+				timings: true,
+				chunks: false,
+				chunkModules: false,
+				modules: false
 			}
-		};
-		res.sendFile("index.html", options, function (err) {
-			if (err) console.log(err);
 		});
-	});
 
-	app.get('/item/*', function (req, res) {
-		var options = {
-			root: __dirname + '/public/',
-			dotfiles: 'deny',
-			headers: {
-				'x-timestamp': Date.now(),
-				'x-sent': true
-			}
-		};
-		res.sendFile("index.html", options, function (err) {
-			if (err) console.log(err);
+		app.use(middleware);
+		app.use(webpackHotMiddleware(compiler));
+		app.get('*', function response(req, res) {
+			res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
+			res.end();
 		});
-	});
+	} else {
+		app.use(express.static(__dirname + '/dist'));
+		app.get('*', function response(req, res) {
+			res.sendFile(path.join(__dirname, 'dist/index.html'));
+		});
+	}
 
-
-	app.listen(port, function () {
-		console.log('CMS served on port ' + port);
+	app.listen(port, '0.0.0.0', function onStart(err) {
+		if (err) {
+			console.log(err);
+		}
+		console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
 	});
-	
-	return app;
 
 };

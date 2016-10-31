@@ -1,73 +1,21 @@
-/* eslint no-console: 0 */
+#!/usr/bin/env node
+var express = require('express');
+var program = require('commander');
+var process = require('process');
+var fs = require('fs');
+var colors = require('colors');
 
-const path = require('path');
-const fs = require('fs');
-const express = require('express');
-const webpack = require('webpack');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack.config.js');
-const bodyParser = require('body-parser');
+var server = require('./index');
 
-const isDeveloping = process.env.NODE_ENV !== 'production';
-const port = isDeveloping ? 3000 : process.env.PORT;
-const app = express();
-app.use(bodyParser.json());
+program
+	.version('0.0.1')
+	.option('-m, --model [file]', 'CMS Model file (json). Default is ./default/model.json')
+	.option('-d, --data [file]', 'CMS Data file (json). Default is ./default/data.json')
+	.option('-p, --port [port]', 'Server port. Default is 3000')
+	.parse(process.argv);
 
-var modelFile = __dirname + "/default/model.json";
-var dataFile = __dirname + "/default/data.json";
+var port = program.port || 3000;
+var modelFile = program.model || 'default/model.json';
+var dataFile = program.data || 'default/data.json';
 
-app.get('/model.json', function (req, res) {
-  fs.readFile(modelFile, 'utf-8', (err, json) => {
-    if (err) throw err;
-    res.send(json);
-  });
-});
-app.get('/data.json', function (req, res) {
-  fs.readFile(dataFile, 'utf-8', (err, json) => {
-    if (err) throw err;
-    res.send(json);
-  });
-});
-app.post('/data.json', function (req, res) {
-  var json = req.body;
-  fs.writeFile(dataFile, JSON.stringify(json, undefined, 2), function (err) {
-    if (err) console.log(err);
-    console.log("File " + dataFile + " saved");
-  });
-});
-
-if (isDeveloping) {
-  const compiler = webpack(config);
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.publicPath,
-    contentBase: 'src',
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  });
-
-  app.use(middleware);
-  app.use(webpackHotMiddleware(compiler));
-  app.get('*', function response(req, res) {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
-    res.end();
-  });
-} else {
-  app.use(express.static(__dirname + '/dist'));
-  app.get('*', function response(req, res) {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-  });
-}
-
-app.listen(port, '0.0.0.0', function onStart(err) {
-  if (err) {
-    console.log(err);
-  }
-  console.info('==> 🌎 Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port);
-});
+server.run({ modelFile: modelFile, dataFile: dataFile, port: port});
