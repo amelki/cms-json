@@ -1,11 +1,6 @@
-config.rb
+node_modules
 .DS_Store
-/cms/uploads/*
-*/.sass-cache/*
-.sass-cache/*
-.sass-cache
-*.codekit*
-*.iml
-*.zip
-/generated
-/node_modules
+dist
+*.log
+coverage
+.idea
