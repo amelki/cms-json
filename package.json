@@ -1,6 +1,6 @@
 {
   "name": "cms-json",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Antoine Melki",
   "license": "MIT",
   "description": "A lightweight CMS loading and saving its data from/to a json file",
