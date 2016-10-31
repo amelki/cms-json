@@ -1,1 +1,15 @@
-{}
+{
+  "site_info": {
+    "favicon": "iijij"
+  },
+  "nav": {
+    "header": [
+      {
+        "label": "New Item",
+        "url": "coucou"
+      }
+    ],
+    "footer": []
+  },
+  "pages": []
+}

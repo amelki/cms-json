@@ -59,7 +59,7 @@ function _findDeepest(node, path, depth) {
 	}
 }
 
-cms.fillPath = function(data, path, array) {
+cms.fillPath = function(data, path, list) {
 	path = ensureArray(path);
 	var i;
 	var found = this.findDeepest(data, path);
@@ -70,9 +70,10 @@ cms.fillPath = function(data, path, array) {
 		var p = path[i];
 		if (i == path.length - 1) { 
 			if (!Number.isNaN(parseInt(p))) {
+				// This is a number: we don't want to fill in anything here...
 				break;
 			} else {
-				data[p] = [];
+				data[p] = list ? [] : {};
 			}
 		} else {
 			data[p] = {};
