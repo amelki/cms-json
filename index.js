@@ -3,10 +3,6 @@
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
-const webpack = require('webpack');
-const webpackMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack.config.js');
 const bodyParser = require('body-parser');
 
 
@@ -27,11 +23,11 @@ const bodyParser = require('body-parser');
  */
 module.exports.run = function(options) {
 	options = options || {};
-	const isDeveloping = process.env.NODE_ENV !== 'production';
 //	const port = isDeveloping ? 3000 : process.env.PORT;
 	var port = options.port || 3000;
 	var modelFile = options.modelFile;
 	var dataFile = options.dataFile;
+	const isDeveloping = options.env == 'development';
 	if (!modelFile) {
 		throw "Model file not provided";
 	}
@@ -64,26 +60,9 @@ module.exports.run = function(options) {
 	});
 
 	if (isDeveloping) {
-		const compiler = webpack(config);
-		const middleware = webpackMiddleware(compiler, {
-			publicPath: config.output.publicPath,
-			contentBase: 'src',
-			stats: {
-				colors: true,
-				hash: false,
-				timings: true,
-				chunks: false,
-				chunkModules: false,
-				modules: false
-			}
-		});
-
-		app.use(middleware);
-		app.use(webpackHotMiddleware(compiler));
-		app.get('*', function response(req, res) {
-			res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')));
-			res.end();
-		});
+		// Include webpack only if needed, so that it is not loaded from modules than only need the production version
+		var withWebpack = require('./with-webpack');
+		withWebpack(app);
 	} else {
 		app.use(express.static(__dirname + '/dist'));
 		app.get('*', function response(req, res) {
