@@ -17,7 +17,7 @@
   "bin": {
     "cms-json": "./server.js"
   },
-  "main": "server.js",
+  "main": "index.js",
   "keywords": [
     "cms",
     "json",
