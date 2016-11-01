@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './cms.scss';
 import Cms from './cms';
+import md from './md';
 
 export default class Item extends React.Component {
 	render() {
@@ -23,7 +24,11 @@ class Field extends React.Component {
 		this.setValue = this.setValue.bind(this);
 	}
 	setValue(event) {
-		this.props.setValue(this.props.node, this.props.field, event.target.value);
+		var value = event.target.value;
+		if (this.props.field.type == 'markdown') {
+			value = md.html(value);
+		}
+		this.props.setValue(this.props.node, this.props.field, value);
 	}
 	render() {
 		var field = this.props.field;
@@ -40,8 +45,10 @@ class Field extends React.Component {
 		var input;
 		switch (field.type) {
 			case 'textarea':
-			case 'markdown':
 				input = <textarea name={name} onChange={this.setValue}>{value}</textarea>;
+				break;
+			case 'markdown':
+				input = <textarea name={name} onChange={this.setValue}>{md.md(value)}</textarea>;
 				break;
 			case 'checkbox':
 				input = <input type="checkbox" name={name} value={value} onChange={this.setValue}/>;
