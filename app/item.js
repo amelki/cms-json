@@ -43,18 +43,19 @@ class Field extends React.Component {
 			</div>
 			: '';
 		var input;
+		var className = field.className ? field.className : '';
 		switch (field.type) {
 			case 'textarea':
-				input = <textarea name={name} onChange={this.setValue}>{value}</textarea>;
+				input = <textarea className={className} name={name} onChange={this.setValue}>{value}</textarea>;
 				break;
 			case 'markdown':
-				input = <textarea name={name} onChange={this.setValue}>{md.md(value)}</textarea>;
+				input = <textarea className={className} name={name} onChange={this.setValue}>{md.md(value)}</textarea>;
 				break;
 			case 'checkbox':
-				input = <input type="checkbox" name={name} value={value} onChange={this.setValue}/>;
+				input = <input className={className} type="checkbox" name={name} value={value} onChange={this.setValue}/>;
 				break;
 			default:
-				input = <input type="text" name={name} value={value} onChange={this.setValue}/>;
+				input = <input className={className} type="text" name={name} value={value} onChange={this.setValue}/>;
 		}
 		return (
 			<label>
