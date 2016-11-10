@@ -37,6 +37,7 @@ class Field extends React.Component {
 		var displayName = Cms.fieldDisplayName(field);
 		var value = data[name];
 		var description = field.description ? <div><small>{field.description}</small></div> : '';
+		var typeHelp = '';
 		var typeHelp = (field.type == 'markdown') ?
 			<div className="type">
 				<a className="blue" target="_blank" href="http://commonmark.org/help/">(markdown)</a>
@@ -47,11 +48,19 @@ class Field extends React.Component {
 		switch (field.type) {
 			case 'textarea':
 				input = <textarea className={className} name={name} onChange={this.setValue}>{value}</textarea>;
+				typeHelp =
+					<div className="type">
+						(html)
+					</div>;
 				break;
 			case 'markdown':
 				input = <textarea className={className} name={name} onChange={this.setValue}>{md.md(value)}</textarea>;
+				typeHelp =
+					<div className="type">
+						<a className="blue" target="_blank" href="http://commonmark.org/help/">(markdown)</a>
+					</div>;
 				break;
-			case 'checkbox':
+			case 'boolean':
 				input = <input className={className} type="checkbox" name={name} value={value} onChange={this.setValue}/>;
 				break;
 			default:
