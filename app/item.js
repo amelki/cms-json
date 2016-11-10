@@ -37,21 +37,17 @@ class Field extends React.Component {
 		var displayName = Cms.fieldDisplayName(field);
 		var value = data[name];
 		var description = field.description ? <div><small>{field.description}</small></div> : '';
-		var typeHelp = '';
-		var typeHelp = (field.type == 'markdown') ?
-			<div className="type">
-				<a className="blue" target="_blank" href="http://commonmark.org/help/">(markdown)</a>
-			</div>
+		var typeHelp = field.type
+			? <div className="type">
+					({field.type})
+				</div>
 			: '';
 		var input;
 		var className = field.className ? field.className : '';
 		switch (field.type) {
 			case 'textarea':
+			case 'html':
 				input = <textarea className={className} name={name} onChange={this.setValue}>{value}</textarea>;
-				typeHelp =
-					<div className="type">
-						(html)
-					</div>;
 				break;
 			case 'markdown':
 				input = <textarea className={className} name={name} onChange={this.setValue}>{md.md(value)}</textarea>;
