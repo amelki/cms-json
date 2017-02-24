@@ -24,9 +24,13 @@ class Field extends React.Component {
 		this.setValue = this.setValue.bind(this);
 	}
 	setValue(event) {
-		var value = event.target.value;
+		var value;
 		if (this.props.field.type == 'markdown') {
-			value = md.html(value);
+			value = md.html(event.target.value);
+		} else if (this.props.field.type == 'boolean') {
+			value = event.target.checked;
+		} else {
+			value = event.target.value;
 		}
 		this.props.setValue(this.props.node, this.props.field, value);
 	}
@@ -57,7 +61,11 @@ class Field extends React.Component {
 					</div>;
 				break;
 			case 'boolean':
-				input = <input className={className} type="checkbox" name={name} value={value} onChange={this.setValue}/>;
+				if (value) {
+					input = <input className={className} type="checkbox" name={name} checked onChange={this.setValue}/>;
+				} else {
+					input = <input className={className} type="checkbox" name={name} onChange={this.setValue}/>;
+				}
 				break;
 			default:
 				input = <input className={className} type="text" name={name} value={value} onChange={this.setValue}/>;

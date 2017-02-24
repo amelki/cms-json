@@ -1,12 +1,15 @@
 {
   "site_info": {},
   "nav": {
-    "footer": []
+    "footer": [],
+    "header": []
   },
   "pages": [
     {
       "key": "New Item",
-      "body": ""
+      "body": "",
+      "search_enabled": true,
+      "heading": "hello"
     }
   ]
 }
