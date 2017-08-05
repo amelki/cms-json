@@ -32,6 +32,7 @@
         "Heading",
         { "name": "Body", "type": "markdown" },
         { "name": "Search Enabled", "type": "boolean" },
+        { "name": "Tags", "type": "array", "description": "An array of tags" },
         { "name": "Title", "description": "The SEO title of the page, for web crawlers" },
         { "name": "Description", "description": "The SEO description of the page, for web crawlers", "type": "textarea", "className": "short" }
       ]

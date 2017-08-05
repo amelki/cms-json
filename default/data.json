@@ -6,10 +6,15 @@
   },
   "pages": [
     {
-      "key": "New Item",
+      "key": "A Page",
       "body": "",
       "search_enabled": true,
-      "heading": "hello"
+      "heading": "hello",
+      "tags": [
+        "foo",
+        "bar",
+        "hux"
+      ]
     }
   ]
 }

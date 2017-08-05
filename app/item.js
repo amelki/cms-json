@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './cms.scss';
 import Cms from './cms';
 import md from './md';
+import { WithContext as ReactTags } from 'react-tag-input';
+import Tags from "./tags";
 
 export default class Item extends React.Component {
 	render() {
@@ -22,6 +24,7 @@ class Field extends React.Component {
 	constructor(props) {
 		super(props);
 		this.setValue = this.setValue.bind(this);
+		this.setArrayValue = this.setArrayValue.bind(this);
 	}
 	setValue(event) {
 		var value;
@@ -32,6 +35,9 @@ class Field extends React.Component {
 		} else {
 			value = event.target.value;
 		}
+		this.props.setValue(this.props.node, this.props.field, value);
+	}
+	setArrayValue(value) {
 		this.props.setValue(this.props.node, this.props.field, value);
 	}
 	render() {
@@ -66,6 +72,9 @@ class Field extends React.Component {
 				} else {
 					input = <input className={className} type="checkbox" name={name} onChange={this.setValue}/>;
 				}
+				break;
+			case 'array':
+				input = <Tags value={value} onChange={this.setArrayValue} />;
 				break;
 			default:
 				input = <input className={className} type="text" name={name} value={value} onChange={this.setValue}/>;
