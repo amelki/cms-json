@@ -28,6 +28,7 @@ export class App extends React.Component {
   addItem(node) {
 		Cms.addItem(node);
 		this.doSetState();
+		this.props.router.push(this.props.router.location.pathname + "/" + (node.data.length - 1));
 	}
   deleteItem(node, index) {
 		Cms.deleteItem(node, index);
@@ -82,7 +83,9 @@ export class App extends React.Component {
 				if (Array.isArray(node.data)) {
 					right = <List node={node} selection={selection} addItem={this.addItem} deleteItem={this.deleteItem}/>;
 				} else {
-					right = <Item node={node} setValue={this.setValue}/>;
+					let fragments = selection.split('/');
+					let parent = fragments.slice(0, fragments.length - 1).join('/');
+					right = <Item node={node} parent={parent} setValue={this.setValue}/>;
 				}
 			} else if (!node.model.children) {
 				right = <Item node={node} setValue={this.setValue}/>

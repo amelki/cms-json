@@ -4,18 +4,22 @@ import Cms from './cms';
 import md from './md';
 import { WithContext as ReactTags } from 'react-tag-input';
 import Tags from "./tags";
+import { Link } from 'react-router';
 
 export default class Item extends React.Component {
 	render() {
-		var node = this.props.node;
-		var fields = [];
+		const node = this.props.node;
+		const fields = [];
 		for (let i = 0; i < node.model.fields.length; i++) {
 			fields.push(<Field key={i} node={node} field={node.model.fields[i]} setValue={this.props.setValue}/>);
 		}
-		return (
-			<form>
-				{fields}
-			</form>
+		const divs = [];
+		divs.push(<form>{fields}</form>);
+		if (this.props.parent) {
+			divs.push(<Link id="backBtn" className="btn" to={ '/node/' + this.props.parent }>Back to list</Link>);
+		}
+ 		return (
+			<div>{divs}</div>
 		);
 	}
 }

@@ -13,7 +13,8 @@ cms.findNode = function(model, data, path) {
 	}
 	return {
 		model: modelNode,
-		data: dataNode
+		data: dataNode,
+		path: path
 	};
 };
 
@@ -36,9 +37,23 @@ cms.treePath = function (path) {
 
 cms.addItem = function(node) {
 	var item = {};
-	item[this.defaultFieldName(node.model)] = "New Item";
+	item[this.defaultFieldName(node.model)] = this.findNewName(node, "New " + node.model.name, 1);
 	node.data[node.data.length] = item;
 	return item;
+};
+
+cms.findNewName = function(node, newName, idx) {
+	let fieldName = this.defaultFieldName(node.model);
+	let items = node.data;
+	let fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
+	for (let i = 0; i < items.length; i++) {
+		let item = items[i];
+		let name = item[fieldName];
+		if (name === fullName) {
+			return this.findNewName(node, newName, idx + 1);
+		}
+	}
+	return fullName;
 };
 
 cms.deleteItem = function(node, index) {
