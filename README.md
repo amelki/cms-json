@@ -21,9 +21,9 @@ Then open your browser at:
 ## Status
 
 [![npm version](https://img.shields.io/npm/v/cms-json.svg?style=flat-square)](https://www.npmjs.com/package/cms-json)
-[![npm module downloads per month](http://img.shields.io/npm/dm/cms-json.svg?style=flat-square)](https://www.npmjs.org/package/cms-json)
+[![downloads](http://img.shields.io/npm/dm/cms-json.svg?style=flat-square)](https://www.npmjs.org/package/cms-json)
 [![node](https://img.shields.io/node/v/cms-json.svg?style=flat-square)](https://www.npmjs.com/package/micro-stats)
-[![Known Vulnerabilities](https://snyk.io/test/npm/name/badge.svg?style=flat-square)](https://snyk.io/test/npm/cms-json)
+[![build](https://img.shields.io/travis/amelki/cms-json/master.svg?style=flat-square)](https://travis-ci.org/amelki/cms-json)
 
 ## Why do I need this?
 
