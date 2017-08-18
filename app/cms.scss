@@ -92,6 +92,12 @@ a.blue:hover {
 	text-decoration: none
 }
 
+div.separator {
+	display: inline-block;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
 small {
 	font-size: 12px
 }
@@ -535,7 +541,7 @@ form .bottom {
 		text-align: left;
 		#message {
 			font-size: 12px;
-			margin-left: 30px;
+			//margin-left: 30px;
 			display: inline;
 			color: #888888;
 		}

@@ -14,9 +14,9 @@ export default class Item extends React.Component {
 			fields.push(<Field key={i} node={node} field={node.model.fields[i]} setValue={this.props.setValue}/>);
 		}
 		const divs = [];
-		divs.push(<form>{fields}</form>);
+		divs.push(<form key="form">{fields}</form>);
 		if (this.props.parent) {
-			divs.push(<Link id="backBtn" className="btn" to={ '/node/' + this.props.parent }>Back to list</Link>);
+			divs.push(<Link key="backBtn" id="backBtn" className="btn" to={ '/node/' + this.props.parent }>Back to list</Link>);
 		}
  		return (
 			<div>{divs}</div>

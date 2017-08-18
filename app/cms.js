@@ -42,6 +42,13 @@ cms.addItem = function(node) {
 	return item;
 };
 
+cms.moveItem = function(node, sourceIndex, targetIndex) {
+	const source = node.data[sourceIndex];
+	const target = node.data[targetIndex];
+	node.data[sourceIndex] = target;
+	node.data[targetIndex] = source;
+};
+
 cms.findNewName = function(node, newName, idx) {
 	let fieldName = this.defaultFieldName(node.model);
 	let items = node.data;

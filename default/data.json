@@ -1,8 +1,39 @@
 {
-  "site_info": {},
+  "site_info": {
+    "copyright": "",
+    "favicon": "favicon.ico"
+  },
   "nav": {
-    "footer": [],
-    "header": []
+    "footer": [
+      {
+        "label": "About",
+        "url": "/about"
+      },
+      {
+        "label": "Facebook",
+        "url": "www.facebook.com/mywebsite",
+        "target": "_blank"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter/mywebsite",
+        "target": "_blank"
+      }
+    ],
+    "header": [
+      {
+        "label": "Home",
+        "url": "/home"
+      },
+      {
+        "label": "Product",
+        "url": "/product"
+      },
+      {
+        "label": "Blog",
+        "url": "/blog"
+      }
+    ]
   },
   "pages": [
     {
@@ -15,6 +46,9 @@
         "bar",
         "hux"
       ]
+    },
+    {
+      "key": "Another Page"
     }
   ]
 }
