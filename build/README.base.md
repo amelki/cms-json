@@ -22,6 +22,8 @@ Then open your browser at:
 
     http://localhost:3000
 
+(https://image.ibb.co/b040bk/cms_json_screenshot.png)
+
 ## Why do I need this?
 
 In a small IT company, the question of how and by whom your website can be updated is a recurrent
