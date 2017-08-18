@@ -22,7 +22,7 @@ Then open your browser at:
 
     http://localhost:3000
 
-(https://image.ibb.co/b040bk/cms_json_screenshot.png)
+![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://image.ibb.co/b040bk/cms_json_screenshot.png)
 
 ## Why do I need this?
 
