@@ -4,15 +4,26 @@ A lightweight CMS loading and saving its data from/to a json file
 
 ## Install
 
-    $ npm install -g cms-json
+```bash
+npm install -g cms-json
+```
 
 ## Quick Start
 
-    $ cms-json
+```bash
+cms-json
+```
 
 Then open your browser at:
 
     http://localhost:3000
+
+## Status
+
+[![npm version](https://img.shields.io/npm/v/cms-json.svg?style=flat-square)](https://www.npmjs.com/package/cms-json)
+[![npm module downloads per month](http://img.shields.io/npm/dm/cms-json.svg?style=flat-square)](https://www.npmjs.org/package/cms-json)
+[![node](https://img.shields.io/node/v/cms-json.svg?style=flat-square)](https://www.npmjs.com/package/micro-stats)
+[![Known Vulnerabilities](https://snyk.io/test/npm/name/badge.svg?style=flat-square)](https://snyk.io/test/npm/cms-json)
 
 ## Why do I need this?
 
