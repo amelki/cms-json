@@ -12,7 +12,7 @@
     "email": "antoine@onemore.company"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 5.0.0"
   },
   "bin": {
     "cms-json": "./server.js"
