@@ -2,10 +2,9 @@
 
 A lightweight CMS loading and saving its data from/to a json file
 
-[![npm version](https://img.shields.io/npm/v/cms-json.svg?style=flat-square)](https://www.npmjs.com/package/cms-json)
-[![downloads](http://img.shields.io/npm/dm/cms-json.svg?style=flat-square)](https://www.npmjs.org/package/cms-json)
-[![node](https://img.shields.io/node/v/cms-json.svg?style=flat-square)](https://www.npmjs.com/package/micro-stats)
-[![build](https://img.shields.io/travis/amelki/cms-json/master.svg?style=flat-square)](https://travis-ci.org/amelki/cms-json)
+  [![NPM Version][npm-image]][npm-url]
+  [![NPM Downloads][downloads-image]][downloads-url]
+  [![Build][travis-image]][travis-url]
 
 ## Install
 
@@ -64,4 +63,9 @@ Standard Options:
                    Default is 3000.
 
 ```
-
+[npm-image]: https://img.shields.io/npm/v/cms-json.svg
+[npm-url]: https://npmjs.org/package/cms-json
+[downloads-image]: https://img.shields.io/npm/dm/cms-json.svg
+[downloads-url]: https://npmjs.org/package/cms-json
+[travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=linux
+[travis-url]: https://travis-ci.org/amelki/cms-json
