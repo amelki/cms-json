@@ -6,6 +6,8 @@ A lightweight CMS loading and saving its data from/to a json file
   [![NPM Downloads][downloads-image]][downloads-url]
   [![Build][travis-image]][travis-url]
 
+![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://image.ibb.co/b040bk/cms_json_screenshot.png)
+
 ## Install
 
 ```bash
@@ -21,8 +23,6 @@ cms-json
 Then open your browser at:
 
     http://localhost:3000
-
-![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://image.ibb.co/b040bk/cms_json_screenshot.png)
 
 ## Why do I need this?
 
