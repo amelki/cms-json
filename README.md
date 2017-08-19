@@ -6,7 +6,7 @@ A lightweight CMS loading and saving its data from/to a json file
   [![NPM Downloads][downloads-image]][downloads-url]
   [![Build][travis-image]][travis-url]
 
-![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://image.ibb.co/b040bk/cms_json_screenshot.png)
+![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GGidZqT.png)
 
 ## Install
 
