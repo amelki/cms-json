@@ -68,7 +68,9 @@ export class App extends React.Component {
 	}
 
 	resetState() {
-		this.loadState('Loaded CMS JSON data and model files');
+		if (this.state.stale) {
+			this.loadState('Loaded CMS JSON data and model files');
+		}
 	}
 
 	loadState(message) {
