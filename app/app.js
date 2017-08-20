@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './cms.scss';
 import axios from 'axios';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import Cms from './cms';
 import Tree from './tree';
 import List from './list';
@@ -74,8 +74,9 @@ export class App extends React.Component {
 	}
 
 	loadState(message) {
+		const _this = this;
 		Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-			this.setState({
+			_this.setState({
 				model: values[0].data,
 				data: values[1].data,
 				stale: false,
@@ -92,7 +93,8 @@ export class App extends React.Component {
 		if (!this.isStateValid()) {
 			return <div>No model nor data</div>;
 		}
-		const selection = this.props.params.splat;
+		const selection = this.props.match.params["0"];
+//		const selection = this.props.location.pathname.substring(1);
 		let node;
 		let right = '';
 		if (selection && selection.length > 0) {
@@ -112,26 +114,29 @@ export class App extends React.Component {
 		const saveBtnClass = (this.state.stale ? 'btn blue cmd' : 'btn blue cmd disabled');
 		const resetBtnClass = (this.state.stale ? 'btn cmd' : 'btn cmd disabled');
 		return (
-			<div>
-				<aside id="sidebar">
-					<div className="inner">
-						<header>
-							<h1>{this.state.model.name}</h1>
-						</header>
-						<Tree model={this.state.model} selection={'/' + Cms.treePath(selection)}/>
-					</div>
-				</aside>
-				<section id="content">
-					<div id="navbar">
-						<a href="#" className={saveBtnClass} onClick={this.saveState}>Save</a>
-						<a href="#" className={resetBtnClass} onClick={this.resetState}>Reset</a>
-						<div id="message">{this.state.message}</div>
-						<div className="separator">|</div>
-						<a href='/data.json' className="blue" target="_blank">Download data</a>
-					</div>
-					<hr/>
-					{right}
-				</section>
+			<div style={{position: 'relative', textAlign: 'left'}}>
+				<div id="navbar">
+					<a href="#" className={saveBtnClass} onClick={this.saveState}>Save</a>
+					<a href="#" className={resetBtnClass} onClick={this.resetState}>Reset</a>
+					<div className="separator">|</div>
+					<a href='/json/data.json' className="blue" target="_blank">data.json</a>
+					<div className="separator">|</div>
+					<a href='/json/model.json' className="blue" target="_blank">model.json</a>
+				</div>
+				<div id="content">
+					<aside id="left">
+						<div className="inner">
+							<header>
+								<h1>{this.state.model.name}</h1>
+							</header>
+							<Tree model={this.state.model} selection={'/' + Cms.treePath(selection)}/>
+						</div>
+					</aside>
+					<section id="right">
+						{right}
+					</section>
+				</div>
+				<div id="message">{this.state.message}</div>
 			</div>
 		);
 	}

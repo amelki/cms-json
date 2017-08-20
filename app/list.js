@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './cms.scss';
 import Cms from './cms';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragSource, DropTarget } from 'react-dnd';

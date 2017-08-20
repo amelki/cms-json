@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 
 /**
@@ -27,7 +28,7 @@ module.exports.run = function(options) {
 	var port = options.port || 3000;
 	var modelFile = options.modelFile;
 	var dataFile = options.dataFile;
-	const isDeveloping = options.env == 'development';
+	const isDeveloping = options.env === 'development';
 	if (!modelFile) {
 		throw "Model file not provided";
 	}
@@ -37,13 +38,15 @@ module.exports.run = function(options) {
 
 	const app = express();
 	app.use(bodyParser.json());
-
+	app.use(cors());
+	app.options('/model.json', cors());
 	app.get('/model.json', function (req, res) {
 		fs.readFile(modelFile, 'utf-8', (err, json) => {
 			if (err) throw err;
 			res.send(json);
 		});
 	});
+	app.options('/data.json', cors());
 	app.get('/data.json', function (req, res) {
 		fs.readFile(dataFile, 'utf-8', (err, json) => {
 			if (err) throw err;

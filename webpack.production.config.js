@@ -4,7 +4,6 @@ var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -16,7 +15,6 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: 'body',
@@ -29,10 +27,6 @@ module.exports = {
         screw_ie8: true
       }
     }),
-    new StatsPlugin('webpack.stats.json', {
-      source: false,
-      modules: false
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
@@ -41,7 +35,7 @@ module.exports = {
     loaders: [{
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      loader: 'babel',
+      loader: 'babel-loader',
       query: {
         "presets": ["es2015", "stage-0", "react"],
 				"plugins": ["transform-decorators-legacy"]
@@ -50,10 +44,7 @@ module.exports = {
       test: /\.json?$/,
       loader: 'json'
     },
-      {test: /(\.css|\.scss)$/, loaders: ['style', 'css?sourceMap', 'postcss', 'sass?sourceMap']}
+      {test: /(\.css|\.scss)$/, loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']}
     ]
-  },
-  postcss: [
-    require('autoprefixer')
-  ]
+  }
 };

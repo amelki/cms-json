@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './cms.scss';
 import axios from 'axios';
-import { Router, Route, Link, browserHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import Cms from './cms';
 
 export default class Tree extends React.Component {
@@ -19,7 +19,7 @@ export default class Tree extends React.Component {
 	}
 }
 
-class Node extends React.Component {
+export class Node extends React.Component {
 	render() {
 		var node = this.props.node;
 		var path = this.props.path;

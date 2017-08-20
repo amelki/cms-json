@@ -4,7 +4,7 @@ import Cms from './cms';
 import md from './md';
 import { WithContext as ReactTags } from 'react-tag-input';
 import Tags from "./tags";
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 export default class Item extends React.Component {
 	render() {

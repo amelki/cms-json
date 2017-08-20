@@ -1,3 +1,6 @@
+$topNav: 50px;
+$bottomNav: 20px;
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
@@ -229,11 +232,11 @@ input.error, textarea.error, .ql-editor.error {
 	outline: none
 }
 
-#sidebar {
+#left {
 	position: fixed;
-	top: 0;
+	top: $topNav;
+	bottom: $bottomNav;
 	left: 0;
-	bottom: 0;
 	width: 200px;
 	height: 100%;
 	color: #fff;
@@ -241,7 +244,7 @@ input.error, textarea.error, .ql-editor.error {
 	background-color: #111
 }
 
-#sidebar .inner {
+#left .inner {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -250,15 +253,15 @@ input.error, textarea.error, .ql-editor.error {
 	overflow-y: auto
 }
 
-#sidebar header {
+#left header {
 	margin: 30px 20px
 }
 
-#sidebar header h1 {
+#left header h1 {
 	font-size: 22px
 }
 
-#sidebar footer {
+#left footer {
 	position: fixed;
 	left: 0;
 	bottom: 0;
@@ -267,36 +270,36 @@ input.error, textarea.error, .ql-editor.error {
 	background-color: #292929
 }
 
-#sidebar footer a {
+#left footer a {
 	display: block;
 	color: #fff;
 	padding: 20px 0
 }
 
-#sidebar footer a:hover {
+#left footer a:hover {
 	color: salmon
 }
 
-#sidebar nav {
+#left nav {
 	padding-bottom: 70px
 }
 
-#sidebar nav > li {
+#left nav > li {
 	list-style-type: none;
 	padding-bottom: 10px;
 	margin-bottom: 10px;
 	border-bottom: 1px solid #333
 }
 
-#sidebar nav > li:last-of-type {
+#left nav > li:last-of-type {
 	border-bottom: none
 }
 
-#sidebar nav > li ul {
+#left nav > li ul {
 	margin-left: 20px
 }
 
-#sidebar nav a {
+#left nav a {
 	display: block;
 	margin-top: 1px;
 	padding: 10px 15px;
@@ -304,20 +307,43 @@ input.error, textarea.error, .ql-editor.error {
 	border-left: 3px solid transparent;
 }
 
-#sidebar nav a:hover {
+#left nav a:hover {
 	color: #fff;
 	background-color: rgba(255, 255, 255, 0.1)
 }
 
-#sidebar nav a.selected {
+#left nav a.selected {
 	color: salmon;
 	border-color: salmon;
 	background-color: transparent
 }
 
-#content {
+#navbar {
+	text-align: left;
+	background-color: #eeeeee;
+	border-bottom: 1px solid #dddddd;
+	height: $topNav;
+}
+
+#message {
+//	display: none;
+	background-color: #eeeeee;
+	padding: 5px 5px 5px 20px;
+	text-align: left;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	border-top: 1px solid #dddddd;
+	font-size: 12px;
+	color: #202020;
+	z-index: 1000;
+	height: $bottomNav;
+}
+
+#right {
 	position: absolute;
-	top: 0;
+	top: $topNav;
 	left: 200px;
 	right: 0;
 	bottom: 0;
@@ -533,21 +559,6 @@ form .bottom {
 			color: white;
 		}
 		cursor: default;
-	}
-}
-
-#content {
-	#navbar {
-		text-align: left;
-		#message {
-			font-size: 12px;
-			//margin-left: 30px;
-			display: inline;
-			color: #888888;
-		}
-	}
-	hr {
-		background-color: #ccc;
 	}
 }
 
