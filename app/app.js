@@ -1,57 +1,17 @@
 import React from 'react';
 import styles from './cms.scss';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Cms from './cms';
 import Tree from './tree';
 import List from './list';
 import Item from './item';
+import { LOAD } from './actions';
+import { connect } from 'react-redux'
 
-export class App extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {};
-		this.addItem = this.addItem.bind(this);
-		this.moveItem = this.moveItem.bind(this);
-		this.deleteItem = this.deleteItem.bind(this);
-		this.isStateValid = this.isStateValid.bind(this);
-		this.setValue = this.setValue.bind(this);
-		this.saveState = this.saveState.bind(this);
-		this.loadState = this.loadState.bind(this);
-		this.resetState = this.resetState.bind(this);
-		this.doSetState = this.doSetState.bind(this);
-	}
-
-	doSetState() {
-		this.state.stale = true;
-		this.state.message = "";
-		this.setState(this.state);
-	}
-
-	addItem(node) {
-		Cms.addItem(node);
-		this.doSetState();
-		this.props.router.push(this.props.router.location.pathname + "/" + (node.data.length - 1));
-	}
-
-	moveItem(node, sourceIndex, targetIndex) {
-		Cms.moveItem(node, sourceIndex, targetIndex);
-		this.doSetState();
-	}
-
-	deleteItem(node, index) {
-		Cms.deleteItem(node, index);
-		this.doSetState();
-	}
-
-	setValue(node, field, value) {
-		const name = Cms.fieldName(field);
-		node.data[name] = value;
-		this.doSetState();
-	}
-
-	isStateValid() {
-		return this.state.model && this.state.data;
+class App extends React.Component {
+	static isStateValid() {
+		return this.props.state.model && this.props.state.data;
 	}
 
 	saveState() {
@@ -67,41 +27,37 @@ export class App extends React.Component {
 		}
 	}
 
-	resetState() {
-		if (this.state.stale) {
+	static resetState() {
+		if (store.getState().stale) {
 			this.loadState('Loaded CMS JSON data and model files');
 		}
 	}
 
-	loadState(message) {
-		const _this = this;
+	static loadState(message) {
 		Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-			_this.setState({
+			store.dispatch({
+				type: LOAD,
 				model: values[0].data,
 				data: values[1].data,
-				stale: false,
-				message: message ? message : ''
+				message: message
 			});
 		});
 	}
 
-	componentDidMount() {
-		this.loadState();
-	}
+	// componentDidMount() {
+	// 	App.loadState();
+	// }
 
 	render() {
-		if (!this.isStateValid()) {
-			return <div>No model nor data</div>;
-		}
-		const selection = this.props.match.params["0"];
-//		const selection = this.props.location.pathname.substring(1);
+		let { state } = this.props;
+		const selection = (this.props.match.path === '/') ? '' : this.props.match.params[0];
 		let node;
 		let right = '';
 		if (selection && selection.length > 0) {
-			node = Cms.findNode(this.state.model, this.state.data, selection);
+			node = Cms.findNode(state.model, state.data, selection);
 			if (node.model.list) {
 				if (Array.isArray(node.data)) {
-					right = <List node={node} selection={selection} addItem={this.addItem} deleteItem={this.deleteItem} moveItem={this.moveItem}/>;
+					right = <List node={node} selection={selection}/>;
 				} else {
 					let fragments = selection.split('/');
 					let parent = fragments.slice(0, fragments.length - 1).join('/');
@@ -111,46 +67,53 @@ export class App extends React.Component {
 				right = <Item node={node} setValue={this.setValue}/>
 			}
 		}
-		const saveBtnClass = (this.state.stale ? 'btn blue cmd' : 'btn blue cmd disabled');
-		const resetBtnClass = (this.state.stale ? 'btn cmd' : 'btn cmd disabled');
+		const saveBtnClass = (state.stale ? 'btn blue cmd' : 'btn blue cmd disabled');
+		const resetBtnClass = (state.stale ? 'btn cmd' : 'btn cmd disabled');
 		return (
-			<div style={{position: 'relative', textAlign: 'left'}}>
-				<div id="navbar">
-					<a href="#" className={saveBtnClass} onClick={this.saveState}>Save</a>
-					<a href="#" className={resetBtnClass} onClick={this.resetState}>Reset</a>
-					<div className="separator">|</div>
-					<a href='/json/data.json' className="blue" target="_blank">data.json</a>
-					<div className="separator">|</div>
-					<a href='/json/model.json' className="blue" target="_blank">model.json</a>
+				<div style={{position: 'relative', textAlign: 'left'}}>
+					<ul id="navbar">
+						<li>
+							<a href="#" className={saveBtnClass} onClick={this.saveState}>Save</a>
+						</li>
+						<li>
+							<a href="#" className={resetBtnClass} onClick={this.resetState}>Reset</a>
+						</li>
+						<li>
+							<div className="separator">|</div>
+						</li>
+						<li>
+							<a href='/json/data.json' className="blue" target="_blank">data.json</a>
+						</li>
+						<li>
+							<div className="separator">|</div>
+						</li>
+						<li>
+							<a href='/json/model.json' className="blue" target="_blank">model.json</a>
+						</li>
+					</ul>
+					<div id="content">
+						<aside id="left">
+							<div className="inner">
+								<header>
+									<h1>{state.model.name}</h1>
+								</header>
+								<Tree model={state.model} selection={'/' + Cms.treePath(selection)}/>
+							</div>
+						</aside>
+						<section id="right">
+							{right}
+						</section>
+					</div>
+					<div id="message">{state.message}</div>
 				</div>
-				<div id="content">
-					<aside id="left">
-						<div className="inner">
-							<header>
-								<h1>{this.state.model.name}</h1>
-							</header>
-							<Tree model={this.state.model} selection={'/' + Cms.treePath(selection)}/>
-						</div>
-					</aside>
-					<section id="right">
-						{right}
-					</section>
-				</div>
-				<div id="message">{this.state.message}</div>
-			</div>
 		);
 	}
 }
 
-export const NoMatch = () => {
-	return (
-		<div>
-			<h4>
-				404 Page Not Found
-			</h4>
-			<Link to="/"> Go back to homepage </Link>
-		</div>
-	);
-};
+function mapStateToProps(state, ownProps) {
+	return {
+		state: state
+	};
+}
 
-
+export default connect(mapStateToProps)(App);

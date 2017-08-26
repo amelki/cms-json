@@ -2,803 +2,821 @@ $topNav: 50px;
 $bottomNav: 20px;
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font: inherit;
-	font-size: 100%;
-	vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
 }
 
 html {
-	line-height: 1
+  line-height: 1
 }
 
 ol, ul {
-	list-style: none
+  list-style: none
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0
+  border-collapse: collapse;
+  border-spacing: 0
 }
 
 caption, th, td {
-	text-align: left;
-	font-weight: normal;
-	vertical-align: middle;
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
 }
 
 q, blockquote {
-	quotes: none
+  quotes: none
 }
 
 q:before, q:after, blockquote:before, blockquote:after {
-	content: "";
-	content: none
+  content: "";
+  content: none
 }
 
 a img {
-	border: none
+  border: none
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
-	display: block
+  display: block
 }
 
 *, *:before, *:after {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box
 }
 
 html {
-	margin: 0;
-	background-color: #f2f3f7
+  margin: 0;
+  background-color: #f2f3f7
 }
 
 body {
-	margin: 0;
-	font-family: "Avenir Next", "Helvetica", sans-serif;
-	color: #23262c;
-	font-size: 15px;
-	text-align: center;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility
+  margin: 0;
+  font-family: "Avenir Next", "Helvetica", sans-serif;
+  color: #23262c;
+  font-size: 15px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility
 }
 
 a {
-	outline: none;
-	color: #23262c;
-	text-decoration: none;
-	-moz-transition-property: all;
-	-o-transition-property: all;
-	-webkit-transition-property: all;
-	transition-property: all;
-	-moz-transition-duration: 0.2s;
-	-o-transition-duration: 0.2s;
-	-webkit-transition-duration: 0.2s;
-	transition-duration: 0.2s
+  outline: none;
+  color: #23262c;
+  text-decoration: none;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s
 }
 
 a:active {
-	outline: none
+  outline: none
 }
 
 a.blue {
-	color: DodgerBlue;
-	text-decoration: underline
+  color: DodgerBlue;
+  text-decoration: underline
 }
 
 a.blue:hover {
-	text-decoration: none
+  text-decoration: none
 }
 
 div.separator {
-	display: inline-block;
-	padding-right: 10px;
-	padding-left: 10px;
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 small {
-	font-size: 12px
+  font-size: 12px
 }
 
 b {
-	font-weight: bold
+  font-weight: bold
 }
 
 i {
-	font-style: italic
+  font-style: italic
 }
 
 hr {
-	border: none;
-	height: 1px;
-	margin: 20px 0;
-	background-color: #aaa
+  border: none;
+  height: 1px;
+  margin: 20px 0;
+  background-color: #aaa
 }
 
 input {
-	padding: 5px;
-	font-size: 16px;
-	width: 100%;
-	border: 1px solid #ddd;
-	font-family: "Avenir Next", "Helvetica", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
-	-moz-transition-property: all;
-	-o-transition-property: all;
-	-webkit-transition-property: all;
-	transition-property: all;
-	-moz-transition-duration: 0.2s;
-	-o-transition-duration: 0.2s;
-	-webkit-transition-duration: 0.2s;
-	transition-duration: 0.2s
+  padding: 5px;
+  font-size: 16px;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-family: "Avenir Next", "Helvetica", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s
 }
 
 input:focus {
-	border-color: DodgerBlue;
-	outline: none
+  border-color: DodgerBlue;
+  outline: none
 }
 
 input[type=submit] {
-	border: 0;
-	padding: 14px 22px;
-	font-size: 20px;
-	color: #fff;
-	width: auto;
-	font-family: "Avenir Next", "Helvetica", sans-serif;
-	background-color: DodgerBlue;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
-	box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
-	cursor: pointer;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility
+  border: 0;
+  padding: 14px 22px;
+  font-size: 20px;
+  color: #fff;
+  width: auto;
+  font-family: "Avenir Next", "Helvetica", sans-serif;
+  background-color: DodgerBlue;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility
 }
 
 input[type=submit]:active {
-	background-color: #0077ea;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	box-shadow: none
+  background-color: #0077ea;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none
 }
 
 .textarea {
-	position: relative
+  position: relative
 }
 
 textarea, .ql-editor {
-	width: 100%;
-	height: 200px;
-	resize: vertical;
-	font-size: 16px;
-	padding: 5px;
-	border: 1px solid #ddd;
-	font-family: "Avenir Next", "Helvetica", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-rendering: optimizeLegibility;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	-moz-transition-property: color, border-color;
-	-o-transition-property: color, border-color;
-	-webkit-transition-property: color, border-color;
-	transition-property: color, border-color;
-	-moz-transition-duration: 0.2s;
-	-o-transition-duration: 0.2s;
-	-webkit-transition-duration: 0.2s;
-	transition-duration: 0.2s
+  width: 100%;
+  height: 200px;
+  resize: vertical;
+  font-size: 16px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  font-family: "Avenir Next", "Helvetica", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -moz-transition-property: color, border-color;
+  -o-transition-property: color, border-color;
+  -webkit-transition-property: color, border-color;
+  transition-property: color, border-color;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s
 }
 
 textarea:focus, textarea.focus, .ql-editor:focus, .ql-editor.focus {
-	border-color: DodgerBlue;
-	outline: none
+  border-color: DodgerBlue;
+  outline: none
 }
 
 textarea.short, .ql-editor.short {
-	height: 60px
+  height: 60px
 }
 
 .ql-editor {
-	position: relative;
-	background-color: #fff;
-	overflow: auto;
-	padding: 6px;
-	white-space: pre-wrap;
-	word-wrap: break-word;
-	line-height: normal
+  position: relative;
+  background-color: #fff;
+  overflow: auto;
+  padding: 6px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: normal
 }
 
 .ql-editor a {
-	color: DodgerBlue
+  color: DodgerBlue
 }
 
 input.error, textarea.error, .ql-editor.error {
-	border: 2px solid red
+  border: 2px solid red
 }
 
 [contenteditable]:focus {
-	outline: none
+  outline: none
 }
 
 #left {
-	position: fixed;
-	top: $topNav;
-	bottom: $bottomNav;
-	left: 0;
-	width: 200px;
-	height: 100%;
-	color: #fff;
-	text-align: left;
-	background-color: #111
+  position: fixed;
+  top: $topNav;
+  bottom: $bottomNav;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  color: #fff;
+  text-align: left;
+  background-color: #111
 }
 
 #left .inner {
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	width: 200px;
-	overflow-y: auto
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  overflow-y: auto
 }
 
 #left header {
-	margin: 30px 20px
+  margin: 30px 20px
 }
 
 #left header h1 {
-	font-size: 22px
+  font-size: 22px
 }
 
 #left footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 200px;
-	text-align: center;
-	background-color: #292929
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 200px;
+  text-align: center;
+  background-color: #292929
 }
 
 #left footer a {
-	display: block;
-	color: #fff;
-	padding: 20px 0
+  display: block;
+  color: #fff;
+  padding: 20px 0
 }
 
 #left footer a:hover {
-	color: salmon
+  color: salmon
 }
 
 #left nav {
-	padding-bottom: 70px
+  padding-bottom: 70px
 }
 
 #left nav > li {
-	list-style-type: none;
-	padding-bottom: 10px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #333
+  list-style-type: none;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #333
 }
 
 #left nav > li:last-of-type {
-	border-bottom: none
+  border-bottom: none
 }
 
 #left nav > li ul {
-	margin-left: 20px
+  margin-left: 20px
 }
 
 #left nav a {
-	display: block;
-	margin-top: 1px;
-	padding: 10px 15px;
-	color: #aaa;
-	border-left: 3px solid transparent;
+  display: block;
+  margin-top: 1px;
+  padding: 10px 15px;
+  color: #aaa;
+  border-left: 3px solid transparent;
 }
 
 #left nav a:hover {
-	color: #fff;
-	background-color: rgba(255, 255, 255, 0.1)
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1)
 }
 
 #left nav a.selected {
-	color: salmon;
-	border-color: salmon;
-	background-color: transparent
+  color: salmon;
+  border-color: salmon;
+  background-color: transparent
 }
 
 #navbar {
-	text-align: left;
-	background-color: #eeeeee;
-	border-bottom: 1px solid #dddddd;
-	height: $topNav;
+  position: fixed;
+  text-align: left;
+  width: 100%;
+  z-index: 100;
+  background-color: #eeeeee;
+  border-bottom: 1px solid #dddddd;
+  height: $topNav;
+  vertical-align: middle;
+  list-style: none;
+  padding-top: 5px;
+  li {
+    list-style: none;
+    display: inline-block;
+  }
 }
 
 #message {
-//	display: none;
-	background-color: #eeeeee;
-	padding: 5px 5px 5px 20px;
-	text-align: left;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	border-top: 1px solid #dddddd;
-	font-size: 12px;
-	color: #202020;
-	z-index: 1000;
-	height: $bottomNav;
+  //	display: none;
+  background-color: #eeeeee;
+  padding: 5px 5px 5px 20px;
+  text-align: left;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-top: 1px solid #dddddd;
+  font-size: 12px;
+  color: #202020;
+  z-index: 1000;
+  height: $bottomNav;
 }
 
 #right {
-	position: absolute;
-	top: $topNav;
-	left: 200px;
-	right: 0;
-	bottom: 0;
-	padding: 40px
+  position: absolute;
+  top: $topNav;
+  left: 200px;
+  right: 0;
+  bottom: 0;
+  padding: 40px;
+  & > div {
+    padding-bottom: 40px;
+  }
 }
 
 h2 {
-	margin: 0 0 40px 0;
-	font-size: 32px;
-	color: #111
+  margin: 0 0 40px 0;
+  font-size: 32px;
+  color: #111
 }
 
 .top-nav {
-	display: inline-block;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline;
-	border: 1px solid #111;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  border: 1px solid #111;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px
 }
 
 .top-nav a {
-	display: inline-block;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline;
-	padding: 15px 20px;
-	border-right: 1px solid #111;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	font-size: 12px;
-	font-weight: bold;
-	color: #555
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  padding: 15px 20px;
+  border-right: 1px solid #111;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #555
 }
 
 .top-nav a.selected {
-	background-color: #111;
-	color: #fff
+  background-color: #111;
+  color: #fff
 }
 
 .top-nav a:last-of-type {
-	border: none
+  border: none
 }
 
 form {
-	margin: 40px auto;
-	max-width: 700px;
-	font-size: 16px;
-	padding-bottom: 20px;
-	border: 1px solid #aaa;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px
+  margin-bottom: 30px;
+  max-width: 700px;
+  font-size: 16px;
+  padding-bottom: 20px;
+  border: 1px solid #aaa;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px
 }
 
 form.no-border {
-	border: none
+  border: none
 }
 
 form .container {
-	position: relative;
-	margin-bottom: 20px;
-	border: 1px solid #aaa;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	background-color: rgba(242, 243, 247, 0.85);
-	cursor: move
+  position: relative;
+  margin-bottom: 20px;
+  border: 1px solid #aaa;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  background-color: rgba(242, 243, 247, 0.85);
+  cursor: move
 }
 
 form label, form .label {
-	display: block;
-	margin: 25px;
-	text-align: left
+  display: block;
+  margin: 25px;
+  text-align: left
 }
 
 form label strong, form .label strong {
-	display: block;
-	margin: 10px 10px 8px 0
+  display: block;
+  margin: 10px 10px 8px 0
 }
 
 form label strong small, form .label strong small {
-	display: block;
-	padding-top: 5px;
-	font-style: italic;
-	color: #888
+  display: block;
+  padding-top: 5px;
+  font-style: italic;
+  color: #888
 }
 
 form label .toolbar, form .label .toolbar {
-	margin-bottom: 8px
+  margin-bottom: 8px
 }
 
 form label.inline > *, form .label.inline > * {
-	width: auto;
-	display: inline-block;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline
 }
 
 form label .type {
-	float: right;
-	font-size: 12px;
-	a {
-		text-decoration: none;
-	}
+  float: right;
+  font-size: 12px;
+  a {
+    text-decoration: none;
+  }
 }
 
 form input.edit-submit, form a.delete {
-	display: inline-block;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline;
-	margin-right: 30px
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  margin-right: 30px
 }
 
 form a.delete {
-	padding: 6px 12px;
-	font-size: 12px;
-	color: red;
-	margin-right: 0;
-	margin-left: 30px;
-	border: 1px solid #eb8282;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px
+  padding: 6px 12px;
+  font-size: 12px;
+  color: red;
+  margin-right: 0;
+  margin-left: 30px;
+  border: 1px solid #eb8282;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px
 }
 
 form a.close {
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	width: 20px;
-	height: 20px;
-	color: #fff;
-	text-align: center;
-	font-weight: bold;
-	font-size: 16px;
-	padding: 2px 5px;
-	background-color: #000;
-	-moz-border-radius: 20px;
-	-webkit-border-radius: 20px;
-	border-radius: 20px
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 2px 5px;
+  background-color: #000;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px
 }
 
 form a.close:active {
-	background-color: #777
+  background-color: #777
 }
 
 form .bottom {
-	margin-bottom: 20px
+  margin-bottom: 20px
 }
 
 .btn {
-	display: inline-block;
-	cursor: pointer;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline;
-	padding: 10px 25px;
-	background-color: #fff;
-	font-size: 13px;
-	border: 1px solid #bbb;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
-	box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  padding: 10px 25px;
+  background-color: #fff;
+  font-size: 13px;
+  border: 1px solid #bbb;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px
 }
 
 .btn:active {
-	background-color: #f4f4f4;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	box-shadow: none
+  background-color: #f4f4f4;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none
 }
 
 .btn.small {
-	padding: 5px 10px;
-	background: transparent;
-	-moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	box-shadow: none
+  padding: 5px 10px;
+  background: transparent;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none
 }
 
 .btn.small:hover {
-	background-color: rgba(0, 0, 0, 0.05)
+  background-color: rgba(0, 0, 0, 0.05)
 }
 
 .btn.cmd {
-	text-decoration: none;
-	font-size: 16px;
-	margin-left: 10px;
-	margin-right: 10px;
-	&.blue {
-		background-color: #0077ea;
-		color: white;
-	}
-	&.disabled {
-		color: lighten(black, 80%);
-		border-color: white;
-		&.blue {
-			background-color: lighten(#0077ea, 40%);
-			border-color: lighten(#0077ea, 40%);
-			color: white;
-		}
-		cursor: default;
-	}
+  text-decoration: none;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  &.blue {
+    background-color: #0077ea;
+    color: white;
+  }
+  &.disabled {
+    color: lighten(black, 80%);
+    border-color: white;
+    &.blue {
+      background-color: lighten(#0077ea, 40%);
+      border-color: lighten(#0077ea, 40%);
+      color: white;
+    }
+    cursor: default;
+  }
 }
 
-
 .msg {
-	margin: 40px;
-	padding: 15px 10px;
-	font-size: 14px;
-	color: #fff;
-	font-weight: bold;
-	background-color: red;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px
+  margin: 40px;
+  padding: 15px 10px;
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+  background-color: red;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px
 }
 
 .msg.success {
-	background-color: mediumseagreen
+  background-color: mediumseagreen
 }
 
 .preview-image {
-	margin: 40px 0 0 0
+  margin: 40px 0 0 0
 }
 
 .preview-image img {
-	width: 200px;
-	border: 3px solid #fff;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px;
-	box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px
+  width: 200px;
+  border: 3px solid #fff;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0 1px 2px
 }
 
 table {
-	margin: 30px 0;
-	width: 100%;
-	border: 1px solid #aaa;
-	border-top: none
+  margin: 0 0 30px 0;
+  width: 100%;
+  border: 1px solid #aaa;
+  border-top: none
 }
 
 table tr {
-	width: 100%;
-	border: 1px solid #aaa;
-	background-color: rgba(242, 243, 247, 0.85)
+  width: 100%;
+  border: 1px solid #aaa;
+  background-color: rgba(242, 243, 247, 0.85)
 }
 
 table tr.ui-sortable-placeholder {
-	height: 60px
+  height: 60px
 }
 
 table tr:hover td {
-	background-color: rgba(0, 0, 0, 0.02)
+  background-color: rgba(0, 0, 0, 0.02)
 }
 
 table tr:hover td.delete {
-	background-color: #000
+  background-color: #000
 }
 
 table td {
-	position: relative
+  position: relative
 }
 
 table td a {
-	display: block;
-	padding: 20px 10px
+  display: block;
+  padding: 20px 10px
 }
 
 table td.first {
-	width: 25%
+  width: 25%
 }
 
 table td.delete {
-	width: 40px;
-	background-color: #000;
-	text-align: center;
-	font-weight: bold;
-	font-size: 20px
+  width: 40px;
+  background-color: #000;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px
 }
 
 table td.delete a {
-	color: #fff
+  color: #fff
 }
 
 table td.delete a:hover {
-	background-color: red
+  background-color: red
 }
 
 #bottom_nav {
-	margin: 80px 0 40px 0
+  margin: 80px 0 40px 0
 }
 
 .ql-tooltip {
-	position: absolute;
-	font-size: 13px;
-	background-color: #fff;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
-	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 15px, rgba(0, 0, 0, 0.2) 0 1px 1px, rgba(0, 0, 0, 0.2) 0 0 1px;
-	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 15px, rgba(0, 0, 0, 0.2) 0 1px 1px, rgba(0, 0, 0, 0.2) 0 0 1px;
-	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 15px, rgba(0, 0, 0, 0.2) 0 1px 1px, rgba(0, 0, 0, 0.2) 0 0 1px
+  position: absolute;
+  font-size: 13px;
+  background-color: #fff;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 15px, rgba(0, 0, 0, 0.2) 0 1px 1px, rgba(0, 0, 0, 0.2) 0 0 1px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 15px, rgba(0, 0, 0, 0.2) 0 1px 1px, rgba(0, 0, 0, 0.2) 0 0 1px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 1px 15px, rgba(0, 0, 0, 0.2) 0 1px 1px, rgba(0, 0, 0, 0.2) 0 0 1px
 }
 
 .ql-tooltip input {
-	margin: 5px;
-	width: auto
+  margin: 5px;
+  width: auto
 }
 
 .ql-tooltip .url {
-	white-space: nowrap;
-	overflow: hidden;
-	-ms-text-overflow: ellipsis;
-	-o-text-overflow: ellipsis;
-	text-overflow: ellipsis;
-	margin-left: 5px;
-	max-width: 160px
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin-left: 5px;
+  max-width: 160px
 }
 
 .ql-tooltip a {
-	display: inline-block;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline;
-	color: DodgerBlue;
-	font-size: 12px;
-	padding: 15px 10px 15px 6px;
-	border-right: 1px solid #ddd
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline;
+  color: DodgerBlue;
+  font-size: 12px;
+  padding: 15px 10px 15px 6px;
+  border-right: 1px solid #ddd
 }
 
 .ql-tooltip a:hover {
-	opacity: 0.6
+  opacity: 0.6
 }
 
 .ql-tooltip a:last-of-type, .ql-tooltip a.remove {
-	border-right: none
+  border-right: none
 }
 
 .ql-link-tooltip span, .ql-link-tooltip a.done, .ql-link-tooltip input {
-	display: none
+  display: none
 }
 
 .ql-link-tooltip.editing .url, .ql-link-tooltip.editing a.done, .ql-link-tooltip.editing input {
-	display: inline-block;
-	vertical-align: middle;
-	*vertical-align: auto;
-	*zoom: 1;
-	*display: inline
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  *zoom: 1;
+  *display: inline
 }
 
 .ql-link-tooltip.editing a.change, .ql-link-tooltip.editing a.remove, .ql-link-tooltip.editing .url {
-	display: none
+  display: none
 }
 
 .ql-image-tooltip {
-	text-align: center
+  text-align: center
 }
 
 .ql-image-tooltip .preview {
-	position: relative;
-	margin: 0;
-	background-color: #ddd;
-	color: #fff;
-	height: 150px
+  position: relative;
+  margin: 0;
+  background-color: #ddd;
+  color: #fff;
+  height: 150px
 }
 
 .ql-image-tooltip .preview span {
-	position: absolute;
-	text-align: center;
-	left: 0;
-	top: 45%;
-	width: 100%
+  position: absolute;
+  text-align: center;
+  left: 0;
+  top: 45%;
+  width: 100%
 }
 
 .ql-image-tooltip a {
-	margin: 0 auto;
-	padding-left: 25px;
-	padding-right: 25px
+  margin: 0 auto;
+  padding-left: 25px;
+  padding-right: 25px
 }
 
 /* Example Styles for React Tags*/
 div.ReactTags__tags {
-	position: relative;
+  position: relative;
 }
 
 /* Styles for the input */
 div.ReactTags__tagInput {
-	width: 200px;
-	border-radius: 2px;
-	display: inline-block;
+  width: 200px;
+  border-radius: 2px;
+  display: inline-block;
 }
+
 div.ReactTags__tagInput input.ReactTags__tagInputField,
 div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
-	height: 31px;
-	margin: 0;
-	font-size: 12px;
-	width: 100%;
-	border: 1px solid #eee;
+  height: 31px;
+  margin: 0;
+  font-size: 12px;
+  width: 100%;
+  border: 1px solid #eee;
 }
 
 /* Styles for selected tags */
 div.ReactTags__selected span.ReactTags__tag {
-	border: 1px solid #ddd;
-	background: #eee;
-	font-size: 12px;
-	display: inline-block;
-	padding: 5px;
-	margin: 0 5px;
-	cursor: move;
-	border-radius: 2px;
+  border: 1px solid #ddd;
+  background: #eee;
+  font-size: 12px;
+  display: inline-block;
+  padding: 5px;
+  margin: 0 5px;
+  cursor: move;
+  border-radius: 2px;
 }
+
 div.ReactTags__selected a.ReactTags__remove {
-	color: #aaa;
-	margin-left: 5px;
-	cursor: pointer;
+  color: #aaa;
+  margin-left: 5px;
+  cursor: pointer;
 }
 
 /* Styles for suggestions */
 div.ReactTags__suggestions {
-	position: absolute;
+  position: absolute;
 }
+
 div.ReactTags__suggestions ul {
-	list-style-type: none;
-	box-shadow: .05em .01em .5em rgba(0,0,0,.2);
-	background: white;
-	width: 200px;
+  list-style-type: none;
+  box-shadow: .05em .01em .5em rgba(0, 0, 0, .2);
+  background: white;
+  width: 200px;
 }
+
 div.ReactTags__suggestions li {
-	border-bottom: 1px solid #ddd;
-	padding: 5px 10px;
-	margin: 0;
+  border-bottom: 1px solid #ddd;
+  padding: 5px 10px;
+  margin: 0;
 }
+
 div.ReactTags__suggestions li mark {
-	text-decoration: underline;
-	background: none;
-	font-weight: 600;
+  text-decoration: underline;
+  background: none;
+  font-weight: 600;
 }
+
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
-	background: #b7cfe0;
-	cursor: pointer;
+  background: #b7cfe0;
+  cursor: pointer;
 }

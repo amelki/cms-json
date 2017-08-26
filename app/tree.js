@@ -1,45 +1,46 @@
 import React from 'react';
-import styles from './cms.scss';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Cms from './cms';
+import PropTypes from 'prop-types';
 
-export default class Tree extends React.Component {
-	render() {
-		var model = this.props.model;
-		var all = [];
-		if (model.children && model.children.length > 0) {
-			for (let i = 0; i < model.children.length; i++) {
-				var child = model.children[i];
-				all.push(<Node key={i} node={child} path={''} selection={this.props.selection}/>);
-			}
-			return <nav>{all}</nav>;
+const Tree = ({model, selection}) => {
+	const all = [];
+	if (model.children && model.children.length > 0) {
+		for (let i = 0; i < model.children.length; i++) {
+			const child = model.children[i];
+			all.push(<Node key={i} node={child} path={''} selection={selection}/>);
 		}
-		return <span/>;
+		return <nav>{all}</nav>;
 	}
-}
+	return <span/>;
+};
 
-export class Node extends React.Component {
-	render() {
-		var node = this.props.node;
-		var path = this.props.path;
-		var newPath = path + "/" + Cms.slugify(node.name);
-		var linkClass = (this.props.selection == newPath) ? 'selected' : '';
-		var prefix = "/node";
-		var subul = "";
-		if (node.children && node.children.length > 0) {
-			var children = [];
-			for (let i = 0; i < node.children.length; i++) {
-				var child = node.children[i];
-				children.push(<Node key={i} node={child} path={newPath} selection={this.props.selection}/>);
-			}
-			subul = <ul>{children}</ul>;
+export default Tree;
+
+export const Node = ({node, path, selection}) => {
+	const newPath = path + "/" + Cms.slugify(node.name);
+	const linkClass = (selection === newPath) ? 'selected' : '';
+	const prefix = "/node";
+	let subList = "";
+	if (node.children && node.children.length > 0) {
+		const children = [];
+		for (let i = 0; i < node.children.length; i++) {
+			const child = node.children[i];
+			children.push(<Node key={i} node={child} path={newPath} selection={selection}/>);
 		}
-		return (
-			<li>
-				<Link to={ prefix + newPath } className={linkClass}>{node.name}</Link>
-				{subul}
-			</li>
-		);
+		subList = <ul>{children}</ul>;
 	}
-}
+	return (
+		<li>
+			<Link to={ prefix + newPath } className={linkClass}>{node.name}</Link>
+			{subList}
+		</li>
+	);
+};
+
+Node.propTypes = {
+	node: PropTypes.object.isRequired,
+	path: PropTypes.string.isRequired,
+	selection: PropTypes.string.isRequired
+};
+

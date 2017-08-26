@@ -18,6 +18,16 @@ cms.findNode = function(model, data, path) {
 	};
 };
 
+cms.deepCopy = function(model, data) {
+	// For now, use JSON parse/stringify.
+	// If performance becomes an issue, we could write our own custom deep copy
+	// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
+	return {
+		model: JSON.parse(JSON.stringify(model)),
+		data: JSON.parse(JSON.stringify(data))
+	}
+};
+
 /**
  * Removes the last path fragment if it is a number
  * 		/foo/bar/5 => /foo/bar
