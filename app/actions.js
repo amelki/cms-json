@@ -4,6 +4,7 @@ export const MOVE_ITEM = 'MOVE_ITEM';
 export const INPUT_VALUE = 'INPUT_VALUE';
 export const ADD_VALUE = 'ADD_VALUE';
 export const LOAD = 'LOAD';
+export const SAVE = 'SAVE';
 
 export const addItem = (node) => ({
 	type: ADD_ITEM,
@@ -24,6 +25,10 @@ export const load = (model, data, message) => ({
 	type: LOAD,
 	model,
 	data,
+	message
+});
+export const save = (message) => ({
+	type: SAVE,
 	message
 });
 export const inputValue = (node, field, event) => ({

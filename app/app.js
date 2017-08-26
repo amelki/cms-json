@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from './cms.scss';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import Cms from './cms';
-import Tree from './tree';
-import List from './list';
-import Item from './item';
+import Content from './content';
+import Json from './json';
 import { LOAD } from './actions';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import { withRouter } from 'react-router';
+
 
 class App extends React.Component {
 	static isStateValid() {
@@ -44,29 +44,8 @@ class App extends React.Component {
 		});
 	}
 
-	// componentDidMount() {
-	// 	App.loadState();
-	// }
-
 	render() {
 		let { state } = this.props;
-		const selection = (this.props.match.path === '/') ? '' : this.props.match.params[0];
-		let node;
-		let right = '';
-		if (selection && selection.length > 0) {
-			node = Cms.findNode(state.model, state.data, selection);
-			if (node.model.list) {
-				if (Array.isArray(node.data)) {
-					right = <List node={node} selection={selection}/>;
-				} else {
-					let fragments = selection.split('/');
-					let parent = fragments.slice(0, fragments.length - 1).join('/');
-					right = <Item node={node} parent={parent} setValue={this.setValue}/>;
-				}
-			} else if (!node.model.children) {
-				right = <Item node={node} setValue={this.setValue}/>
-			}
-		}
 		const saveBtnClass = (state.stale ? 'btn blue cmd' : 'btn blue cmd disabled');
 		const resetBtnClass = (state.stale ? 'btn cmd' : 'btn cmd disabled');
 		return (
@@ -82,28 +61,26 @@ class App extends React.Component {
 							<div className="separator">|</div>
 						</li>
 						<li>
-							<a href='/json/data.json' className="blue" target="_blank">data.json</a>
+							<Link to="/" className="blue">Editor</Link>
 						</li>
 						<li>
 							<div className="separator">|</div>
 						</li>
 						<li>
-							<a href='/json/model.json' className="blue" target="_blank">model.json</a>
+							<Link to="/json/data" className="blue">data.json</Link>
+						</li>
+						<li>
+							<div className="separator">|</div>
+						</li>
+						<li>
+							<Link to="/json/model" className="blue">model.json</Link>
 						</li>
 					</ul>
-					<div id="content">
-						<aside id="left">
-							<div className="inner">
-								<header>
-									<h1>{state.model.name}</h1>
-								</header>
-								<Tree model={state.model} selection={'/' + Cms.treePath(selection)}/>
-							</div>
-						</aside>
-						<section id="right">
-							{right}
-						</section>
-					</div>
+					<Switch>
+						<Route exact path='/' component={Content}/>
+						<Route path='/node/*' component={Content}/>
+						<Route path='/json/*' component={Json}/>
+					</Switch>
 					<div id="message">{state.message}</div>
 				</div>
 		);
@@ -116,4 +93,4 @@ function mapStateToProps(state, ownProps) {
 	};
 }
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));

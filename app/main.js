@@ -14,46 +14,19 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		model: values[0].data,
 		data: values[1].data,
 		stale: false,
+		selection: '',
 		message: ""
 	};
-
 	let store = createStore(reducer, initialState);
 	ReactDOM.render(
 		<Provider store={store}>
 			<BrowserRouter>
-				<Switch>
-					<Route exact path='/' component={App}/>
-					<Route path='/node/*' component={App}/>
-					<Route path='/json/*' component={Json}/>
-				</Switch>
+				<App/>
 			</BrowserRouter>
 		</Provider>,
 		document.getElementById('root')
 	);
 });
-
-// Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-// 	const initialState = {
-// 		model: values[0].data,
-// 		data: values[1].data,
-// 		stale: false,
-// 		message: ""
-// 	};
-	// let store = createStore(reducer, initialState);
-	// ReactDOM.render(
-	// 	<Provider store={store}>
-	// 		<BrowserRouter>
-	// 			<Switch>
-	// 				<Route exact path='/' component={App}/>
-	// 				{/* both /roster and /roster/:number begin with /roster */}
-	// 				<Route path='/node/*' component={App}/>
-	// 				<Route path='/json/*' component={Json}/>
-	// 			</Switch>
-	// 		</BrowserRouter>
-	// 	</Provider>,
-	// 	document.getElementById('root')
-	// );
-//});
 
 const NoMatch = () => {
 	return (
