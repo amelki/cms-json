@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import App from './app';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import reducers from './reducers';
+import { mainReducer, messageReducer } from './reducers';
 import {Provider} from 'react-redux';
 import axios from 'axios';
+import thunkMiddleware from 'redux-thunk';
 
-import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
 
 const history = createHistory();
-const middleware = routerMiddleware(history);
+const historyMiddleware = routerMiddleware(history);
 
 Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
 	const initialState = {
@@ -19,16 +20,17 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 			data: values[1].data,
 			stale: false,
 			busy: false,
-			message: ''
 		},
+		message: { text: '' },
 		router: {}
 	};
-	let store = createStore(combineReducers({
-			main: reducers,
+	const store = createStore(combineReducers({
+			main: mainReducer,
+			message: messageReducer,
 			router: routerReducer
 		}),
 		initialState,
-		applyMiddleware(middleware)
+		applyMiddleware(historyMiddleware, thunkMiddleware)
 	);
 	ReactDOM.render(
 		<Provider store={store}>
@@ -40,15 +42,13 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 	);
 });
 
-const NoMatch = () => {
-	return (
-		<div>
-			<h4>
-				404 Page Not Found
-			</h4>
-			<Link to="/"> Go back to homepage </Link>
-		</div>
-	);
-};
-
-
+// const NoMatch = () => {
+// 	return (
+// 		<div>
+// 			<h4>
+// 				404 Page Not Found
+// 			</h4>
+// 			<Link to="/"> Go back to homepage </Link>
+// 		</div>
+// 	);
+// };

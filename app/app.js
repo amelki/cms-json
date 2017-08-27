@@ -8,21 +8,8 @@ import Header from './header';
 
 class App extends React.Component {
 
-	// saveState() {
-	// 	if (this.state.stale) {
-	// 		const _this = this;
-	// 		axios.post('/data.json', this.state.data).then(() => {
-	// 			_this.state.stale = false;
-	// 			_this.state.message = "JSON data file saved on disk";
-	// 			_this.setState(_this.state);
-	// 		}).catch(err => {
-	// 			_this.state.message = "Error: " + err;
-	// 		});
-	// 	}
-	// }
-
 	render() {
-		let { message } = this.props;
+		const { message } = this.props;
 		return (
 				<div style={{position: 'relative', textAlign: 'left'}}>
 					<Header/>
@@ -31,7 +18,7 @@ class App extends React.Component {
 						<Route path='/node/*' component={Content}/>
 						<Route path='/json/*' component={Json}/>
 					</Switch>
-					<div id="message">{message}</div>
+					<div id="message" className={ message.severity }>{ message.text }</div>
 				</div>
 		);
 	}
@@ -39,7 +26,7 @@ class App extends React.Component {
 
 const mapStateToProps = state =>  {
 	return {
-		message: state.main.message
+		message: state.message
 	};
 };
 

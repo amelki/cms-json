@@ -37,7 +37,7 @@ const apply = (action, state, node) => {
 	}
 };
 
-export default (state = {data: {}, model: {}, stale: false, busy: false}, action) => {
+export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: false}, action) => {
 	switch (action.type) {
 		case Actions.ADD_ITEM:
 		case Actions.DELETE_ITEM:
@@ -51,12 +51,47 @@ export default (state = {data: {}, model: {}, stale: false, busy: false}, action
 			const newNode = Cms.findNode(newState.model, newState.data, action.node.path);
 			apply(action, newState, newNode);
 			return newState;
-		case Actions.LOAD:
-		case Actions.SAVE:
-			return Object.assign({
+		case Actions.LOAD_START:
+		case Actions.SAVE_START:
+			return {
+				...state,
+				busy: true
+			};
+		case Actions.LOAD_END:
+			return {
+				model: action.model,
+				data: action.data,
 				stale: false,
 				busy: false
-			}, Cms.deepCopy(state.model, state.data));
+			};
+		case Actions.SAVE_END:
+			return {
+				...state,
+				stale: false,
+				busy: false
+			};
+		case Actions.LOAD_ERROR:
+			return {
+				...state,
+				busy: false
+			};
+		default:
+			return state;
+	}
+};
+
+export const messageReducer = (state = { text: '', level: '' }, action) => {
+	switch (action.type) {
+		case Actions.LOG_ERROR:
+			return {
+				text: state.text,
+				level: 'error'
+			};
+		case Actions.LOG_INFO:
+			return {
+				text: state.text,
+				level: 'info'
+			};
 		default:
 			return state;
 	}

@@ -9,14 +9,14 @@ const Header = ({ enabled, load, save}) => (
 		<li>
 			<a href="#"
 				 className={enabled ? 'btn blue cmd' : 'btn blue cmd disabled'}
-				 onClick={() => save('File data.json saved to server')}>
+				 onClick={() => save()}>
 				Save
 			</a>
 		</li>
 		<li>
 			<a href="#"
 				 className={enabled ? 'btn cmd' : 'btn cmd disabled'}
-				 onClick={() => load('File data.json loaded from server')}>
+				 onClick={() => load()}>
 				Reset
 			</a>
 		</li>
