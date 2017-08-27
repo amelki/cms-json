@@ -24,7 +24,7 @@ Tree.propTypes = {
 
 export const Node = ({node, path, selection}) => {
 	const newPath = path + "/" + Cms.slugify(node.name);
-	const linkClass = (selection.treePath === newPath) ? 'selected' : '';
+	const linkClass = (('/' + selection.treePath) === newPath) ? 'selected' : '';
 	const prefix = "/node";
 	let subList = "";
 	if (node.children && node.children.length > 0) {
