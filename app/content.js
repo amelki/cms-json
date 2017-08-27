@@ -12,12 +12,12 @@ import {connect} from 'react-redux'
 class Content extends React.Component {
 
 	render() {
-		let {state} = this.props;
-		const selection = (this.props.match.path === '/') ? '' : this.props.match.params[0];
+		let { model, data, selection } = this.props;
+//		const selection = (this.props.match.path === '/') ? '' : this.props.match.params[0];
 		let node;
 		let right = '';
 		if (selection && selection.length > 0) {
-			node = Cms.findNode(state.model, state.data, selection);
+			node = Cms.findNode(model, data, selection);
 			if (node.model.list) {
 				if (Array.isArray(node.data)) {
 					right = <List node={node} selection={selection}/>;
@@ -35,9 +35,9 @@ class Content extends React.Component {
 				<aside id="left">
 					<div className="inner">
 						<header>
-							<h1>{state.model.name}</h1>
+							<h1>{model.name}</h1>
 						</header>
-						<Tree model={state.model} selection={'/' + Cms.treePath(selection)}/>
+						<Tree model={model} selection={'/' + Cms.treePath(selection)}/>
 					</div>
 				</aside>
 				<section id="right">
@@ -48,9 +48,16 @@ class Content extends React.Component {
 	}
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
+	const path = state.router.location.pathname; // /node/header/2
+	let selection = '';
+	if (path.startsWith('/node/')) {
+		selection = path.substring('/node/'.length);
+	}
 	return {
-		state: state
+		model: state.main.model,
+		data: state.main.data,
+		selection: selection
 	};
 }
 

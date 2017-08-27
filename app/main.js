@@ -1,29 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import App from './app';
-import Json from './json';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { createStore, combineReducers } from 'redux';
-import reducer from './reducers';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import reducers from './reducers';
 import {Provider} from 'react-redux';
 import axios from 'axios';
-import { renderRoutes } from 'react-router-config';
+
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
+import createHistory from 'history/createBrowserHistory';
+
+const history = createHistory();
+const middleware = routerMiddleware(history);
 
 Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
 	const initialState = {
-		model: values[0].data,
-		data: values[1].data,
-		stale: false,
-		busy: false,
-		selection: '',
-		message: ""
+		main: {
+			model: values[0].data,
+			data: values[1].data,
+			stale: false,
+			busy: false,
+			selection: '',
+			message: ""
+		},
+		router: {}
 	};
-	let store = createStore(reducer, initialState);
+	let store = createStore(combineReducers({
+			main: reducers,
+			router: routerReducer
+		}),
+		initialState,
+		applyMiddleware(middleware)
+	);
 	ReactDOM.render(
 		<Provider store={store}>
-			<BrowserRouter>
+			<ConnectedRouter history={history}>
 				<App/>
-			</BrowserRouter>
+			</ConnectedRouter>
 		</Provider>,
 		document.getElementById('root')
 	);

@@ -39,7 +39,7 @@ class App extends React.Component {
 
 const mapStateToProps = state =>  {
 	return {
-		message: state.message
+		message: state.main.message
 	};
 };
 

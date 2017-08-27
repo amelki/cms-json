@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux';
 import { load, save } from './actions';
 
-const Header = (enabled, load, save) => (
+const Header = ({ enabled, load, save}) => (
 	<ul id="navbar">
 		<li>
 			<a href="#"
@@ -41,11 +41,7 @@ const Header = (enabled, load, save) => (
 	</ul>
 );
 
-const mapStateToProps = state => {
-	return {
-		enabled: (state.stale || state.busy)
-	};
-};
+const mapStateToProps = state => ({ enabled: (state.main.stale || state.main.busy) });
 const mapDispatchToProps = dispatch => bindActionCreators({ load, save }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
