@@ -84,12 +84,12 @@ export const messageReducer = (state = { text: '', level: '' }, action) => {
 	switch (action.type) {
 		case Actions.LOG_ERROR:
 			return {
-				text: state.text,
+				text: action.message,
 				level: 'error'
 			};
 		case Actions.LOG_INFO:
 			return {
-				text: state.text,
+				text: action.message,
 				level: 'info'
 			};
 		default:

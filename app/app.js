@@ -18,7 +18,7 @@ class App extends React.Component {
 						<Route path='/node/*' component={Content}/>
 						<Route path='/json/*' component={Json}/>
 					</Switch>
-					<div id="message" className={ message.severity }>{ message.text }</div>
+					<div id="message" className={ message.level }>{ message.text }</div>
 				</div>
 		);
 	}

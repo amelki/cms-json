@@ -95,6 +95,15 @@ a.blue:hover {
   text-decoration: none
 }
 
+a.white {
+  color: #e0e0e0;
+  text-decoration: none
+}
+
+a.white:hover {
+  color: white;
+}
+
 div.separator {
   display: inline-block;
   padding-right: 10px;
@@ -239,9 +248,10 @@ input.error, textarea.error, .ql-editor.error {
   left: 0;
   width: 200px;
   height: 100%;
-  color: #fff;
+  color: #d4d4d4;
   text-align: left;
-  background-color: #111
+  background-color: #24282A;
+  border-top: 1px solid #121516;
 }
 
 #left .inner {
@@ -323,22 +333,42 @@ input.error, textarea.error, .ql-editor.error {
   text-align: left;
   width: 100%;
   z-index: 100;
-  background-color: #eeeeee;
-  border-bottom: 1px solid #dddddd;
+  background-color: #1C2022;
+  margin: 0;
+  padding: 0;
   height: $topNav;
-  vertical-align: middle;
-  list-style: none;
-  padding-top: 5px;
-  li {
-    list-style: none;
+  vertical-align: top;
+  .nav {
+    margin: 0;
+    vertical-align: top;
     display: inline-block;
+    height: 100%;
+    border-bottom: 2px solid #1C2022;
+    box-sizing: border-box;
+    padding: 10px 0 0;
+    &.tab {
+      padding: 0;
+      margin-left: 10px;
+      margin-right: 10px;
+      line-height: $topNav;
+      &.selected {
+        border-bottom-color: #6CAEDD;
+      }
+      &:hover {
+        border-bottom-color: #6CAEDD;
+      }
+      a {
+        display: inline-block;
+        height: 100%;
+      }
+    }
   }
 }
 
 #message {
   //	display: none;
   background-color: #eeeeee;
-  padding: 5px 5px 5px 20px;
+  padding: 5px 5px 18px 20px;
   text-align: left;
   position: fixed;
   bottom: 0;
@@ -346,6 +376,8 @@ input.error, textarea.error, .ql-editor.error {
   width: 100%;
   border-top: 1px solid #dddddd;
   font-size: 12px;
+  font-weight: 600;
+  font-family: "Courier New", "Helvetica", sans-serif;
   color: #202020;
   z-index: 1000;
   height: $bottomNav;
@@ -532,7 +564,7 @@ form .bottom {
   border-radius: 4px;
   -moz-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
   -webkit-box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
-  box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px
+  box-shadow: rgba(0, 0, 0, 0.06) 0 1px 2px, inset rgba(0, 0, 0, 0.05) 0 -1px 1px;
 }
 
 .btn:active {
@@ -556,20 +588,35 @@ form .bottom {
 
 .btn.cmd {
   text-decoration: none;
-  font-size: 16px;
   margin-left: 10px;
   margin-right: 10px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 3px 3px rgba(0,0,0,0.5);
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  width: 6rem;
+  text-align: center;
   &.blue {
-    background-color: #0077ea;
+//    background-color: #0077ea;
     color: white;
+    background-color: #7abae8;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.5);
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
   }
   &.disabled {
-    color: lighten(black, 80%);
-    border-color: white;
+    background-color: #24282A;
+    box-shadow: none;
+    color: #555;
     &.blue {
-      background-color: lighten(#0077ea, 40%);
-      border-color: lighten(#0077ea, 40%);
-      color: white;
+      background-color: #24282A;
+      box-shadow: none;
+      color: #555;
     }
     cursor: default;
   }
@@ -819,4 +866,35 @@ div.ReactTags__suggestions li mark {
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   background: #b7cfe0;
   cursor: pointer;
+}
+
+#json-container {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+}
+
+#json-pretty {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0px;
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  text-align: left;
+  padding: 10px 10px 40px;
+  border-top: 1px solid #121516;
+}
+.json-pretty .json-string {
+  color: #6caedd;
+}
+.json-pretty .json-key {
+  color: #ec5f67;
+}
+.json-pretty .json-boolean {
+  color: #99c794;
+}
+.json-pretty .json-number {
+  color: #99c794;
 }
