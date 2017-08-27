@@ -5,6 +5,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import { deleteItem, moveItem } from './actions';
+import { bindActionCreators } from 'redux'
 
 const style = {
 	border: '1px dashed gray',
@@ -77,7 +78,7 @@ const rowTarget = {
 	connectDragSource: connect.dragSource(),
 	isDragging: monitor.isDragging(),
 }))
-class ListRow extends Component {
+class Row extends Component {
 	render() {
 		const { node, index, isDragging, connectDragSource, connectDropTarget, selection, dispatch } = this.props;
 		const label = node.data[index][Cms.defaultFieldName(node.model)];
@@ -85,14 +86,16 @@ class ListRow extends Component {
 		return connectDragSource(connectDropTarget(
 			<tr style={{ ...style, opacity }}>
 				<td>
-					<Link to={ '/node/' + selection + '/' + index }>{label}</Link>
+					<Link to={ '/node/' + selection.treePath + '/' + index }>{label}</Link>
 				</td>
 				<td className="delete">
-					<a href="#" onClick={(event) => dispatch(deleteItem(node, index))}>×</a>
+					<a href="#" onClick={() => dispatch(deleteItem(node, index))}>×</a>
 				</td>
 			</tr>
 		))
 	}
 }
 
-export default connect()(ListRow);
+//const mapDispatchToProps = dispatch => bindActionCreators({ deleteItem }, dispatch);
+
+export default connect()(Row);

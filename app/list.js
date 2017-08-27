@@ -8,7 +8,7 @@ import Row from './row';
 @DragDropContext(HTML5Backend)
 class List extends Component {
 	render() {
-		const { node, selection, dispatch } = this.props;
+		const { node, dispatch, selection } = this.props;
 		const rows = [];
 		for (let i = 0; i < node.data.length; i++) {
 			rows.push(<Row key={i} id={i} index={i} node={node} selection={selection}/>);

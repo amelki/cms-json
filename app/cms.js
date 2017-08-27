@@ -35,14 +35,14 @@ cms.deepCopy = function(model, data) {
  * @param path
  * @returns {*}
  */
-cms.treePath = function (path) {
+cms.treePathAndIndex = function (path) {
 	if (path && path.length > 0) {
-		var p = path.split('/');
+		const p = path.split('/');
 		if (p.length > 0 && !Number.isNaN(parseInt(p[p.length - 1]))) {
-			return p.slice(0, p.length - 1).join('/');
+			return { fullPath: path, treePath: p.slice(0, p.length - 1).join('/'), index: p[p.length - 1] };
 		}
 	}
-	return path;
+	return { fullPath: path, treePath: path, index: -1 };
 };
 
 cms.addItem = function(node) {

@@ -5,17 +5,19 @@ import { connect } from 'react-redux';
 
 class Json extends React.Component {
 	render() {
+		const { json } = this.props;
 		return <JSONPretty
 			style={{textAlign: 'left', padding: 10, paddingTop: 60, paddingBottom: 40}}
 			id="json-pretty"
-			json={this.props.state[this.props.match.params[0]]}/>;
+			json={json}/>;
 	}
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = (state) => {
+	const routerPath = state.router.location.pathname; // /node/header/2
 	return {
-		state: state
+		json: state.main[routerPath.substring('/json/'.length)]
 	};
-}
+};
 
 export default connect(mapStateToProps)(Json);

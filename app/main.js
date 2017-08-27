@@ -19,8 +19,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 			data: values[1].data,
 			stale: false,
 			busy: false,
-			selection: '',
-			message: ""
+			message: ''
 		},
 		router: {}
 	};

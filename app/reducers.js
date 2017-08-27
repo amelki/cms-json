@@ -37,7 +37,7 @@ const apply = (action, state, node) => {
 	}
 };
 
-export default (state = {data: {}, model: {}, stale: false, busy: false, selection: ''}, action) => {
+export default (state = {data: {}, model: {}, stale: false, busy: false}, action) => {
 	switch (action.type) {
 		case Actions.ADD_ITEM:
 		case Actions.DELETE_ITEM:
@@ -46,8 +46,7 @@ export default (state = {data: {}, model: {}, stale: false, busy: false, selecti
 		case Actions.ADD_VALUE:
 			const newState = Object.assign({
 				stale: true,
-				busy: false,
-				selection: state.selection
+				busy: false
 			}, Cms.deepCopy(state.model, state.data));
 			const newNode = Cms.findNode(newState.model, newState.data, action.node.path);
 			apply(action, newState, newNode);
@@ -56,8 +55,7 @@ export default (state = {data: {}, model: {}, stale: false, busy: false, selecti
 		case Actions.SAVE:
 			return Object.assign({
 				stale: false,
-				busy: false,
-				selection: state.selection
+				busy: false
 			}, Cms.deepCopy(state.model, state.data));
 		default:
 			return state;
