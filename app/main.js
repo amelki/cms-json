@@ -14,6 +14,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		model: values[0].data,
 		data: values[1].data,
 		stale: false,
+		busy: false,
 		selection: '',
 		message: ""
 	};
