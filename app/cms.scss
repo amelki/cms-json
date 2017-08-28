@@ -54,7 +54,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 html {
   margin: 0;
-  background-color: #f2f3f7
+//  background-color: #f2f3f7
+  background-color: #f2f2f2;
 }
 
 body {
@@ -264,7 +265,13 @@ input.error, textarea.error, .ql-editor.error {
 }
 
 #left header {
-  margin: 30px 20px
+  padding-top: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 #left header h1 {
@@ -291,41 +298,33 @@ input.error, textarea.error, .ql-editor.error {
 }
 
 #left nav {
-  padding-bottom: 70px
-}
-
-#left nav > li {
-  list-style-type: none;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #333
-}
-
-#left nav > li:last-of-type {
-  border-bottom: none
-}
-
-#left nav > li ul {
-  margin-left: 20px
-}
-
-#left nav a {
-  display: block;
-  margin-top: 1px;
-  padding: 10px 15px;
-  color: #aaa;
-  border-left: 3px solid transparent;
-}
-
-#left nav a:hover {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1)
-}
-
-#left nav a.selected {
-  color: salmon;
-  border-color: salmon;
-  background-color: transparent
+  padding-bottom: 70px;
+  li {
+    list-style-type: none;
+    border-bottom: 1px solid #333;
+    &:last-of-type {
+      border-bottom: none
+    }
+    a {
+      display: block;
+      line-height: 25px;
+      margin-top: 1px;
+      width: 100%;
+      padding: 10px 15px;
+      color: #aaa;
+      border-left: 3px solid transparent;
+      &:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      &.selected {
+        color: white;
+        border-color: #ec5f67;
+        background-color: rgba(139,191,228,0.19999999999999996);
+      }
+    }
+  }
 }
 
 #navbar {
