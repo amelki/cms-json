@@ -1,5 +1,15 @@
 $topNav: 50px;
 $bottomNav: 20px;
+$colorErrorRed: red;
+$colorRed: #ec5f67;
+$colorBlue: #6caedd;
+$colorBorderDark: #121516;
+$colorVeryDark: #1C2022;
+$colorDark: #24282A;
+$colorSelectedDark: rgba(139, 191, 228, 0.19999999999999996);
+$colorFontDisabledDark: #555;
+$colorFontLightGray: #aaa;
+$colorFontSelectedWhite: #fff;
 
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
@@ -88,7 +98,7 @@ a:active {
 }
 
 a.blue {
-  color: DodgerBlue;
+  color: $colorBlue;
   text-decoration: underline
 }
 
@@ -127,7 +137,7 @@ hr {
   border: none;
   height: 1px;
   margin: 20px 0;
-  background-color: #aaa
+  background-color: $colorFontLightGray
 }
 
 input {
@@ -235,7 +245,7 @@ textarea.short, .ql-editor.short {
 }
 
 input.error, textarea.error, .ql-editor.error {
-  border: 2px solid red
+  border: 2px solid $colorErrorRed
 }
 
 [contenteditable]:focus {
@@ -251,8 +261,8 @@ input.error, textarea.error, .ql-editor.error {
   height: 100%;
   color: #d4d4d4;
   text-align: left;
-  background-color: #24282A;
-  border-top: 1px solid #121516;
+  background-color: $colorDark;
+  border-top: 1px solid $colorBorderDark;
 }
 
 #left .inner {
@@ -294,7 +304,7 @@ input.error, textarea.error, .ql-editor.error {
 }
 
 #left footer a:hover {
-  color: salmon
+  color: $colorRed
 }
 
 #left nav {
@@ -311,17 +321,17 @@ input.error, textarea.error, .ql-editor.error {
       margin-top: 1px;
       width: 100%;
       padding: 10px 15px;
-      color: #aaa;
+      color: $colorFontLightGray;
       border-left: 3px solid transparent;
       &:hover {
-        color: #fff;
+        color: $colorFontSelectedWhite;
         background-color: rgba(255, 255, 255, 0.1);
         border-color: rgba(255, 255, 255, 0.1);
       }
       &.selected {
-        color: white;
-        border-color: #ec5f67;
-        background-color: rgba(139,191,228,0.19999999999999996);
+        color: $colorFontSelectedWhite;
+        border-color: $colorRed;
+        background-color: $colorSelectedDark;
       }
     }
   }
@@ -332,7 +342,7 @@ input.error, textarea.error, .ql-editor.error {
   text-align: left;
   width: 100%;
   z-index: 100;
-  background-color: #1C2022;
+  background-color: $colorVeryDark;
   margin: 0;
   padding: 0;
   height: $topNav;
@@ -342,7 +352,7 @@ input.error, textarea.error, .ql-editor.error {
     vertical-align: top;
     display: inline-block;
     height: 100%;
-    border-bottom: 2px solid #1C2022;
+    border-bottom: 2px solid $colorVeryDark;
     box-sizing: border-box;
     padding: 10px 0 0;
     &.tab {
@@ -351,10 +361,10 @@ input.error, textarea.error, .ql-editor.error {
       margin-right: 10px;
       line-height: $topNav;
       &.selected {
-        border-bottom-color: #6CAEDD;
+        border-bottom-color: $colorBlue;
       }
       &:hover {
-        border-bottom-color: #6CAEDD;
+        border-bottom-color: $colorBlue;
       }
       a {
         display: inline-block;
@@ -424,7 +434,7 @@ h2 {
   letter-spacing: 1px;
   font-size: 12px;
   font-weight: bold;
-  color: #555
+  color: $colorFontDisabledDark
 }
 
 .top-nav a.selected {
@@ -441,7 +451,7 @@ form {
   max-width: 700px;
   font-size: 16px;
   padding-bottom: 20px;
-  border: 1px solid #aaa;
+  border: 1px solid $colorFontLightGray;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px
@@ -454,7 +464,7 @@ form.no-border {
 form .container {
   position: relative;
   margin-bottom: 20px;
-  border: 1px solid #aaa;
+  border: 1px solid $colorFontLightGray;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
@@ -513,7 +523,7 @@ form input.edit-submit, form a.delete {
 form a.delete {
   padding: 6px 12px;
   font-size: 12px;
-  color: red;
+  color: $colorErrorRed;
   margin-right: 0;
   margin-left: 30px;
   border: 1px solid #eb8282;
@@ -600,7 +610,7 @@ form .bottom {
   &.blue {
 //    background-color: #0077ea;
     color: white;
-    background-color: #7abae8;
+    background-color: $colorBlue;
     border-radius: 4px;
     box-sizing: border-box;
     box-shadow: 0 3px 3px rgba(0,0,0,0.5);
@@ -609,13 +619,13 @@ form .bottom {
     font-size: 0.875rem;
   }
   &.disabled {
-    background-color: #24282A;
+    background-color: $colorDark;
     box-shadow: none;
-    color: #555;
+    color: $colorFontDisabledDark;
     &.blue {
-      background-color: #24282A;
+      background-color: $colorDark;
       box-shadow: none;
-      color: #555;
+      color: $colorFontDisabledDark;
     }
     cursor: default;
   }
@@ -627,7 +637,7 @@ form .bottom {
   font-size: 14px;
   color: #fff;
   font-weight: bold;
-  background-color: red;
+  background-color: $colorErrorRed;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px
@@ -655,13 +665,13 @@ form .bottom {
 table {
   margin: 0 0 30px 0;
   width: 100%;
-  border: 1px solid #aaa;
+  border: 1px solid $colorFontLightGray;
   border-top: none
 }
 
 table tr {
   width: 100%;
-  border: 1px solid #aaa;
+  border: 1px solid $colorFontLightGray;
   background-color: rgba(242, 243, 247, 0.85)
 }
 
@@ -674,7 +684,7 @@ table tr:hover td {
 }
 
 table tr:hover td.delete {
-  background-color: #000
+  background-color: $colorDark;
 }
 
 table td {
@@ -692,18 +702,19 @@ table td.first {
 
 table td.delete {
   width: 40px;
-  background-color: #000;
+  background-color: $colorDark;
   text-align: center;
   font-weight: bold;
   font-size: 20px
 }
 
 table td.delete a {
-  color: #fff
+  color: $colorFontLightGray;
 }
 
 table td.delete a:hover {
-  background-color: red
+  background-color: $colorErrorRed;
+  color: $colorFontSelectedWhite;
 }
 
 #bottom_nav {
@@ -833,7 +844,7 @@ div.ReactTags__selected span.ReactTags__tag {
 }
 
 div.ReactTags__selected a.ReactTags__remove {
-  color: #aaa;
+  color: $colorFontLightGray;
   margin-left: 5px;
   cursor: pointer;
 }
@@ -883,13 +894,13 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
   color: #d4d4d4;
   text-align: left;
   padding: 10px 10px 40px;
-  border-top: 1px solid #121516;
+  border-top: 1px solid $colorBorderDark;
 }
 .json-pretty .json-string {
-  color: #6caedd;
+  color: $colorBlue;
 }
 .json-pretty .json-key {
-  color: #ec5f67;
+  color: $colorRed;
 }
 .json-pretty .json-boolean {
   color: #99c794;
