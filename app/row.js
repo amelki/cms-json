@@ -7,14 +7,6 @@ import { connect } from 'react-redux'
 import { deleteItem, moveItem } from './actions';
 import { bindActionCreators } from 'redux'
 
-const style = {
-	border: '1px dashed gray',
-	padding: '0.5rem 1rem',
-	marginBottom: '.5rem',
-	backgroundColor: 'white',
-	cursor: 'move',
-};
-
 const rowSource = {
 	beginDrag(props) {
 		return {
@@ -84,7 +76,7 @@ class Row extends Component {
 		const label = node.data[index][Cms.defaultFieldName(node.model)];
 		const opacity = isDragging ? 0 : 1;
 		return connectDragSource(connectDropTarget(
-			<tr style={{ ...style, opacity }}>
+			<tr style={{ opacity }}>
 				<td>
 					<Link to={ '/node/' + selection.treePath + '/' + index }>{label}</Link>
 				</td>
