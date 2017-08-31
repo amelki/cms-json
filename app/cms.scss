@@ -19,6 +19,9 @@ $colorFontAlmostWhite: #d4d4d4;
 $colorFontInput: #aab3ba;
 $colorBorderInput: lighten($colorInputBackground, 10%);
 $colorBorderFocusedInput: $colorFontLightGray;
+$fontCode: Menlo, Monaco, "Courier New", monospace;
+
+$colorNavBar: $colorVeryDark;
 
 ////////////////////
 // [ Reset
@@ -56,7 +59,7 @@ a img {
   border: none
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
   display: block
 }
 
@@ -69,7 +72,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 ////////////////////
 // ] Reset
 ////////////////////
-
 
 html {
   background-color: $colorDefaultBackground;
@@ -167,7 +169,7 @@ hr {
     margin-left: 10px;
     margin-right: 10px;
     padding-left: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     h1 {
       font-size: 22px
     }
@@ -208,7 +210,7 @@ hr {
   text-align: left;
   width: 100%;
   z-index: 100;
-  background-color: $colorVeryDark;
+  background-color: $colorNavBar;
   margin: 0;
   padding: 0;
   height: $topNav;
@@ -218,7 +220,7 @@ hr {
     vertical-align: top;
     display: inline-block;
     height: 100%;
-    border-bottom: 2px solid $colorVeryDark;
+    border-bottom: 2px solid $colorNavBar;
     box-sizing: border-box;
     padding: 10px 0 0;
     &.tab {
@@ -292,8 +294,16 @@ form {
       }
     }
     display: block;
-    margin: 25px;
+    margin-left: 2px;
+    margin-right: 2px;
     text-align: left;
+    padding: 10px 23px 20px;
+    &:not(:last-child) {
+      border-bottom: 1px solid lighten($colorDefaultBackground, 4%);
+    }
+    .description {
+      margin-bottom: 4px;
+    }
   }
 }
 
@@ -367,7 +377,7 @@ textarea {
 
     // Box hover
     &:hover + label:before {
-//      background: #f35429;
+      //      background: #f35429;
     }
 
     // Box focus
@@ -412,8 +422,6 @@ textarea {
   }
 }
 
-
-
 .btn {
   display: inline-block;
   cursor: pointer;
@@ -442,7 +450,7 @@ textarea {
     margin-right: 10px;
     border-radius: 4px;
     box-sizing: border-box;
-    box-shadow: 0 3px 3px rgba(0,0,0,0.5);
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
     border: none;
     padding: 0.5rem 0.75rem;
     font-size: 0.875rem;
@@ -453,7 +461,7 @@ textarea {
       background-color: $colorPastelBlue;
       border-radius: 4px;
       box-sizing: border-box;
-      box-shadow: 0 3px 3px rgba(0,0,0,0.5);
+      box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
       border: none;
       padding: 0.5rem 0.75rem;
       font-size: 0.875rem;
@@ -532,64 +540,64 @@ div.ReactTags__tagInput {
   width: 200px;
   border-radius: 2px;
   display: inline-block;
-}
-
-div.ReactTags__tagInput input.ReactTags__tagInputField {
-  height: 31px;
-  margin: 0;
-  font-size: 12px;
-  width: 100%;
-  border: 1px solid $colorBorderInput;
-  &:focus {
-    border-color: $colorBorderFocusedInput;
+  input.ReactTags__tagInputField {
+    height: 31px;
+    margin: 0;
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid $colorBorderInput;
+    &:focus {
+      border-color: $colorBorderFocusedInput;
+    }
   }
 }
 
 /* Styles for selected tags */
-div.ReactTags__selected span.ReactTags__tag {
-  border: 1px solid $colorBorderInput;
-  background: $colorInputBackground;
-  font-size: 12px;
-  display: inline-block;
-  padding: 5px;
-  margin: 0 5px;
-  cursor: move;
-  border-radius: 2px;
+div.ReactTags__selected {
+  span.ReactTags__tag {
+    border: 1px solid $colorBorderInput;
+    background: $colorInputBackground;
+    font-size: 12px;
+    display: inline-block;
+    padding: 5px;
+    margin: 0 5px;
+    cursor: move;
+    border-radius: 2px;
+  }
+  a.ReactTags__remove {
+    color: $colorFontLightGray;
+    margin-left: 5px;
+    cursor: pointer;
+  }
 }
 
-div.ReactTags__selected a.ReactTags__remove {
-  color: $colorFontLightGray;
-  margin-left: 5px;
-  cursor: pointer;
-}
 
 /* Styles for suggestions */
 div.ReactTags__suggestions {
   position: absolute;
-}
+  ul {
+    list-style-type: none;
+    box-shadow: .05em .01em .5em rgba(0, 0, 0, .2);
+    background: white;
+    width: 200px;
+  }
 
-div.ReactTags__suggestions ul {
-  list-style-type: none;
-  box-shadow: .05em .01em .5em rgba(0, 0, 0, .2);
-  background: white;
-  width: 200px;
-}
+  li {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 10px;
+    margin: 0;
+  }
 
-div.ReactTags__suggestions li {
-  border-bottom: 1px solid #ddd;
-  padding: 5px 10px;
-  margin: 0;
-}
+  li mark {
+    text-decoration: underline;
+    background: none;
+    font-weight: 600;
+  }
 
-div.ReactTags__suggestions li mark {
-  text-decoration: underline;
-  background: none;
-  font-weight: 600;
-}
-
-div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
-  background: #b7cfe0;
-  cursor: pointer;
+  ul li.ReactTags__activeSuggestion {
+    background: #b7cfe0;
+    cursor: pointer;
+  }
 }
 
 #json-container {
@@ -599,26 +607,30 @@ div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
 }
 
 #json-pretty {
-  font-family: Menlo, Monaco, "Courier New", monospace;
+  font-family: $fontCode;
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;
-  letter-spacing: 0px;
+  letter-spacing: 0;
   background-color: #1e1e1e;
   color: $colorFontAlmostWhite;
   text-align: left;
   padding: 10px 10px 40px;
   border-top: 1px solid $colorBorderDark;
 }
+
 .json-pretty .json-string {
   color: $colorPastelBlue;
 }
+
 .json-pretty .json-key {
   color: $colorPastelRed;
 }
+
 .json-pretty .json-boolean {
   color: $colorPastelGreen;
 }
+
 .json-pretty .json-number {
   color: $colorPastelGreen;
 }

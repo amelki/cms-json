@@ -12,7 +12,7 @@ class Field extends React.Component {
 		const name = Cms.fieldName(field);
 		const displayName = Cms.fieldDisplayName(field);
 		const value = data[name];
-		const description = field.description ? <div><small>{field.description}</small></div> : '';
+		const description = field.description ? <div className="description"><small>{field.description}</small></div> : '';
 		let typeHelp = field.type
 			? <div className="type">
 				({field.type})
