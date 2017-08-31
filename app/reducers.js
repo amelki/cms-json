@@ -21,12 +21,13 @@ const apply = (action, state, node) => {
 		case Actions.INPUT_VALUE:
 			const {event, field} = action;
 			let value = event.target.value;
-			switch (field) {
+			switch (field.type) {
 				case 'markdown':
 					value = md.html(value);
 					break;
 				case 'boolean':
-					value = event.target.checked;
+					// Do not try to grab the state from the checkbox itself (event.target.checked has a surprising behavior...)
+					value = !node.data[Cms.fieldName(field)];
 					break;
 			}
 			node.data[Cms.fieldName(field)] = value;

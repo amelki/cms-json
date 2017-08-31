@@ -19,8 +19,10 @@ class Field extends React.Component {
 			</div>
 			: '';
 		let input;
-		const className = field.className ? field.className : '';
-		const handleInputValue = (event) => dispatch(inputValue(node, field, event));
+		let className = field.className ? field.className : '';
+		const handleInputValue = (event) => {
+			dispatch(inputValue(node, field, event));
+		};
 		const handleAddValue = (event) => dispatch(addValue(node, field, event));
 		switch (field.type) {
 			case 'textarea':
@@ -35,11 +37,11 @@ class Field extends React.Component {
 					</div>;
 				break;
 			case 'boolean':
-				if (value) {
-					input = <input className={className} type="checkbox" name={name} checked onChange={handleInputValue}/>;
-				} else {
-					input = <input className={className} type="checkbox" name={name} onChange={handleInputValue}/>;
-				}
+				input =
+					<div className="checkbox">
+						<input className={className} type="checkbox" id={name} name="checked" value={value} onChange={handleInputValue}/>
+						<label htmlFor={name}/>
+					</div>;
 				break;
 			case 'array':
 				input = <Tags value={value} onChange={handleAddValue} />;
@@ -48,14 +50,14 @@ class Field extends React.Component {
 				input = <input className={className} type="text" name={name} value={value || ''} onChange={handleInputValue}/>;
 		}
 		return (
-			<label>
+			<div className="field">
 				<strong>
 					{displayName}
 					{typeHelp}
 				</strong>
 				{description}
 				{input}
-			</label>
+			</div>
 		);
 	}
 }

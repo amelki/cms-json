@@ -18,6 +18,7 @@ $colorFontSelectedWhite: #fff;
 $colorFontAlmostWhite: #d4d4d4;
 $colorFontInput: #aab3ba;
 $colorBorderInput: lighten($colorInputBackground, 10%);
+$colorBorderFocusedInput: $colorFontLightGray;
 
 ////////////////////
 // [ Reset
@@ -138,50 +139,6 @@ hr {
   height: 1px;
   margin: 20px 0;
   background-color: $colorFontLightGray
-}
-
-input, textarea {
-  background-color: $colorInputBackground;
-  color: $colorFontAlmostWhite;
-  font-family: "Avenir Next", "Helvetica", sans-serif;
-  font-size: 16px;
-  width: 100%;
-  padding: 5px;
-  border: 1px solid $colorBorderInput;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  -webkit-transition-property: all;
-  transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
-  &:focus {
-    border-color: $colorFontLightGray;
-    outline: none
-  }
-  &.error {
-    border: 2px solid $colorErrorRed
-  }
-}
-
-textarea {
-  height: 200px;
-  resize: vertical;
-  color: $colorFontInput;
-  background-color: $colorInputBackground;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  &.short {
-    height: 60px
-  }
-}
-
-[contenteditable]:focus {
-  outline: none
 }
 
 #left {
@@ -321,7 +278,7 @@ form {
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  label {
+  .field {
     strong {
       color: $colorFontLightGray;
       display: block;
@@ -339,6 +296,123 @@ form {
     text-align: left;
   }
 }
+
+input[type="text"], textarea {
+  background-color: $colorInputBackground;
+  color: $colorFontAlmostWhite;
+  font-family: "Avenir Next", "Helvetica", sans-serif;
+  font-size: 16px;
+  width: 100%;
+  padding: 5px;
+  border: 1px solid $colorBorderInput;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -moz-transition-property: all;
+  -o-transition-property: all;
+  -webkit-transition-property: all;
+  transition-property: all;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  &:focus {
+    border-color: $colorBorderFocusedInput;
+    outline: none
+  }
+  &.error {
+    border: 2px solid $colorErrorRed
+  }
+}
+
+textarea {
+  height: 200px;
+  resize: vertical;
+  color: $colorFontInput;
+  background-color: $colorInputBackground;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  &.short {
+    height: 60px
+  }
+}
+
+[contenteditable]:focus {
+  outline: none
+}
+
+.checkbox {
+  position: relative;
+  input {
+    position: absolute; // take it out of document flow
+    opacity: 0; // hide it
+
+    & + label {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    // Box.
+    & + label:before {
+      content: '';
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: text-top;
+      width: 20px;
+      height: 20px;
+      background: $colorInputBackground;
+      border: 1px solid $colorBorderInput;
+    }
+
+    // Box hover
+    &:hover + label:before {
+//      background: #f35429;
+    }
+
+    // Box focus
+    &:focus + label:before {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+    }
+
+    // Box checked
+    &[value=true] + label:before {
+      background: $colorInputBackground;
+    }
+
+    // Disabled state label.
+    &:disabled + label {
+      color: #b8b8b8;
+      cursor: auto;
+    }
+
+    // Disabled box.
+    &:disabled + label:before {
+      box-shadow: none;
+      background: #ddd;
+    }
+
+    // Checkmark. Could be replaced with an image
+    &[value=true] + label:after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 9px;
+      background: $colorFontInput;
+      width: 2px;
+      height: 2px;
+      box-shadow: 2px 0 0 $colorFontInput,
+      4px 0 0 $colorFontInput,
+      4px -2px 0 $colorFontInput,
+      4px -4px 0 $colorFontInput,
+      4px -6px 0 $colorFontInput,
+      4px -8px 0 $colorFontInput;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+
 
 .btn {
   display: inline-block;
@@ -460,19 +534,21 @@ div.ReactTags__tagInput {
   display: inline-block;
 }
 
-div.ReactTags__tagInput input.ReactTags__tagInputField,
-div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
+div.ReactTags__tagInput input.ReactTags__tagInputField {
   height: 31px;
   margin: 0;
   font-size: 12px;
   width: 100%;
-  border: 1px solid #eee;
+  border: 1px solid $colorBorderInput;
+  &:focus {
+    border-color: $colorBorderFocusedInput;
+  }
 }
 
 /* Styles for selected tags */
 div.ReactTags__selected span.ReactTags__tag {
-  border: 1px solid #ddd;
-  background: #eee;
+  border: 1px solid $colorBorderInput;
+  background: $colorInputBackground;
   font-size: 12px;
   display: inline-block;
   padding: 5px;
