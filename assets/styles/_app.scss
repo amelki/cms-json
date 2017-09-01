@@ -208,6 +208,10 @@ form {
     .description {
       margin-bottom: 4px;
     }
+    &:hover {
+//      background-color: lighten($colorDefaultBackground, 5%);
+      background-color: rgba(0, 0, 0, 0.03);
+    }
   }
 }
 
@@ -413,7 +417,8 @@ table {
       }
     }
     &:hover td {
-      background-color: rgba(0, 0, 0, 0.02);
+//      background-color: lighten($colorInputBackground, 1%);
+      background-color: rgba(0, 0, 0, 0.04);
       &.delete {
         background-color: $colorDark;
       }
