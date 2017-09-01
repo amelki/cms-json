@@ -44,10 +44,6 @@ I finally came up with that very simple feature set:
 Although tons of CMS products exist on the market, I didn't find any one fulfilling the
 constraints above.
 
-## Release notes
-
-This is a very first version. The UI needs some polishing, but it works.
-
 ## Usage
 
 ```
@@ -69,5 +65,5 @@ Standard Options:
 [npm-url]: https://npmjs.org/package/cms-json
 [downloads-image]: https://img.shields.io/npm/dm/cms-json.svg
 [downloads-url]: https://npmjs.org/package/cms-json
-[travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=linux
+[travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=build
 [travis-url]: https://travis-ci.org/amelki/cms-json
