@@ -1,105 +1,17 @@
-$topNav: 50px;
-$bottomNav: 20px;
-$colorErrorRed: red;
-$colorPastelRed: #ec5f67;
-$colorPastelBlue: #6caedd;
-$colorPastelGreen: #99c794;
-$colorBorderDark: #121516;
-$colorVeryDark: #1C2022;
-$colorAnotherDark: #23262c;
-$colorDark: #24282A;
-$colorSelectedDark: rgba(139, 191, 228, 0.19999999999999996);
-$colorFontDisabledDark: #555;
-$colorInputBackground: #494b54;
-$colorFontLightGray: #aaa;
-//$colorDefaultBackground: #f2f2f2;
-$colorDefaultBackground: lighten(#23262c, 5%);
-$colorFontSelectedWhite: #fff;
-$colorFontAlmostWhite: #d4d4d4;
-$colorFontInput: #aab3ba;
-$colorBorderInput: lighten($colorInputBackground, 10%);
-$colorBorderFocusedInput: $colorFontLightGray;
-$fontCode: Menlo, Monaco, "Courier New", monospace;
-
-$colorNavBar: $colorVeryDark;
-
-////////////////////
-// [ Reset
-////////////////////
-
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-
-html {
-  line-height: 1
-}
-
-ol, ul {
-  list-style: none
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0
-}
-
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-a img {
-  border: none
-}
-
-article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
-  display: block
-}
-
-*, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box
-}
-
-////////////////////
-// ] Reset
-////////////////////
+@import "variables";
 
 html {
   background-color: $colorDefaultBackground;
 }
 
 body {
-  margin: 0;
-  font-family: "Avenir Next", "Helvetica", sans-serif;
+  font-family: $fontMain;
   color: $colorFontAlmostWhite;
   font-size: 15px;
-  text-align: center;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility
 }
 
 a {
-  outline: none;
   color: $colorAnotherDark;
-  text-decoration: none;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  -webkit-transition-property: all;
-  transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s
 }
 
 a:active {
@@ -126,14 +38,6 @@ a.white:hover {
 
 small {
   font-size: 12px
-}
-
-b {
-  font-weight: bold
-}
-
-i {
-  font-style: italic
 }
 
 hr {
@@ -310,22 +214,11 @@ form {
 input[type="text"], textarea {
   background-color: $colorInputBackground;
   color: $colorFontAlmostWhite;
-  font-family: "Avenir Next", "Helvetica", sans-serif;
+  font-family: $fontMain;
   font-size: 16px;
   width: 100%;
   padding: 5px;
   border: 1px solid $colorBorderInput;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  -moz-transition-property: all;
-  -o-transition-property: all;
-  -webkit-transition-property: all;
-  transition-property: all;
-  -moz-transition-duration: 0.2s;
-  -o-transition-duration: 0.2s;
-  -webkit-transition-duration: 0.2s;
-  transition-duration: 0.2s;
   &:focus {
     border-color: $colorBorderFocusedInput;
     outline: none
@@ -340,8 +233,6 @@ textarea {
   resize: vertical;
   color: $colorFontInput;
   background-color: $colorInputBackground;
-  -moz-appearance: none;
-  -webkit-appearance: none;
   &.short {
     height: 60px
   }
@@ -528,109 +419,4 @@ table {
       }
     }
   }
-}
-
-/* Example Styles for React Tags*/
-div.ReactTags__tags {
-  position: relative;
-}
-
-/* Styles for the input */
-div.ReactTags__tagInput {
-  width: 200px;
-  border-radius: 2px;
-  display: inline-block;
-  input.ReactTags__tagInputField {
-    height: 31px;
-    margin: 0;
-    font-size: 12px;
-    width: 100%;
-    border: 1px solid $colorBorderInput;
-    &:focus {
-      border-color: $colorBorderFocusedInput;
-    }
-  }
-}
-
-/* Styles for selected tags */
-div.ReactTags__selected {
-  span.ReactTags__tag {
-    border: 1px solid $colorBorderInput;
-    background: $colorInputBackground;
-    font-size: 12px;
-    display: inline-block;
-    padding: 5px;
-    margin: 0 5px;
-    cursor: move;
-    border-radius: 2px;
-  }
-  a.ReactTags__remove {
-    color: $colorFontLightGray;
-    margin-left: 5px;
-    cursor: pointer;
-  }
-}
-
-
-/* Styles for suggestions */
-div.ReactTags__suggestions {
-  position: absolute;
-  ul {
-    list-style-type: none;
-    box-shadow: .05em .01em .5em rgba(0, 0, 0, .2);
-    background: white;
-    width: 200px;
-  }
-
-  li {
-    border-bottom: 1px solid #ddd;
-    padding: 5px 10px;
-    margin: 0;
-  }
-
-  li mark {
-    text-decoration: underline;
-    background: none;
-    font-weight: 600;
-  }
-
-  ul li.ReactTags__activeSuggestion {
-    background: #b7cfe0;
-    cursor: pointer;
-  }
-}
-
-#json-container {
-  position: absolute;
-  top: 50px;
-  width: 100%;
-}
-
-#json-pretty {
-  font-family: $fontCode;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 16px;
-  letter-spacing: 0;
-  background-color: #1e1e1e;
-  color: $colorFontAlmostWhite;
-  text-align: left;
-  padding: 10px 10px 40px;
-  border-top: 1px solid $colorBorderDark;
-}
-
-.json-pretty .json-string {
-  color: $colorPastelBlue;
-}
-
-.json-pretty .json-key {
-  color: $colorPastelRed;
-}
-
-.json-pretty .json-boolean {
-  color: $colorPastelGreen;
-}
-
-.json-pretty .json-number {
-  color: $colorPastelGreen;
 }

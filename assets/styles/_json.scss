@@ -1,0 +1,36 @@
+@import "variables";
+
+#json-container {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+}
+
+#json-pretty {
+  font-family: $fontCode;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: 0;
+  background-color: #1e1e1e;
+  color: $colorFontAlmostWhite;
+  text-align: left;
+  padding: 10px 10px 40px;
+  border-top: 1px solid $colorBorderDark;
+}
+
+.json-pretty .json-string {
+  color: $colorPastelBlue;
+}
+
+.json-pretty .json-key {
+  color: $colorPastelRed;
+}
+
+.json-pretty .json-boolean {
+  color: $colorPastelGreen;
+}
+
+.json-pretty .json-number {
+  color: $colorPastelGreen;
+}
