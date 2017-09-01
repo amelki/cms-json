@@ -3,12 +3,11 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
 	devtool: 'eval-source-map',
-	entry: [
-		path.join(__dirname, 'app/main.js')
-	],
+	entry: { app: [path.join(__dirname, 'app/main.js'), hotMiddlewareScript] },
 	output: {
 		path: path.join(__dirname, '/dist/'),
 		filename: '[name].js',
