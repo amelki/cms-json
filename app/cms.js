@@ -187,10 +187,12 @@ cms.fillPath = function(data, path, type) {
 };
 
 cms._findModel = function(node, path) {
-	for (let c = 0; c < node.children.length; c++) {
-		const child = node.children[c];
-		if (this.slugify(child.name) === path[0]) {
-			return this._findModel(child, path.slice(1));
+	if (node.children) {
+		for (let c = 0; c < node.children.length; c++) {
+			const child = node.children[c];
+			if (this.slugify(child.name) === path[0]) {
+				return this._findModel(child, path.slice(1));
+			}
 		}
 	}
 	if (path.length === 0) {
