@@ -73,16 +73,37 @@ const rowTarget = {
 class Row extends Component {
 	render() {
 		const { node, index, isDragging, connectDragSource, connectDropTarget, selection, dispatch } = this.props;
-		const label = node.data[index][Cms.defaultFieldName(node.model)];
+		let label, dest;
+		const nodeType = Cms.nodeType(node);
+		switch (nodeType) {
+			case Cms.TYPE_TREE:
+				if (node.model.children) {
+					label = node.model.children[index].name;
+					dest = '/node/' + selection.treePath + '/' + Cms.slugify(label);
+				}
+				break;
+			case Cms.TYPE_LIST:
+				label = node.data[index][Cms.defaultFieldName(node.model)];
+				dest = '/node/' + selection.treePath + '/' + index;
+				break;
+			case Cms.TYPE_MAP:
+				label = node.data[index][Cms.defaultFieldName(node.model)];
+				dest = '/node/' + selection.treePath + '/' + index;
+				break;
+		}
+		const nodeChildren = node.model.children;
 		const opacity = isDragging ? 0 : 1;
 		return connectDragSource(connectDropTarget(
 			<tr style={{ opacity }}>
 				<td>
-					<Link to={ '/node/' + selection.treePath + '/' + index }>{label}</Link>
+					<Link to={ dest }>{ label }</Link>
 				</td>
-				<td className="delete">
-					<a href="#" onClick={() => dispatch(deleteItem(node, index))}>×</a>
-				</td>
+				{
+					!nodeChildren &&
+					<td className="delete">
+						<a href="#" onClick={() => dispatch(deleteItem(node, index))}>×</a>
+					</td>
+				}
 			</tr>
 		))
 	}

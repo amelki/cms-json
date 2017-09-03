@@ -1,6 +1,8 @@
 import fetch from 'isomorphic-fetch'
 import axios from 'axios';
+import Cms from './cms';
 
+export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';
 export const DELETE_ITEM = 'DELETE_ITEM';
 export const MOVE_ITEM = 'MOVE_ITEM';
@@ -15,6 +17,11 @@ export const SAVE_ERROR = 'SAVE_ERROR';
 export const LOG_INFO = 'LOG_INFO';
 export const LOG_ERROR = 'LOG_ERROR';
 
+export const addChild = (node, childType) => ({
+	type: ADD_CHILD,
+	node: node,
+	childType: childType
+});
 export const addItem = (node) => ({
 	type: ADD_ITEM,
 	node: node
@@ -30,6 +37,15 @@ export const moveItem = (node, source, target) => ({
 	source,
 	target
 });
+
+export const addChildAndNavigate = (node, childType, history) => {
+	return (dispatch, getState) => {
+		dispatch(addChild(node, childType));
+		// change history state here
+//		history.push(Cms.findNode());
+	}
+};
+
 export const load = () => {
 	return dispatch => {
 		dispatch(loadStart());

@@ -12,14 +12,23 @@ class Content extends React.Component {
 		let { model, selection, node } = this.props;
 		let right = '';
 		if (node) {
-			if (node.model.list) {
-				if (Array.isArray(node.data)) {
-					right = <List node={node} selection={selection}/>;
-				} else {
-					right = <Item node={node} selection={selection}/>;
-				}
-			} else if (!node.model.children) {
-				right = <Item node={node}/>
+			const nodeType = Cms.nodeType(node);
+			switch (nodeType) {
+				case Cms.TYPE_TREE:
+					right =
+						<span>
+							<Item node={node} selection={selection}/>
+							<List node={node} selection={selection}/>
+						</span>;
+					break;
+				case Cms.TYPE_LIST:
+				case Cms.TYPE_MAP:
+					if (selection && (selection.index != -1)) {
+						right = <Item node={node} selection={selection}/>;
+					} else {
+						right = <List node={node} selection={selection}/>;
+					}
+					break;
 			}
 		}
 		return (
@@ -48,7 +57,7 @@ const mapStateToProps = (state) => {
 		index: -1
 	};
 	if (routerPath.startsWith('/node/')) {
-		selection = Cms.treePathAndIndex(routerPath.substring('/node/'.length));
+		selection = Cms.treePathAndIndex(state.main.model, routerPath.substring('/node/'.length));
 	}
 	const node = (selection.fullPath && selection.fullPath.length > 0)
 		? Cms.findNode(state.main.model, state.main.data, selection.fullPath)

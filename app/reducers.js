@@ -5,12 +5,55 @@ import * as Actions from './actions';
 const apply = (action, state, node) => {
 	switch (action.type) {
 		case Actions.ADD_ITEM:
-			node.data.push({
-				[Cms.defaultFieldName(node.model)] : Cms.findNewName(node, "New " + node.model.name, 1)
-			});
+			const newItemName = Cms.findNewName(node, "New " + node.model.name, 1);
+			let nodeType = Cms.nodeType(node);
+			switch (nodeType) {
+				case Cms.TYPE_MAP:
+					node.data[Cms.slugify(newItemName)] = {
+						[Cms.defaultFieldName(node.model)] : newItemName
+					};
+					break;
+				case Cms.TYPE_LIST:
+					node.data.push({
+						[Cms.defaultFieldName(node.model)] : newItemName
+					});
+					break;
+				default:
+					throw new Error(`Cannot add item to node of type ${nodeType}`);
+			}
+			break;
+		case Actions.ADD_CHILD:
+			const newModel = {
+				name : Cms.findNewNodeName(node, "New " + action.childType, 1),
+				type: action.childType
+			};
+			let newData;
+			switch (action.childType) {
+				case Cms.TYPE_TREE:
+					newModel.children = [];
+					newData = {};
+					break;
+				case Cms.TYPE_MAP:
+					newModel.fields = [ "Name" ];
+					newData = {};
+					break;
+				case Cms.TYPE_LIST:
+					newModel.fields = [ "Name" ];
+					newData = [];
+					break;
+			}
+			if (!node.model.children) {
+				node.model.children = [];
+			}
+			node.model.children.push(newModel);
+			node.data[Cms.slugify(newModel.name)] = newData;
 			break;
 		case Actions.DELETE_ITEM:
-			node.data.splice(action.index, 1);
+			if (Cms.nodeType(node) === Cms.TYPE_LIST) {
+				node.data.splice(action.index, 1);
+			} else {
+				delete node.data[action.index];
+			}
 			break;
 		case Actions.MOVE_ITEM:
 			const sourceItem = node.data[action.source];
@@ -40,6 +83,7 @@ const apply = (action, state, node) => {
 
 export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: false}, action) => {
 	switch (action.type) {
+		case Actions.ADD_CHILD:
 		case Actions.ADD_ITEM:
 		case Actions.DELETE_ITEM:
 		case Actions.MOVE_ITEM:

@@ -39,10 +39,20 @@ export const Node = ({node, path, selection, depth}) => {
 		subList = children;
 	}
 	const space = (20 * depth) + 'px';
+	let labelContent = [ <span key="name">{node.name}</span> ];
+	const nodeType = Cms.nodeType({ model: node });
+	switch (nodeType) {
+		case Cms.TYPE_LIST:
+			labelContent.push(<span key="type" className="node-type">{"\u005b\u005d"}</span>);
+			break;
+		case Cms.TYPE_MAP:
+			labelContent.push(<span key="type" className="node-type">{"\u007b\u007d"}</span>);
+			break;
+	}
 	return (
 		<span>
 			<li>
-				<Link className={linkClass} style={{paddingLeft: space}} to={ prefix + newPath }>{node.name}</Link>
+				<Link className={linkClass} style={{paddingLeft: space}} to={ prefix + newPath }>{labelContent}</Link>
 			</li>
 			{subList}
 		</span>
