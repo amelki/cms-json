@@ -16,8 +16,10 @@ const historyMiddleware = routerMiddleware(history);
 Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
 	const initialState = {
 		main: {
-			model: values[0].data,
-			data: values[1].data,
+			tree: {
+				model: values[0].data,
+				data: values[1].data
+			},
 			stale: false,
 			busy: false,
 		},

@@ -89,11 +89,12 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 		case Actions.MOVE_ITEM:
 		case Actions.INPUT_VALUE:
 		case Actions.ADD_VALUE:
-			const newState = Object.assign({
+			const newState = {
 				stale: true,
-				busy: false
-			}, Cms.deepCopy(state.model, state.data));
-			const newNode = Cms.findNode(newState.model, newState.data, action.node.path);
+				busy: false,
+				tree: Cms.deepCopy(state.tree)
+			};
+			const newNode = Cms.findNode(newState.tree, action.node.path);
 			apply(action, newState, newNode);
 			return newState;
 		case Actions.LOAD_START:
@@ -104,8 +105,10 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 			};
 		case Actions.LOAD_END:
 			return {
-				model: action.model,
-				data: action.data,
+				tree: {
+					model: action.model,
+					data: action.data
+				},
 				stale: false,
 				busy: false
 			};

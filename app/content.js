@@ -9,7 +9,7 @@ import styles from './main.scss';
 class Content extends React.Component {
 
 	render() {
-		let { model, selection, node } = this.props;
+		let { tree, selection, node } = this.props;
 		let right = '';
 		if (node) {
 			const nodeType = Cms.nodeType(node);
@@ -36,9 +36,9 @@ class Content extends React.Component {
 				<aside id="left">
 					<div className="inner">
 						<header>
-							<h1>{model.name}</h1>
+							<h1>{tree.model.name}</h1>
 						</header>
-						<Tree model={model} selection={ selection }/>
+						<Tree model={tree.model} selection={ selection }/>
 					</div>
 				</aside>
 				<section id="right">
@@ -57,14 +57,13 @@ const mapStateToProps = (state) => {
 		index: -1
 	};
 	if (routerPath.startsWith('/node/')) {
-		selection = Cms.treePathAndIndex(state.main.model, routerPath.substring('/node/'.length));
+		selection = Cms.treePathAndIndex(state.main.tree, routerPath.substring('/node/'.length));
 	}
 	const node = (selection.fullPath && selection.fullPath.length > 0)
-		? Cms.findNode(state.main.model, state.main.data, selection.fullPath)
+		? Cms.findNode(state.main.tree, selection.fullPath)
 		: null;
 	return {
-		model: state.main.model,
-		data: state.main.data,
+		tree: state.main.tree,
 		selection: selection,
 		node: node
 	};

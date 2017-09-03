@@ -17,15 +17,15 @@ cms.nodeType = function(node) {
 	}
 };
 
-cms.findNode = function(model, data, path) {
+cms.findNode = function(node, path) {
 	if (typeof path === 'string') {
 		path = path.split('/');
 	}
-	const modelNode = this._findModel(model, path);
-	let dataNode = this.findData(data, path);
+	const modelNode = this._findModel(node.model, path);
+	let dataNode = this.findData(node.data, path);
 	if (!dataNode) {
-		this.fillPath(data, path, modelNode.type);
-		dataNode = this.findData(data, path);
+		this.fillPath(node.data, path, modelNode.type);
+		dataNode = this.findData(node.data, path);
 	}
 	return {
 		model: modelNode,
@@ -34,26 +34,23 @@ cms.findNode = function(model, data, path) {
 	};
 };
 
-cms.deepCopy = function(model, data) {
+cms.deepCopy = function(tree) {
 	// For now, use JSON parse/stringify.
 	// If performance becomes an issue, we could write our own custom deep copy
 	// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
-	return {
-		model: JSON.parse(JSON.stringify(model)),
-		data: JSON.parse(JSON.stringify(data))
-	}
+	return JSON.parse(JSON.stringify(tree));
 };
 
 /**
  * Removes the last path fragment if it is a number
  * 		/foo/bar/5 => /foo/bar
  *
- * @param model
+ * @param tree
  * @param path
  * @returns {*}
  */
-cms.treePathAndIndex = function (model, path) {
-	let res = _treePathAndIndex(model, path.split('/'), {
+cms.treePathAndIndex = function (tree, path) {
+	let res = _treePathAndIndex(tree, path.split('/'), {
 		fullPath: path,
 		treePath: [],
 		index: -1
@@ -62,14 +59,14 @@ cms.treePathAndIndex = function (model, path) {
 	return res;
 };
 
-const _treePathAndIndex = function(model, path, result) {
+const _treePathAndIndex = function(node, path, result) {
 	if (path.length > 0) {
 		const p = path[0];
-		if (model.children && model.children.length > 0) {
+		if (node.model.children && node.model.children.length > 0) {
 			result.treePath = [ ...result.treePath, p ];
-			_treePathAndIndex(_findChild(model, p), path.slice(1), result);
+			_treePathAndIndex(_findChild(node, p), path.slice(1), result);
 		} else {
-			switch (cms.nodeType({ model: model })) {
+			switch (cms.nodeType(node)) {
 				case cms.TYPE_LIST:
 					result.index = parseInt(p);
 					break;
@@ -84,13 +81,13 @@ const _treePathAndIndex = function(model, path, result) {
 	return result;
 };
 
-const _findChild = (model, slug) => {
-	for (let i = 0; i < model.children.length; i++) {
-		if (cms.slugify(model.children[i].name) === slug) {
-			return model.children[i];
+const _findChild = (node, slug) => {
+	for (let i = 0; i < node.model.children.length; i++) {
+		if (cms.slugify(node.model.children[i].name) === slug) {
+			return { model: node.model.children[i], data: node.data[slug], parent: node };
 		}
 	}
-	throw new Error("Could not find child with slug" + slug + " in " + model.name);
+	throw new Error(`Could not find child with slug ${slug} in node ${node.model.name}`);
 };
 
 cms.addItem = function(node) {
@@ -155,14 +152,14 @@ cms.findDeepest = function(node, path) {
 	return _findDeepest(node, path, 0);
 };
 
-function _findDeepest(node, path, depth) {
+const _findDeepest = (node, path, depth) => {
 	const found = node[path[0]];
 	if (found) {
 		return _findDeepest(found, path.slice(1), depth + 1);
 	} else {
 		return { node: node, depth: depth };
 	}
-}
+};
 
 cms.fillPath = function(data, path, type) {
 	path = ensureArray(path);
@@ -186,19 +183,19 @@ cms.fillPath = function(data, path, type) {
 	}
 };
 
-cms._findModel = function(node, path) {
-	if (node.children) {
-		for (let c = 0; c < node.children.length; c++) {
-			const child = node.children[c];
+cms._findModel = function(model, path) {
+	if (model.children) {
+		for (let c = 0; c < model.children.length; c++) {
+			const child = model.children[c];
 			if (this.slugify(child.name) === path[0]) {
 				return this._findModel(child, path.slice(1));
 			}
 		}
 	}
 	if (path.length === 0) {
-		return node;
+		return model;
 	} else if (path.length === 1) {
-		return node;
+		return model;
 	}
 	return null;
 };
@@ -224,12 +221,12 @@ cms.slugify = function(str) {
 	return str.replace(/\s/g, '_').replace(/\//g, '-').toLowerCase();
 };
 
-cms.findData = function (node, path) {
-	if (!node) {
+cms.findData = function (data, path) {
+	if (!data) {
 		return null;
 	}
 	const key = path[0];
-	const found = Array.isArray(node) ? node[parseInt(key)] : node[key];
+	const found = Array.isArray(data) ? data[parseInt(key)] : data[key];
 	if (path.length === 1) {
 		return found;
 	} else {
