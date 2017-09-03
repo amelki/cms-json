@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Cms from './cms';
+import * as Cms from './cms';
 import PropTypes from 'prop-types';
 
 const Tree = ({model, selection}) => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Cms from './cms';
+import * as Cms from './cms';
 import md from './md';
 import Tags from "./tags";
 import { connect } from 'react-redux'

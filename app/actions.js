@@ -1,6 +1,4 @@
-import fetch from 'isomorphic-fetch'
 import axios from 'axios';
-import Cms from './cms';
 
 export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';

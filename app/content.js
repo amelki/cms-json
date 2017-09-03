@@ -1,9 +1,9 @@
 import React from 'react';
-import Cms from './cms';
+import * as Cms from './cms';
 import Tree from './tree';
 import List from './list';
 import Item from './item';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import styles from './main.scss';
 
 class Content extends React.Component {

@@ -1,31 +1,28 @@
-const cms = {};
-module.exports = cms;
+export const TYPE_TREE = "tree";
+export const TYPE_MAP = "map";
+export const TYPE_LIST = "list";
 
-cms.TYPE_TREE = "tree";
-cms.TYPE_MAP = "map";
-cms.TYPE_LIST = "list";
-
-cms.nodeType = function(node) {
+export const nodeType = (node) => {
 	if (node.model.type) {
 		return node.model.type;
 	} else {
 		if (node.model.list) {
-			return cms.TYPE_LIST;
+			return TYPE_LIST;
 		} else {
-			return cms.TYPE_TREE;
+			return TYPE_TREE;
 		}
 	}
 };
 
-cms.findNode = function(node, path) {
+export const findNode = (node, path) => {
 	if (typeof path === 'string') {
 		path = path.split('/');
 	}
-	const modelNode = this._findModel(node.model, path);
-	let dataNode = this.findData(node.data, path);
+	const modelNode = _findModel(node.model, path);
+	let dataNode = findData(node.data, path);
 	if (!dataNode) {
-		this.fillPath(node.data, path, modelNode.type);
-		dataNode = this.findData(node.data, path);
+		fillPath(node.data, path, modelNode.type);
+		dataNode = findData(node.data, path);
 	}
 	return {
 		model: modelNode,
@@ -34,7 +31,7 @@ cms.findNode = function(node, path) {
 	};
 };
 
-cms.deepCopy = function(tree) {
+export const deepCopy = (tree) => {
 	// For now, use JSON parse/stringify.
 	// If performance becomes an issue, we could write our own custom deep copy
 	// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
@@ -49,7 +46,7 @@ cms.deepCopy = function(tree) {
  * @param path
  * @returns {*}
  */
-cms.treePathAndIndex = function (tree, path) {
+export const treePathAndIndex = (tree, path) => {
 	let res = _treePathAndIndex(tree, path.split('/'), {
 		fullPath: path,
 		treePath: [],
@@ -66,11 +63,11 @@ const _treePathAndIndex = function(node, path, result) {
 			result.treePath = [ ...result.treePath, p ];
 			_treePathAndIndex(_findChild(node, p), path.slice(1), result);
 		} else {
-			switch (cms.nodeType(node)) {
-				case cms.TYPE_LIST:
+			switch (nodeType(node)) {
+				case TYPE_LIST:
 					result.index = parseInt(p);
 					break;
-				case cms.TYPE_MAP:
+				case TYPE_MAP:
 					result.index = p;
 					break;
 				default:
@@ -83,52 +80,39 @@ const _treePathAndIndex = function(node, path, result) {
 
 const _findChild = (node, slug) => {
 	for (let i = 0; i < node.model.children.length; i++) {
-		if (cms.slugify(node.model.children[i].name) === slug) {
+		if (slugify(node.model.children[i].name) === slug) {
 			return { model: node.model.children[i], data: node.data[slug], parent: node };
 		}
 	}
 	throw new Error(`Could not find child with slug ${slug} in node ${node.model.name}`);
 };
 
-cms.addItem = function(node) {
-	const item = {};
-	item[this.defaultFieldName(node.model)] = this.findNewName(node, "New " + node.model.name, 1);
-	node.data[node.data.length] = item;
-	return item;
-};
-
-cms.moveItem = function(node, sourceIndex, targetIndex) {
-	const source = node.data[sourceIndex];
-	node.data[sourceIndex] = node.data[targetIndex];
-	node.data[targetIndex] = source;
-};
-
-cms.items = function(node) {
-	switch (cms.nodeType(node)) {
-		case cms.TYPE_LIST:
+const _items = (node) => {
+	switch (nodeType(node)) {
+		case TYPE_LIST:
 			return node.data;
-		case cms.TYPE_MAP:
+		case TYPE_MAP:
 			return Object.values(node.data);
 		default:
 			throw new Error("Cannot list items for type: " + node.model.type);
 	}
 };
 
-cms.findNewName = function(node, newName, idx) {
-	let fieldName = this.defaultFieldName(node.model);
-	let items = cms.items(node);
+export const findNewName = (node, newName, idx) => {
+	let fieldName = defaultFieldName(node.model);
+	let items = _items(node);
 	let fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	for (let i = 0; i < items.length; i++) {
 		let item = items[i];
 		let name = item[fieldName];
 		if (name === fullName) {
-			return this.findNewName(node, newName, idx + 1);
+			return findNewName(node, newName, idx + 1);
 		}
 	}
 	return fullName;
 };
 
-cms.findNewNodeName = function(node, newName, idx) {
+export const findNewNodeName = (node, newName, idx) => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const children = node.model.children;
 	if (children) {
@@ -136,21 +120,14 @@ cms.findNewNodeName = function(node, newName, idx) {
 			let child = children[i];
 			let name = child["name"];
 			if (name === fullName) {
-				return this.findNewNodeName(node, newName, idx + 1);
+				return findNewNodeName(node, newName, idx + 1);
 			}
 		}
 	}
 	return fullName;
 };
 
-cms.deleteItem = function(node, index) {
-	node.data.splice(index, 1);
-};
-
-cms.findDeepest = function(node, path) {
-	path = ensureArray(path);
-	return _findDeepest(node, path, 0);
-};
+export const findDeepest = (node, path) => _findDeepest(node, ensureArray(path), 0);
 
 const _findDeepest = (node, path, depth) => {
 	const found = node[path[0]];
@@ -161,9 +138,9 @@ const _findDeepest = (node, path, depth) => {
 	}
 };
 
-cms.fillPath = function(data, path, type) {
+export const fillPath = (data, path, type) => {
 	path = ensureArray(path);
-	let found = this.findDeepest(data, path);
+	let found = findDeepest(data, path);
 	data = found.node;
 	let depth = found.depth;
 	path = path.slice(depth);
@@ -174,7 +151,7 @@ cms.fillPath = function(data, path, type) {
 				// This is a number: we don't want to fill in anything here...
 				break;
 			} else {
-				data[p] = (type === cms.TYPE_LIST) ? [] : {};
+				data[p] = (type === TYPE_LIST) ? [] : {};
 			}
 		} else {
 			data[p] = {};
@@ -183,12 +160,12 @@ cms.fillPath = function(data, path, type) {
 	}
 };
 
-cms._findModel = function(model, path) {
+const _findModel = (model, path) => {
 	if (model.children) {
 		for (let c = 0; c < model.children.length; c++) {
 			const child = model.children[c];
-			if (this.slugify(child.name) === path[0]) {
-				return this._findModel(child, path.slice(1));
+			if (slugify(child.name) === path[0]) {
+				return _findModel(child, path.slice(1));
 			}
 		}
 	}
@@ -200,28 +177,22 @@ cms._findModel = function(model, path) {
 	return null;
 };
 
-cms.defaultFieldName = function(model) {
+export const defaultFieldName = (model) => {
 	const field = model.fields[0];
 	if (typeof field === 'object') {
-		return this.slugify(field.name);
+		return slugify(field.name);
 	} else {
-		return this.slugify(field);
+		return slugify(field);
 	}
 };
 
-cms.fieldName = function(field) {
-	return (typeof field === 'string') ? this.slugify(field) : this.slugify(field.name);
-};
+export const fieldName = (field) => (typeof field === 'string') ? slugify(field) : slugify(field.name);
 
-cms.fieldDisplayName = function(field) {
-	return (typeof field === 'string') ? field : field.name;
-};
+export const fieldDisplayName = (field) => (typeof field === 'string') ? field : field.name;
 
-cms.slugify = function(str) {
-	return str.replace(/\s/g, '_').replace(/\//g, '-').toLowerCase();
-};
+export const slugify = (str) => str.replace(/\s/g, '_').replace(/\//g, '-').toLowerCase();
 
-cms.findData = function (data, path) {
+export const findData = (data, path) => {
 	if (!data) {
 		return null;
 	}
@@ -230,18 +201,10 @@ cms.findData = function (data, path) {
 	if (path.length === 1) {
 		return found;
 	} else {
-		return cms.findData(found, path.slice(1));
+		return findData(found, path.slice(1));
 	}
 };
 
-cms.isItem = function (node) {
-	const nodeType = cms.nodeType(node);
-	return nodeType === cms.TYPE_LIST || nodeType === cms.TYPE_MAP;
-};
+export const isItem = (node) => nodeType(node) === TYPE_LIST || nodeType(node) === TYPE_MAP;
 
-function ensureArray(path) {
-	if (typeof path === 'string') {
-		return path.split('/');
-	}
-	return path;
-}
+const ensureArray = path => typeof path === 'string' ? path.split('/') : path;

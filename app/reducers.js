@@ -1,4 +1,4 @@
-import Cms from './cms';
+import * as Cms from './cms';
 import md from './md';
 import * as Actions from './actions';
 

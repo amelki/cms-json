@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Field from './field';
-import Cms from "./cms";
+import * as Cms from "./cms";
 
 const Item = ({node, selection}) => {
 	const res = [];

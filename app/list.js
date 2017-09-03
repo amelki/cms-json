@@ -4,7 +4,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux'
 import { addItem, addChildAndNavigate } from './actions';
 import Row from './row';
-import Cms from './cms';
+import * as Cms from './cms';
 
 @DragDropContext(HTML5Backend)
 class List extends Component {
