@@ -5,51 +5,13 @@ import * as Actions from './actions';
 const apply = (action, state, node) => {
 	switch (action.type) {
 		case Actions.ADD_ITEM:
-			const newItemName = Cms.findNewName(node, "New " + node.model.name, 1);
-			let nodeType = Cms.nodeType(node);
-			switch (nodeType) {
-				case Cms.TYPE_MAP:
-					node.data[Cms.slugify(newItemName)] = {
-						[Cms.defaultFieldName(node.model)] : newItemName
-					};
-					break;
-				case Cms.TYPE_LIST:
-					node.data.push({
-						[Cms.defaultFieldName(node.model)] : newItemName
-					});
-					break;
-				default:
-					throw new Error(`Cannot add item to node of type ${nodeType}`);
-			}
+			Cms.addItem(node, "New " + node.model.name);
 			break;
 		case Actions.ADD_CHILD:
-			const newModel = {
-				name : Cms.findNewNodeName(node, "New " + action.childType, 1),
-				type: action.childType
-			};
-			let newData;
-			switch (action.childType) {
-				case Cms.TYPE_TREE:
-					newModel.children = [];
-					newData = {};
-					break;
-				case Cms.TYPE_MAP:
-					newModel.fields = [ "Name" ];
-					newData = {};
-					break;
-				case Cms.TYPE_LIST:
-					newModel.fields = [ "Name" ];
-					newData = [];
-					break;
-			}
-			if (!node.model.children) {
-				node.model.children = [];
-			}
-			node.model.children.push(newModel);
-			node.data[Cms.slugify(newModel.name)] = newData;
+			Cms.addNode(node, "New " + action.childType, action.childType);
 			break;
 		case Actions.DELETE_ITEM:
-			if (Cms.nodeType(node) === Cms.TYPE_LIST) {
+			if (Cms.getNodeType(node) === Cms.TYPE_LIST_OBJECT) {
 				node.data.splice(action.index, 1);
 			} else {
 				delete node.data[action.index];

@@ -1,13 +1,14 @@
 export const TYPE_TREE = "tree";
-export const TYPE_MAP = "map";
-export const TYPE_LIST = "list";
+export const TYPE_MAP_OBJECT = "map<object>";
+export const TYPE_MAP_STRING = "map<string>";
+export const TYPE_LIST_OBJECT = "list<object>";
 
-export const nodeType = (node) => {
+export const getNodeType = (node) => {
 	if (node.model.type) {
 		return node.model.type;
 	} else {
-		if (node.model.list) {
-			return TYPE_LIST;
+		if (node.model.list) { // legacy
+			return TYPE_LIST_OBJECT;
 		} else {
 			return TYPE_TREE;
 		}
@@ -63,11 +64,12 @@ const _treePathAndIndex = function(node, path, result) {
 			result.treePath = [ ...result.treePath, p ];
 			_treePathAndIndex(_findChild(node, p), path.slice(1), result);
 		} else {
-			switch (nodeType(node)) {
-				case TYPE_LIST:
+			switch (getNodeType(node)) {
+				case TYPE_LIST_OBJECT:
 					result.index = parseInt(p);
 					break;
-				case TYPE_MAP:
+				case TYPE_MAP_OBJECT:
+				case TYPE_MAP_STRING:
 					result.index = p;
 					break;
 				default:
@@ -88,31 +90,40 @@ const _findChild = (node, slug) => {
 };
 
 const _items = (node) => {
-	switch (nodeType(node)) {
-		case TYPE_LIST:
+	switch (getNodeType(node)) {
+		case TYPE_LIST_OBJECT:
 			return node.data;
-		case TYPE_MAP:
+		case TYPE_MAP_OBJECT:
+		case TYPE_MAP_STRING:
 			return Object.values(node.data);
 		default:
 			throw new Error("Cannot list items for type: " + node.model.type);
 	}
 };
 
-export const findNewName = (node, newName, idx) => {
-	let fieldName = defaultFieldName(node.model);
-	let items = _items(node);
-	let fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
+const _findNewListItemName = (node, newName, idx) => {
+	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
+	const fieldName = defaultFieldName(node.model);
+	const items = _items(node);
 	for (let i = 0; i < items.length; i++) {
 		let item = items[i];
 		let name = item[fieldName];
 		if (name === fullName) {
-			return findNewName(node, newName, idx + 1);
+			return _findNewListItemName(node, newName, idx + 1);
 		}
 	}
 	return fullName;
 };
 
-export const findNewNodeName = (node, newName, idx) => {
+const _findNewMapKey = (node, newName, idx) => {
+	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
+	if (node.data[fullName]) {
+		return _findNewMapKey(node, newName, idx + 1);
+	}
+	return fullName;
+};
+
+const _findNewNodeName = (node, newName, idx) => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const children = node.model.children;
 	if (children) {
@@ -120,11 +131,75 @@ export const findNewNodeName = (node, newName, idx) => {
 			let child = children[i];
 			let name = child["name"];
 			if (name === fullName) {
-				return findNewNodeName(node, newName, idx + 1);
+				return _findNewNodeName(node, newName, idx + 1);
 			}
 		}
 	}
 	return fullName;
+};
+
+export const addItem = (node, requestedName) => {
+	const nodeType = getNodeType(node);
+	let item;
+	let index;
+	switch (nodeType) {
+		case TYPE_MAP_OBJECT:
+			item = {};
+			index = _findNewMapKey(node, requestedName, 1);
+			node.data[index] = item;
+			break;
+		case TYPE_MAP_STRING:
+			item = "";
+			index = _findNewMapKey(node, requestedName, 1);
+			node.data[index] = item;
+			break;
+		case TYPE_LIST_OBJECT:
+			item = {
+				[defaultFieldName(node.model)] : _findNewListItemName(node, requestedName, 1)
+			};
+			node.data.push(item);
+			index = node.data.length - 1;
+			break;
+		default:
+			throw new Error(`Cannot add item to node of type ${nodeType}`);
+	}
+	return { index, item };
+};
+
+export const addNode = (node, requestedName, nodeType) => {
+	const newModel = {
+		name : _findNewNodeName(node, requestedName, 1),
+		type: nodeType
+	};
+	let newData;
+	switch (nodeType) {
+		case TYPE_TREE:
+			newModel.children = [];
+			newData = {};
+			break;
+		case TYPE_MAP_OBJECT:
+		case TYPE_MAP_STRING:
+			newModel.fields = [ { name: "Key", key: true } ];
+			newData = {};
+			break;
+		case TYPE_LIST_OBJECT:
+			newModel.fields = [ "Name" ];
+			newData = [];
+			break;
+	}
+	if (!node.model.children) {
+		node.model.children = [];
+	}
+	node.model.children.push(newModel);
+	node.data[slugify(newModel.name)] = newData;
+	return Object.assign(
+		{},
+		node,
+		{
+			model: newModel,
+			data: newData
+		}
+	);
 };
 
 export const findDeepest = (node, path) => _findDeepest(node, ensureArray(path), 0);
@@ -151,7 +226,7 @@ export const fillPath = (data, path, type) => {
 				// This is a number: we don't want to fill in anything here...
 				break;
 			} else {
-				data[p] = (type === TYPE_LIST) ? [] : {};
+				data[p] = (type === TYPE_LIST_OBJECT) ? [] : {};
 			}
 		} else {
 			data[p] = {};
@@ -178,12 +253,22 @@ const _findModel = (model, path) => {
 };
 
 export const defaultFieldName = (model) => {
-	const field = model.fields[0];
-	if (typeof field === 'object') {
-		return slugify(field.name);
-	} else {
-		return slugify(field);
+		const field = model.fields[0];
+		if (typeof field === 'object') {
+			return slugify(field.name);
+		} else {
+			return slugify(field);
+		}
+};
+
+const _findKey = (model) => {
+	if (model.fields && model.fields.length > 0) {
+		let keys = model.fields.filter(f => f.key);
+		if (keys.length === 1) {
+			return keys[0];
+		}
 	}
+	throw new Error(`Could not find a field marked as key for model ${model.name}`);
 };
 
 export const fieldName = (field) => (typeof field === 'string') ? slugify(field) : slugify(field.name);
@@ -205,6 +290,6 @@ export const findData = (data, path) => {
 	}
 };
 
-export const isItem = (node) => nodeType(node) === TYPE_LIST || nodeType(node) === TYPE_MAP;
+export const isItem = (node) => [TYPE_LIST_OBJECT, TYPE_MAP_OBJECT, TYPE_MAP_STRING].includes(getNodeType(node));
 
 const ensureArray = path => typeof path === 'string' ? path.split('/') : path;

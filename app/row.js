@@ -73,7 +73,7 @@ class Row extends Component {
 	render() {
 		const { node, index, isDragging, connectDragSource, connectDropTarget, selection, dispatch } = this.props;
 		let label, dest;
-		const nodeType = Cms.nodeType(node);
+		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
 			case Cms.TYPE_TREE:
 				if (node.model.children) {
@@ -81,12 +81,13 @@ class Row extends Component {
 					dest = '/node/' + selection.treePath + '/' + Cms.slugify(label);
 				}
 				break;
-			case Cms.TYPE_LIST:
+			case Cms.TYPE_LIST_OBJECT:
 				label = node.data[index][Cms.defaultFieldName(node.model)];
 				dest = '/node/' + selection.treePath + '/' + index;
 				break;
-			case Cms.TYPE_MAP:
-				label = node.data[index][Cms.defaultFieldName(node.model)];
+			case Cms.TYPE_MAP_OBJECT:
+			case Cms.TYPE_MAP_STRING:
+				label = index;
 				dest = '/node/' + selection.treePath + '/' + index;
 				break;
 		}

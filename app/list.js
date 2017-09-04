@@ -11,7 +11,7 @@ class List extends Component {
 	render() {
 		const { node, dispatch, selection, router } = this.props;
 		const rows = [];
-		const nodeType = Cms.nodeType(node);
+		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
 			case Cms.TYPE_TREE:
 				if (node.model.children) {
@@ -20,12 +20,13 @@ class List extends Component {
 					}
 				}
 				break;
-			case Cms.TYPE_LIST:
+			case Cms.TYPE_LIST_OBJECT:
 				for (let i = 0; i < node.data.length; i++) {
 					rows.push(<Row key={i} id={i} index={i} node={node} selection={selection}/>);
 				}
 				break;
-			case Cms.TYPE_MAP:
+			case Cms.TYPE_MAP_OBJECT:
+			case Cms.TYPE_MAP_STRING:
 				for (let p in node.data) {
 					rows.push(<Row key={p} id={p} index={p} node={node} selection={selection}/>);
 				}
@@ -43,8 +44,9 @@ class List extends Component {
 						? (
 							<span>
 								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_TREE, router.history))}>Add Node</a>
-								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_LIST, router.history))}>Add List</a>
-								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP, router.history))}>Add Map</a>
+								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_LIST_OBJECT, router.history))}>Add List</a>
+								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>
+								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_STRING, router.history))}>Add String Map</a>
 							</span>
 					)
 						: <a id="addBtn" className="btn" onClick={(event) => dispatch(addItem(node))}>Add Item</a>

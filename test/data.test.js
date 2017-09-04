@@ -1,8 +1,7 @@
-var assert = require("assert");
-var fs = require("fs");
-var Cms = require("../app/cms");
-var Promise = require("bluebird");
-var readFile = Promise.promisify(fs.readFile);
+const fs = require("fs");
+const Cms = require("../app/cms");
+const Promise = require("bluebird");
+const readFile = Promise.promisify(fs.readFile);
 
 test("site_info", () => {
 	return Promise.all([readFile('test/data/model.json', 'utf-8'), readFile('test/data/data.json', 'utf-8')])

@@ -40,12 +40,13 @@ export const Node = ({node, path, selection, depth}) => {
 	}
 	const space = (20 * depth) + 'px';
 	let labelContent = [ <span key="name">{node.name}</span> ];
-	const nodeType = Cms.nodeType({ model: node });
+	const nodeType = Cms.getNodeType({ model: node });
 	switch (nodeType) {
-		case Cms.TYPE_LIST:
+		case Cms.TYPE_LIST_OBJECT:
 			labelContent.push(<span key="type" className="node-type">{"\u005b\u005d"}</span>);
 			break;
-		case Cms.TYPE_MAP:
+		case Cms.TYPE_MAP_OBJECT:
+		case Cms.TYPE_MAP_STRING:
 			labelContent.push(<span key="type" className="node-type">{"\u007b\u007d"}</span>);
 			break;
 	}

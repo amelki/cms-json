@@ -1,1 +1,70 @@
-{}
+{
+  "site_info": {
+    "copyright": "",
+    "favicon": "favicon.ico"
+  },
+  "nav": {
+    "footer": [
+      {
+        "label": "About",
+        "url": "/about"
+      },
+      {
+        "label": "Facebook",
+        "url": "www.facebook.com/mywebsite",
+        "target": "_blank"
+      },
+      {
+        "label": "Twitter",
+        "url": "https://twitter/mywebsite",
+        "target": "_blank"
+      }
+    ],
+    "header": [
+      {
+        "label": "Home",
+        "url": "/home"
+      },
+      {
+        "label": "Product",
+        "url": "/product"
+      },
+      {
+        "label": "Blog",
+        "url": "/blog"
+      }
+    ]
+  },
+  "pages": [
+    {
+      "key": "A Page",
+      "body": "",
+      "search_enabled": true,
+      "heading": "hello",
+      "tags": [
+        "foo",
+        "bar",
+        "hux"
+      ]
+    },
+    {
+      "key": "Another Page"
+    }
+  ],
+  "messages": {
+    "errors": {
+      "internalError": {
+        "title": "Internal Error",
+        "message": "An internal error occurred"
+      },
+      "connectionError": {
+        "title": "Network Error",
+        "message": "There seem to be network issues"
+      }
+    },
+    "tooltips": {
+      "welcome": "Welcome to my web site",
+      "sendEmail": "click to send an email"
+    }
+  }
+}

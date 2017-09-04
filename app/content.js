@@ -12,7 +12,7 @@ class Content extends React.Component {
 		let { tree, selection, node } = this.props;
 		let right = '';
 		if (node) {
-			const nodeType = Cms.nodeType(node);
+			const nodeType = Cms.getNodeType(node);
 			switch (nodeType) {
 				case Cms.TYPE_TREE:
 					right =
@@ -21,8 +21,9 @@ class Content extends React.Component {
 							<List node={node} selection={selection}/>
 						</span>;
 					break;
-				case Cms.TYPE_LIST:
-				case Cms.TYPE_MAP:
+				case Cms.TYPE_LIST_OBJECT:
+				case Cms.TYPE_MAP_OBJECT:
+				case Cms.TYPE_MAP_STRING:
 					if (selection && (selection.index != -1)) {
 						right = <Item node={node} selection={selection}/>;
 					} else {

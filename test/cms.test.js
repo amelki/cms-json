@@ -1,7 +1,80 @@
 import * as Cms from '../app/cms.js';
+const fs = require("fs");
+const Promise = require("bluebird");
+const readFile = Promise.promisify(fs.readFile);
+
+test(`findNode(messages)`, () => {
+	return loadTree().then(tree => {
+		const node = Cms.findNode(tree, "messages");
+		expect(node.model.name).toBe("Messages");
+		expect(node.model.children.length).toBe(2);
+		expect(node.model.children[0].name).toBe("Errors");
+		expect(node.data.errors).toBeDefined();
+	});
+});
+
+test(`findNode(nav/header)`, () => {
+	return loadTree().then(tree => {
+		const node = Cms.findNode(tree, "nav/header");
+		expect(node.model.name).toBe("Header");
+		expect(node.data.length).toBe(3);
+		expect(node.data[0].label).toBe('Home');
+	});
+});
+
+test(`findNode(nav/header/2)`, () => {
+	return loadTree().then(tree => {
+		const node = Cms.findNode(tree, "nav/header/2");
+		expect(node.model.name).toBe("Header");
+		expect(node.data.label).toBe('Blog');
+	});
+});
+
+test(`findNode(messages/errors)`, () => {
+	return loadTree().then(tree => {
+		const node = Cms.findNode(tree, "messages/errors");
+		expect(node.model.name).toBe("Errors");
+		expect(node.data.internalError).toBeDefined();
+	});
+});
+
+test(`findNode(messages/errors/internalError)`, () => {
+	return loadTree().then(tree => {
+		const node = Cms.findNode(tree, "messages/errors/internalError");
+		expect(node.model.name).toBe("Errors");
+		expect(node.data.title).toBe('Internal Error');
+	});
+});
+
+test(`treePathAndIndex(messages/errors/internalError)`, () => {
+	return loadTree().then(tree => {
+		const res = Cms.treePathAndIndex(tree, 'messages/errors/internalError');
+		expect(res.fullPath).toBe('messages/errors/internalError');
+		expect(res.treePath).toBe('messages/errors');
+		expect(res.index).toBe('internalError');
+	});
+});
+
+test(`treePathAndIndex(nav/header)`, () => {
+	return loadTree().then(tree => {
+		const res = Cms.treePathAndIndex(tree, 'nav/header');
+		expect(res.fullPath).toBe('nav/header');
+		expect(res.treePath).toBe('nav/header');
+		expect(res.index).toBe(-1);
+	});
+});
+
+test(`treePathAndIndex(nav/header/2)`, () => {
+	return loadTree().then(tree => {
+		const res = Cms.treePathAndIndex(tree, 'nav/header/2');
+		expect(res.fullPath).toBe('nav/header/2');
+		expect(res.treePath).toBe('nav/header');
+		expect(res.index).toBe(2);
+	});
+});
 
 const testFindDeepest = (data, path, depth, extractor) => {
-	test(path, () => {
+	test(`findDeepest(${path})`, () => {
 		const result = Cms.findDeepest(data, path);
 		expect(result.depth).toBe(depth);
 		expect(result.node.name).toBe(extractor(data));
@@ -44,6 +117,81 @@ test("fillPath", () => {
 	expect(typeof data3.c.foo.bar).toBe('object');
 });
 
-test("findNewName", () => {
+let jsonTree;
 
-});
+const loadTree = () => {
+	const promise = jsonTree
+		? Promise.resolve(jsonTree) // reparse from cache
+		: Promise.all([readFile('test/data/model.json', 'utf-8'), readFile('test/data/data.json', 'utf-8')])
+			.then(results => {
+				jsonTree = {
+					model: results[0],
+					data: results[1]
+				};
+				return jsonTree;
+			});
+	return promise.then(json => {
+		return {
+			model: JSON.parse(json.model),
+			data: JSON.parse(json.data)
+		}
+	});
+};
+
+const testAddListItem = (path, requestedName, expectedNewNames) => {
+	test(`addListItem(${path},${requestedName})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			if (!Array.isArray(expectedNewNames)) {
+				expectedNewNames = [ expectedNewNames ];
+			}
+			expectedNewNames.forEach(expectedNewName => {
+				const newItem = Cms.addItem(node, requestedName).item;
+				expect(newItem[Cms.defaultFieldName(node.model)]).toBe(expectedNewName);
+			});
+		});
+	});
+};
+
+testAddListItem("nav/header", "New Item", [ "New Item", "New Item (2)", "New Item (3)" ]);
+testAddListItem("nav/header", "Blog", [ "Blog (2)", "Blog (3)" ]);
+testAddListItem("nav/header", "Blog (2)", [ "Blog (2)", "Blog (2) (2)", "Blog (2) (3)" ]);
+
+const testAddMapItem = (path, requestedName, expectedNewNames) => {
+	test(`addMapItem(${path},${requestedName})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			if (!Array.isArray(expectedNewNames)) {
+				expectedNewNames = [ expectedNewNames ];
+			}
+			expectedNewNames.forEach(expectedNewName => {
+				const newKey = Cms.addItem(node, requestedName).index;
+				expect(newKey).toBe(expectedNewName);
+			});
+		});
+	});
+};
+
+testAddMapItem("messages/errors", "internalError", [ "internalError (2)", "internalError (3)" ]);
+
+const testAddNode = (path, nodeType, requestedName, expectedNewNames) => {
+	test(`addNode(${path}, ${nodeType})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			if (!Array.isArray(expectedNewNames)) {
+				expectedNewNames = [ expectedNewNames ];
+			}
+			expectedNewNames.forEach(expectedNewName => {
+				const newNode = Cms.addNode(node, requestedName, nodeType);
+				expect(newNode.model.name).toBe(expectedNewName);
+			});
+		});
+	});
+};
+
+testAddNode("nav", Cms.TYPE_TREE, "New Node", [ "New Node", "New Node (2)", "New Node (3)" ]);
+testAddNode("nav", Cms.TYPE_MAP_OBJECT, "New Map", [ "New Map", "New Map (2)", "New Map (3)" ]);
+testAddNode("nav", Cms.TYPE_LIST_OBJECT, "New List", [ "New List", "New List (2)", "New List (3)" ]);
+testAddNode("nav", Cms.TYPE_LIST_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
+testAddNode("nav", Cms.TYPE_MAP_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
+testAddNode("nav", Cms.TYPE_TREE, "Header", [ "Header (2)", "Header (3)" ]);
