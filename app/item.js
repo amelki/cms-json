@@ -8,7 +8,7 @@ const Item = ({node, selection}) => {
 	if (node.model.fields) {
 		const fields = [];
 		for (let i = 0; i < node.model.fields.length; i++) {
-			fields.push(<Field key={i} node={node} field={node.model.fields[i]}/>);
+			fields.push(<Field key={i} node={node} field={node.model.fields[i]} index={selection.index}/>);
 		}
 		res.push(<form key="form">{fields}</form>);
 	}

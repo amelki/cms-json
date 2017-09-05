@@ -4,14 +4,24 @@ import md from './md';
 import Tags from "./tags";
 import { connect } from 'react-redux'
 import { inputValue, addValue } from './actions';
+import {TYPE_MAP_OBJECT} from "./cms";
+import {TYPE_MAP_STRING} from "./cms";
 
 class Field extends React.Component {
 	render() {
-		const { field, node, dispatch } = this.props;
+		const { field, node, index, dispatch } = this.props;
 		const data = node.data;
 		const name = Cms.fieldName(field);
 		const displayName = Cms.fieldDisplayName(field);
-		const value = data[name];
+		let value;
+		const nodeType = Cms.getNodeType(node);
+		if (Cms.isMapType(node) && Cms.isKeyField(field)) {
+			value = index;
+		} else if (nodeType === TYPE_MAP_STRING && !Cms.isKeyField(field)) {
+			value = data;
+		} else {
+			value = data[name];
+		}
 		const description = field.description ? <div className="description"><small>{field.description}</small></div> : '';
 		let typeHelp = field.type
 			? <div className="type">

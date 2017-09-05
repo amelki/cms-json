@@ -49,7 +49,7 @@
         {
           "name": "Tooltips",
           "type": "map<string>",
-          "fields": [ { "name": "Identifier", "key": true }, "message" ]
+          "fields": [ { "name": "Identifier", "key": true }, "Message" ]
         }
       ]
     }

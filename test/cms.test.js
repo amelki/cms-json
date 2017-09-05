@@ -170,6 +170,9 @@ const testAddMapItem = (path, requestedName, expectedNewNames) => {
 };
 
 testAddMapItem("messages/errors", "internalError", [ "internalError (2)", "internalError (3)" ]);
+testAddMapItem("messages/errors", "anotherError", [ "anotherError", "anotherError (2)" ]);
+testAddMapItem("messages/tooltips", "welcome", [ "welcome (2)", "welcome (3)" ]);
+testAddMapItem("messages/tooltips", "anotherTooltip", [ "anotherTooltip", "anotherTooltip (2)" ]);
 
 const testAddNode = (path, nodeType, requestedName, expectedNewNames) => {
 	test(`addNode(${path}, ${nodeType})`, () => {

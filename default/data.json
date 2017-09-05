@@ -32,9 +32,6 @@
       {
         "label": "Blog",
         "url": "/blog"
-      },
-      {
-        "label": "New Header"
       }
     ]
   },
@@ -53,5 +50,21 @@
     {
       "key": "Another Page"
     }
-  ]
+  ],
+  "messages": {
+    "errors": {
+      "internalError": {
+        "title": "Internal Error",
+        "message": "An internal error occurred"
+      },
+      "connectionError": {
+        "title": "Network Error",
+        "message": "There seem to be network issues"
+      }
+    },
+    "tooltips": {
+      "welcome": "Welcome to my web site",
+      "sendEmail": "click to send an email"
+    }
+  }
 }

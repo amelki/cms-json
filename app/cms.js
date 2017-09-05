@@ -15,6 +15,15 @@ export const getNodeType = (node) => {
 	}
 };
 
+export const isMapType = (node) => {
+	const nodeType = getNodeType(node);
+	return [ TYPE_MAP_STRING, TYPE_MAP_OBJECT ].includes(nodeType);
+};
+
+export const isKeyField = (field) => {
+	return typeof field === 'object' && field.key;
+};
+
 export const findNode = (node, path) => {
 	if (typeof path === 'string') {
 		path = path.split('/');
@@ -117,7 +126,7 @@ const _findNewListItemName = (node, newName, idx) => {
 
 const _findNewMapKey = (node, newName, idx) => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
-	if (node.data[fullName]) {
+	if (typeof node.data[fullName] !== 'undefined') {
 		return _findNewMapKey(node, newName, idx + 1);
 	}
 	return fullName;
@@ -149,7 +158,7 @@ export const addItem = (node, requestedName) => {
 			node.data[index] = item;
 			break;
 		case TYPE_MAP_STRING:
-			item = "";
+			item = "New value";
 			index = _findNewMapKey(node, requestedName, 1);
 			node.data[index] = item;
 			break;
@@ -178,8 +187,11 @@ export const addNode = (node, requestedName, nodeType) => {
 			newData = {};
 			break;
 		case TYPE_MAP_OBJECT:
-		case TYPE_MAP_STRING:
 			newModel.fields = [ { name: "Key", key: true } ];
+			newData = {};
+			break;
+		case TYPE_MAP_STRING:
+			newModel.fields = [ { name: "Key", key: true }, "Value" ];
 			newData = {};
 			break;
 		case TYPE_LIST_OBJECT:

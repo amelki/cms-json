@@ -13,7 +13,7 @@ class Json extends React.Component {
 const mapStateToProps = (state) => {
 	const routerPath = state.router.location.pathname; // /node/header/2
 	return {
-		json: state.main[routerPath.substring('/json/'.length)]
+		json: state.main.tree[routerPath.substring('/json/'.length)]
 	};
 };
 
