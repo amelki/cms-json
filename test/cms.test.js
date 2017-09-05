@@ -35,6 +35,7 @@ test(`findNode(messages)`, () => {
 		expect(node.model.children.length).toBe(2);
 		expect(node.model.children[0].name).toBe("Errors");
 		expect(node.data.errors).toBeDefined();
+		expect(node.path).toBe('messages');
 	});
 });
 
@@ -44,6 +45,7 @@ test(`findNode(nav/header)`, () => {
 		expect(node.model.name).toBe("Header");
 		expect(node.data.length).toBe(3);
 		expect(node.data[0].label).toBe('Home');
+		expect(node.path).toBe('nav/header');
 	});
 });
 
@@ -52,6 +54,7 @@ test(`findNode(nav/header/2)`, () => {
 		const node = Cms.findNode(tree, "nav/header/2");
 		expect(node.model.name).toBe("Header");
 		expect(node.data.label).toBe('Blog');
+		expect(node.path).toBe('nav/header/2');
 	});
 });
 
@@ -60,6 +63,7 @@ test(`findNode(messages/errors)`, () => {
 		const node = Cms.findNode(tree, "messages/errors");
 		expect(node.model.name).toBe("Errors");
 		expect(node.data.internalError).toBeDefined();
+		expect(node.path).toBe('messages/errors');
 	});
 });
 
@@ -68,6 +72,7 @@ test(`findNode(messages/errors/internalError)`, () => {
 		const node = Cms.findNode(tree, "messages/errors/internalError");
 		expect(node.model.name).toBe("Errors");
 		expect(node.data.title).toBe('Internal Error');
+		expect(node.path).toBe('messages/errors/internalError');
 	});
 });
 
@@ -120,20 +125,20 @@ testFindDeepest(data2, "a/b/c", 3, d => d.a.b.c.name);
 testFindDeepest(data2, "a/b/c/d/e/f/g", 3, d => d.a.b.c.name);
 testFindDeepest(data2, "foo/bar/hux", 0, d => d.name);
 
-const data3 = { a: { name: 'hello' }, c: { name: 'world' } };
+// const data3 = { a: { name: 'hello' }, c: { name: 'world' } };
 
-test("fillPath", () => {
-	expect(typeof data3.a.b).toBe('undefined');
-	expect(data3.c).toBeDefined();
-	Cms.fillPath(data3, "a/b");
-	expect(data3.a.b).toBeDefined();
-	Cms.fillPath(data3, "a/b/d/e/f");
-	expect(data3.a.b.d.e.f).toBeDefined();
-	expect(data3.c).toBeDefined();
-	Cms.fillPath(data3, "c/foo/bar/3");
-	expect(data3.c.foo.bar).toBeDefined();
-	expect(typeof data3.c.foo.bar).toBe('object');
-});
+// test("fillPath", () => {
+// 	expect(typeof data3.a.b).toBe('undefined');
+// 	expect(data3.c).toBeDefined();
+// 	Cms.fillPath(data3, "a/b");
+// 	expect(data3.a.b).toBeDefined();
+// 	Cms.fillPath(data3, "a/b/d/e/f");
+// 	expect(data3.a.b.d.e.f).toBeDefined();
+// 	expect(data3.c).toBeDefined();
+// 	Cms.fillPath(data3, "c/foo/bar/3");
+// 	expect(data3.c.foo.bar).toBeDefined();
+// 	expect(typeof data3.c.foo.bar).toBe('object');
+// });
 
 const testAddListItem = (path, requestedName, expectedNewNames) => {
 	test(`addListItem(${path},${requestedName})`, () => {

@@ -2,13 +2,14 @@ import * as Cms from './cms';
 import md from './md';
 import * as Actions from './actions';
 
-const apply = (action, state, node) => {
+const apply = (action, state, node, parentNode) => {
 	switch (action.type) {
 		case Actions.ADD_ITEM:
 			Cms.addItem(node, "New " + node.model.name);
 			break;
 		case Actions.ADD_CHILD:
-			Cms.addNode(node, "New " + action.childType, action.childType);
+			const newNode = Cms.addNode(node, "New " + action.childType, action.childType);
+			state.path = newNode.path;
 			break;
 		case Actions.DELETE_ITEM:
 			if (Cms.getNodeType(node) === Cms.TYPE_LIST_OBJECT) {
@@ -35,7 +36,14 @@ const apply = (action, state, node) => {
 					value = !node.data[Cms.fieldName(field)];
 					break;
 			}
-			node.data[Cms.fieldName(field)] = value;
+			if (Cms.isMapType(node) && Cms.isKeyField(field)) {
+				delete parentNode.data[node.index];
+				parentNode.data[value] = node.data;
+				// Request navigation to the new path
+				state.path = parentNode.path + '/' + value;
+			} else {
+				node.data[Cms.fieldName(field)] = value;
+			}
 			break;
 		case Actions.ADD_VALUE:
 			node.data[Cms.fieldName(action.field)] = action.value;
@@ -57,7 +65,8 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 				tree: Cms.deepCopy(state.tree)
 			};
 			const newNode = Cms.findNode(newState.tree, action.node.path);
-			apply(action, newState, newNode);
+			const selection = Cms.treePathAndIndex(newState.tree, action.node.path);
+			apply(action, newState, newNode, Cms.isSelectionItem(selection) ? Cms.findNode(newState.tree, selection.treePath) : null);
 			return newState;
 		case Actions.LOAD_START:
 		case Actions.SAVE_START:

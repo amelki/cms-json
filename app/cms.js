@@ -28,17 +28,18 @@ export const findNode = (node, path) => {
 	if (typeof path === 'string') {
 		path = path.split('/');
 	}
-	const modelNode = _findModel(node.model, path);
-	let dataNode = findData(node.data, path);
-	if (!dataNode) {
-		fillPath(node.data, path, modelNode.type);
-		dataNode = findData(node.data, path);
-	}
-	return {
-		model: modelNode,
-		data: dataNode,
-		path: path
-	};
+	return _findNode(node, path);
+	// const modelNode = _findModel(node.model, path);
+	// let dataNode = _findData(node.data, path);
+	// if (!dataNode) {
+	// 	fillPath(node.data, path, modelNode.type);
+	// 	dataNode = _findData(node.data, path);
+	// }
+	// return {
+	// 	model: modelNode,
+	// 	data: dataNode,
+	// 	path: path
+	// };
 };
 
 export const deepCopy = (tree) => {
@@ -57,7 +58,7 @@ export const deepCopy = (tree) => {
  * @returns {*}
  */
 export const treePathAndIndex = (tree, path) => {
-	let res = _treePathAndIndex(tree, path.split('/'), {
+	let res = _treePathAndIndex(tree, Array.isArray(path) ? path : path.split('/'), {
 		fullPath: path,
 		treePath: [],
 		index: -1
@@ -65,6 +66,8 @@ export const treePathAndIndex = (tree, path) => {
 	res.treePath = res.treePath.join('/');
 	return res;
 };
+
+export const isSelectionItem = (selection) => selection.index !== -1;
 
 const _treePathAndIndex = function(node, path, result) {
 	if (path.length > 0) {
@@ -209,7 +212,9 @@ export const addNode = (node, requestedName, nodeType) => {
 		node,
 		{
 			model: newModel,
-			data: newData
+			data: newData,
+			path: node.path + '/' + slugify(newModel.name),
+			parent: node,
 		}
 	);
 };
@@ -225,25 +230,44 @@ const _findDeepest = (node, path, depth) => {
 	}
 };
 
-export const fillPath = (data, path, type) => {
-	path = ensureArray(path);
-	let found = findDeepest(data, path);
-	data = found.node;
-	let depth = found.depth;
-	path = path.slice(depth);
-	for (let i = 0; i < path.length; i++) {
-		const p = path[i];
-		if (i === path.length - 1) {
-			if (!Number.isNaN(parseInt(p))) {
-				// This is a number: we don't want to fill in anything here...
-				break;
-			} else {
-				data[p] = (type === TYPE_LIST_OBJECT) ? [] : {};
+const _findNode = (node, path) => {
+	const nodeType = getNodeType(node);
+	if (path.length === 0) {
+		return node;
+	}
+	const next = path[0];
+	if (nodeType === TYPE_TREE) {
+		for (let c = 0; c < node.model.children.length; c++) {
+			const childModel = node.model.children[c];
+			if (slugify(childModel.name) === next) {
+				return _findNode({
+					model: childModel,
+					data: node.data[next] || (getNodeType(childModel) === TYPE_LIST_OBJECT ? [] : {}),
+					parent: node,
+					path: (node.path ? (node.path + '/') : '') + next,
+					index: -1
+				}, path.slice(1));
 			}
-		} else {
-			data[p] = {};
 		}
-		data = data[p];
+		throw new Error(`Could not find child named ${next} in node ${node.model.name}`);
+	} else if (nodeType === TYPE_LIST_OBJECT) {
+		const index = parseInt(next);
+		return {
+			model: node.model,
+			data: node.data[index] || {},
+			parent: node,
+			path: (node.path ? (node.path + '/') : '') + next,
+			index: index
+		};
+	} else {
+		// Map
+		return {
+			model: node.model,
+			data: node.data[next] || (nodeType === TYPE_MAP_OBJECT ? {} : ""),
+			parent: node,
+			path: (node.path ? (node.path + '/') : '') + next,
+			index: next
+		};
 	}
 };
 
@@ -263,6 +287,20 @@ const _findModel = (model, path) => {
 	}
 	return null;
 };
+
+const _findData = (data, path) => {
+	if (!data) {
+		return null;
+	}
+	const key = path[0];
+	const found = Array.isArray(data) ? data[parseInt(key)] : data[key];
+	if (path.length === 1) {
+		return found;
+	} else {
+		return _findData(found, path.slice(1));
+	}
+};
+
 
 export const defaultFieldName = (model) => {
 		const field = model.fields[0];
@@ -288,19 +326,6 @@ export const fieldName = (field) => (typeof field === 'string') ? slugify(field)
 export const fieldDisplayName = (field) => (typeof field === 'string') ? field : field.name;
 
 export const slugify = (str) => str.replace(/\s/g, '_').replace(/\//g, '-').toLowerCase();
-
-export const findData = (data, path) => {
-	if (!data) {
-		return null;
-	}
-	const key = path[0];
-	const found = Array.isArray(data) ? data[parseInt(key)] : data[key];
-	if (path.length === 1) {
-		return found;
-	} else {
-		return findData(found, path.slice(1));
-	}
-};
 
 export const isItem = (node) => [TYPE_LIST_OBJECT, TYPE_MAP_OBJECT, TYPE_MAP_STRING].includes(getNodeType(node));
 

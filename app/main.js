@@ -9,6 +9,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
+import watch from 'redux-watch'
 
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
@@ -34,6 +35,12 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		initialState,
 		applyMiddleware(historyMiddleware, thunkMiddleware)
 	);
+	let w = watch(store.getState, 'main.path');
+	store.subscribe(w((newVal, oldVal, objectPath) => {
+		if (newVal !== oldVal) {
+			history.push('/node/' + newVal);
+		}
+	}));
 	ReactDOM.render(
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
