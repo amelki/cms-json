@@ -3,6 +3,31 @@ const fs = require("fs");
 const Promise = require("bluebird");
 const readFile = Promise.promisify(fs.readFile);
 
+let jsonTree;
+
+/**
+ * Utility methods that loads model and data from disk and cache them in a global variable.
+ * @returns {Promise}
+ */
+const loadTree = () => {
+	const promise = jsonTree
+		? Promise.resolve(jsonTree) // reparse from cache
+		: Promise.all([readFile('test/data/model.json', 'utf-8'), readFile('test/data/data.json', 'utf-8')])
+			.then(results => {
+				jsonTree = {
+					model: results[0],
+					data: results[1]
+				};
+				return jsonTree;
+			});
+	return promise.then(json => {
+		return {
+			model: JSON.parse(json.model),
+			data: JSON.parse(json.data)
+		}
+	});
+};
+
 test(`findNode(messages)`, () => {
 	return loadTree().then(tree => {
 		const node = Cms.findNode(tree, "messages");
@@ -46,32 +71,25 @@ test(`findNode(messages/errors/internalError)`, () => {
 	});
 });
 
-test(`treePathAndIndex(messages/errors/internalError)`, () => {
-	return loadTree().then(tree => {
-		const res = Cms.treePathAndIndex(tree, 'messages/errors/internalError');
-		expect(res.fullPath).toBe('messages/errors/internalError');
-		expect(res.treePath).toBe('messages/errors');
-		expect(res.index).toBe('internalError');
+const testTreePathAndIndex = (path, expectedFullPath, expectedTreePath, expectedIndex) => {
+	test(`treePathAndIndex(${path})`, () => {
+		return loadTree().then(tree => {
+			const res = Cms.treePathAndIndex(tree, path);
+			expect(res.fullPath).toBe(expectedFullPath);
+			expect(res.treePath).toBe(expectedTreePath);
+			expect(res.index).toBe(expectedIndex);
+		});
 	});
-});
+};
 
-test(`treePathAndIndex(nav/header)`, () => {
-	return loadTree().then(tree => {
-		const res = Cms.treePathAndIndex(tree, 'nav/header');
-		expect(res.fullPath).toBe('nav/header');
-		expect(res.treePath).toBe('nav/header');
-		expect(res.index).toBe(-1);
-	});
-});
+testTreePathAndIndex('messages/errors/internalError', 'messages/errors/internalError', 'messages/errors', 'internalError');
+testTreePathAndIndex('site_info', 'site_info', 'site_info', -1);
+testTreePathAndIndex('nav/header', 'nav/header', 'nav/header', -1);
+testTreePathAndIndex('nav/header/2', 'nav/header/2', 'nav/header', 2);
+// The following cases are debatable (should we rather throw an error id a path does not / cannot exist ?...
+testTreePathAndIndex('nav/header/5', 'nav/header/5', 'nav/header', 5);
+testTreePathAndIndex('messages/errors/3', 'messages/errors/3', 'messages/errors', "3");
 
-test(`treePathAndIndex(nav/header/2)`, () => {
-	return loadTree().then(tree => {
-		const res = Cms.treePathAndIndex(tree, 'nav/header/2');
-		expect(res.fullPath).toBe('nav/header/2');
-		expect(res.treePath).toBe('nav/header');
-		expect(res.index).toBe(2);
-	});
-});
 
 const testFindDeepest = (data, path, depth, extractor) => {
 	test(`findDeepest(${path})`, () => {
@@ -116,27 +134,6 @@ test("fillPath", () => {
 	expect(data3.c.foo.bar).toBeDefined();
 	expect(typeof data3.c.foo.bar).toBe('object');
 });
-
-let jsonTree;
-
-const loadTree = () => {
-	const promise = jsonTree
-		? Promise.resolve(jsonTree) // reparse from cache
-		: Promise.all([readFile('test/data/model.json', 'utf-8'), readFile('test/data/data.json', 'utf-8')])
-			.then(results => {
-				jsonTree = {
-					model: results[0],
-					data: results[1]
-				};
-				return jsonTree;
-			});
-	return promise.then(json => {
-		return {
-			model: JSON.parse(json.model),
-			data: JSON.parse(json.data)
-		}
-	});
-};
 
 const testAddListItem = (path, requestedName, expectedNewNames) => {
 	test(`addListItem(${path},${requestedName})`, () => {
