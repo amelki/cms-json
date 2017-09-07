@@ -15,6 +15,18 @@ export const getNodeType = (node) => {
 	}
 };
 
+export const getField = (f) => {
+	return typeof f === 'string' ? { name: f } : f;
+};
+
+export const getFields = (node) => {
+	const fields = node.model.fields;
+	if (fields) {
+		return fields.map(f => typeof f === 'string' ? { name: f } : f);
+	}
+	return fields;
+};
+
 export const isMapType = (node) => {
 	const nodeType = getNodeType(node);
 	return [ TYPE_MAP_STRING, TYPE_MAP_OBJECT ].includes(nodeType);
@@ -29,25 +41,8 @@ export const findNode = (node, path) => {
 		path = path.split('/');
 	}
 	return _findNode(node, path);
-	// const modelNode = _findModel(node.model, path);
-	// let dataNode = _findData(node.data, path);
-	// if (!dataNode) {
-	// 	fillPath(node.data, path, modelNode.type);
-	// 	dataNode = _findData(node.data, path);
-	// }
-	// return {
-	// 	model: modelNode,
-	// 	data: dataNode,
-	// 	path: path
-	// };
 };
 
-export const deepCopy = (tree) => {
-	// For now, use JSON parse/stringify.
-	// If performance becomes an issue, we could write our own custom deep copy
-	// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
-	return JSON.parse(JSON.stringify(tree));
-};
 
 /**
  * Removes the last path fragment if it is a number
@@ -271,37 +266,6 @@ const _findNode = (node, path) => {
 	}
 };
 
-const _findModel = (model, path) => {
-	if (model.children) {
-		for (let c = 0; c < model.children.length; c++) {
-			const child = model.children[c];
-			if (slugify(child.name) === path[0]) {
-				return _findModel(child, path.slice(1));
-			}
-		}
-	}
-	if (path.length === 0) {
-		return model;
-	} else if (path.length === 1) {
-		return model;
-	}
-	return null;
-};
-
-const _findData = (data, path) => {
-	if (!data) {
-		return null;
-	}
-	const key = path[0];
-	const found = Array.isArray(data) ? data[parseInt(key)] : data[key];
-	if (path.length === 1) {
-		return found;
-	} else {
-		return _findData(found, path.slice(1));
-	}
-};
-
-
 export const defaultFieldName = (model) => {
 		const field = model.fields[0];
 		if (typeof field === 'object') {
@@ -311,15 +275,15 @@ export const defaultFieldName = (model) => {
 		}
 };
 
-const _findKey = (model) => {
-	if (model.fields && model.fields.length > 0) {
-		let keys = model.fields.filter(f => f.key);
-		if (keys.length === 1) {
-			return keys[0];
-		}
-	}
-	throw new Error(`Could not find a field marked as key for model ${model.name}`);
-};
+// const _findKey = (model) => {
+// 	if (model.fields && model.fields.length > 0) {
+// 		let keys = model.fields.filter(f => f.key);
+// 		if (keys.length === 1) {
+// 			return keys[0];
+// 		}
+// 	}
+// 	throw new Error(`Could not find a field marked as key for model ${model.name}`);
+// };
 
 export const fieldName = (field) => (typeof field === 'string') ? slugify(field) : slugify(field.name);
 

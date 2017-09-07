@@ -3,13 +3,14 @@ import * as Cms from './cms';
 import Tree from './tree';
 import List from './list';
 import Item from './item';
+import FieldEditor from './fieldEditor';
 import { connect } from 'react-redux';
 import styles from './main.scss';
 
 class Content extends React.Component {
 
 	render() {
-		let { tree, selection, node } = this.props;
+		let { tree, selection, node, editingField } = this.props;
 		let right = '';
 		if (node) {
 			const nodeType = Cms.getNodeType(node);
@@ -24,7 +25,7 @@ class Content extends React.Component {
 				case Cms.TYPE_LIST_OBJECT:
 				case Cms.TYPE_MAP_OBJECT:
 				case Cms.TYPE_MAP_STRING:
-					if (selection && (selection.index != -1)) {
+					if (selection && (selection.index !== -1)) {
 						right = <Item node={node} selection={selection}/>;
 					} else {
 						right = <List node={node} selection={selection}/>;
@@ -45,6 +46,7 @@ class Content extends React.Component {
 				<section id="right">
 					{right}
 				</section>
+				{editingField} ? <FieldEditor/> : ''
 			</div>
 		);
 	}
@@ -66,7 +68,8 @@ const mapStateToProps = (state) => {
 	return {
 		tree: state.main.tree,
 		selection: selection,
-		node: node
+		node: node,
+		editingField: state.editingField
 	};
 };
 

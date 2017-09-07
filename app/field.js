@@ -4,23 +4,29 @@ import md from './md';
 import Tags from "./tags";
 import { connect } from 'react-redux'
 import { inputValue, addValue } from './actions';
-import {TYPE_MAP_OBJECT} from "./cms";
 import {TYPE_MAP_STRING} from "./cms";
 
 class Field extends React.Component {
 	render() {
-		const { field, node, index, dispatch } = this.props;
+		const { field, node, index, fieldsInError, dispatch } = this.props;
+		let className = field.className ? field.className : '';
 		const data = node.data;
 		const name = Cms.fieldName(field);
 		const displayName = Cms.fieldDisplayName(field);
 		let value;
 		const nodeType = Cms.getNodeType(node);
-		if (Cms.isMapType(node) && Cms.isKeyField(field)) {
-			value = index;
-		} else if (nodeType === TYPE_MAP_STRING && !Cms.isKeyField(field)) {
-			value = data;
+		const inError = fieldsInError[node.path];
+		if (inError && inError.field.name === field.name) {
+			value = inError.value;
+			className += ' error';
 		} else {
-			value = data[name];
+			if (Cms.isMapType(node) && Cms.isKeyField(field)) {
+				value = index;
+			} else if (nodeType === TYPE_MAP_STRING && !Cms.isKeyField(field)) {
+				value = data;
+			} else {
+				value = data[name];
+			}
 		}
 		const description = field.description ? <div className="description"><small>{field.description}</small></div> : '';
 		let typeHelp = field.type
@@ -29,7 +35,6 @@ class Field extends React.Component {
 			</div>
 			: '';
 		let input;
-		let className = field.className ? field.className : '';
 		const handleInputValue = (event) => {
 			dispatch(inputValue(node, field, event));
 		};
@@ -57,7 +62,7 @@ class Field extends React.Component {
 				input = <Tags value={value} onChange={handleAddValue} />;
 				break;
 			default:
-				input = <input className={className} type="text" name={name} value={value || ''} onChange={handleInputValue}/>;
+				input = <input autoComplete={"off"} className={className} type="text" name={name} value={value || ''} onChange={handleInputValue}/>;
 		}
 		return (
 			<div className="field">
@@ -72,4 +77,10 @@ class Field extends React.Component {
 	}
 }
 
-export default connect()(Field);
+const mapStateToProps = (state) => {
+	return {
+		fieldsInError: state.main.fieldsInError
+	};
+};
+
+export default connect(mapStateToProps)(Field);

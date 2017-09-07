@@ -232,7 +232,7 @@ input[type="text"], textarea {
     outline: none
   }
   &.error {
-    border: 2px solid $colorErrorRed
+    border: 1px solid $colorPastelRed;
   }
 }
 

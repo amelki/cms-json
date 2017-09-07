@@ -2,8 +2,10 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Field from './field';
 import * as Cms from "./cms";
+import {connect} from "react-redux";
+import {editField} from "./actions";
 
-const Item = ({node, selection}) => {
+const Item = ({node, selection, dispatch}) => {
 	const res = [];
 	if (node.model.fields) {
 		const fields = [];
@@ -14,8 +16,9 @@ const Item = ({node, selection}) => {
 	}
 	if (Cms.isItem(node)) {
 		res.push(<Link key="backBtn" id="backBtn" className="btn" to={ '/node/' + selection.treePath }>Back to list</Link>);
+		res.push(<a href="#" onClick={dispatch(editField(node))}>Add field</a>);
 	}
 	return <div>{res}</div>;
 };
 
-export default Item;
+export default connect()(Item);

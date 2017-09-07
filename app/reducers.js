@@ -37,13 +37,24 @@ const apply = (action, state, node, parentNode) => {
 					break;
 			}
 			if (Cms.isMapType(node) && Cms.isKeyField(field)) {
-				delete parentNode.data[node.index];
-				parentNode.data[value] = node.data;
-				// Request navigation to the new path
-				state.path = parentNode.path + '/' + value;
+				if (value && value.length > 0 && !parentNode.data[value]) {
+					delete parentNode.data[node.index];
+					parentNode.data[value] = node.data;
+					// Request navigation to the new path
+					state.path = parentNode.path + '/' + value;
+					delete state.fieldsInError[node.path];
+				} else {
+					state.fieldsInError[node.path] = { field: field, value: value };
+				}
 			} else {
 				node.data[Cms.fieldName(field)] = value;
 			}
+			break;
+		case Actions.SUBMIT_FIELD:
+			const index = (typeof state.editingField.index !== 'undefined') ? state.editingField.index : node.model.children.length;
+			node.model.fields[index] = state.editingField.field;
+			// TODO: handle the case where the field already exists (involves refactoring data...)
+			state.editingField = null;
 			break;
 		case Actions.ADD_VALUE:
 			node.data[Cms.fieldName(action.field)] = action.value;
@@ -59,15 +70,34 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 		case Actions.MOVE_ITEM:
 		case Actions.INPUT_VALUE:
 		case Actions.ADD_VALUE:
-			const newState = {
-				stale: true,
-				busy: false,
-				tree: Cms.deepCopy(state.tree)
-			};
+		case Actions.SUBMIT_FIELD:
+			// For now, use JSON parse/stringify.
+			// If performance becomes an issue, we could write our own custom deep copy
+			// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
+			const newState = Object.assign({}, JSON.parse(JSON.stringify(state)), { stale: true, busy: false });
 			const newNode = Cms.findNode(newState.tree, action.node.path);
 			const selection = Cms.treePathAndIndex(newState.tree, action.node.path);
 			apply(action, newState, newNode, Cms.isSelectionItem(selection) ? Cms.findNode(newState.tree, selection.treePath) : null);
 			return newState;
+		case Actions.EDIT_FIELD:
+			let editingField = {};
+			if (typeof action.index !== 'undefined') {
+				editingField = { path: action.node.path, index: action.index };
+			}
+			return {
+				...state,
+				editingField
+			};
+		case Actions.CANCEL_EDIT_FIELD:
+			return {
+				...state,
+				editingField: null
+			};
+		case Actions.CLEAR_FIELD_ERRORS:
+			return {
+				...state,
+				fieldsInError: {}
+			};
 		case Actions.LOAD_START:
 		case Actions.SAVE_START:
 			return {
@@ -80,6 +110,7 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 					model: action.model,
 					data: action.data
 				},
+				fieldsInError: {},
 				stale: false,
 				busy: false
 			};
@@ -111,6 +142,21 @@ export const messageReducer = (state = { text: '', level: '' }, action) => {
 				text: action.message,
 				level: 'info'
 			};
+		default:
+			return state;
+	}
+};
+
+export const navigationReducer = (state = { latestNode: '' }, action) => {
+	switch (action.type) {
+		case Actions.ON_NAVIGATE:
+			if (action.current.startsWith('/node/')) {
+				// We were on a node, and qui the tree (eg: /json). We save the latestNode
+				return {
+					latestNode: action.current.substring('/node/'.length)
+				}
+			}
+			return state;
 		default:
 			return state;
 	}

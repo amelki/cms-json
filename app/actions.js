@@ -14,6 +14,11 @@ export const SAVE_END = 'SAVE_END';
 export const SAVE_ERROR = 'SAVE_ERROR';
 export const LOG_INFO = 'LOG_INFO';
 export const LOG_ERROR = 'LOG_ERROR';
+export const CLEAR_FIELD_ERRORS = 'CLEAR_FIELD_ERRORS';
+export const ON_NAVIGATE = 'ON_NAVIGATE';
+export const SUBMIT_FIELD = 'SUBMIT_FIELD';
+export const CANCEL_EDIT_FIELD = 'CANCEL_EDIT_FIELD';
+export const EDIT_FIELD = 'EDIT_FIELD';
 
 export const addChild = (node, childType) => ({
 	type: ADD_CHILD,
@@ -34,6 +39,14 @@ export const moveItem = (node, source, target) => ({
 	node,
 	source,
 	target
+});
+export const clearFieldErrors = () => ({
+	type: CLEAR_FIELD_ERRORS
+});
+export const onNavigate = (previousRouterPath, newRouterPath) => ({
+	type: ON_NAVIGATE,
+	previous: previousRouterPath,
+	current: newRouterPath
 });
 
 export const addChildAndNavigate = (node, childType, history) => {
@@ -113,5 +126,16 @@ export const addValue = (node, field, value) => ({
 	node,
 	field,
 	value
+});
+export const editField = (node, index) => ({
+	type: EDIT_FIELD,
+	node,
+	index
+});
+export const submitField = () => ({
+	type: SUBMIT_FIELD
+});
+export const cancelEditField = () => ({
+	type: CANCEL_EDIT_FIELD
 });
 

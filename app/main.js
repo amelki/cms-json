@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import App from './app';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { mainReducer, messageReducer } from './reducers';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {mainReducer, messageReducer, navigationReducer} from './reducers';
 import {Provider} from 'react-redux';
 import axios from 'axios';
 import thunkMiddleware from 'redux-thunk';
+import { createForms } from 'react-redux-form';
 
-import { ConnectedRouter, routerReducer, routerMiddleware } from 'react-router-redux'
+import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
 import watch from 'redux-watch'
+import {clearFieldErrors, onNavigate} from "./actions";
 
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
@@ -23,22 +25,35 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 			},
 			stale: false,
 			busy: false,
+			fieldsInError: {},
+			editingField: null
 		},
-		message: { text: '' },
-		router: {}
+		message: {text: ''},
+		navigation: {},
+		router: {},
+		...createForms({
+			field: {},
+		}),
 	};
 	const store = createStore(combineReducers({
 			main: mainReducer,
 			message: messageReducer,
+			navigation: navigationReducer,
 			router: routerReducer
 		}),
 		initialState,
 		applyMiddleware(historyMiddleware, thunkMiddleware)
 	);
-	let w = watch(store.getState, 'main.path');
-	store.subscribe(w((newVal, oldVal, objectPath) => {
+	store.subscribe(watch(store.getState, 'main.path')((newVal, oldVal, objectPath) => {
 		if (newVal !== oldVal) {
 			history.push('/node/' + newVal);
+		}
+	}));
+	store.subscribe(watch(store.getState, 'router.location.pathname')((newVal, oldVal, objectPath) => {
+		if (newVal !== oldVal) {
+			// Clear field errors when navigating to any other path
+			store.dispatch(clearFieldErrors());
+			store.dispatch(onNavigate(oldVal, newVal));
 		}
 	}));
 	ReactDOM.render(
