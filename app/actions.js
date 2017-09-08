@@ -1,4 +1,6 @@
 import axios from 'axios';
+import * as Cms from './cms';
+import { actions } from 'react-redux-form';
 
 export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';
@@ -127,14 +129,32 @@ export const addValue = (node, field, value) => ({
 	field,
 	value
 });
-export const editField = (node, index) => ({
-	type: EDIT_FIELD,
-	node,
-	index
-});
-export const submitField = () => ({
-	type: SUBMIT_FIELD
-});
+export const editField = (node, index) => {
+	return (dispatch, getState) => {
+		let field ;
+		if (typeof index !== 'undefined') {
+			field = node.model.fields[index];
+		} else {
+			field = { name: '' }
+		}
+		dispatch(actions.change('field', field));
+		dispatch({
+			type: EDIT_FIELD,
+			node,
+			index
+		});
+	}
+};
+export const submitField = (field) => {
+	return (dispatch, getState) => {
+		const state = getState();
+		dispatch({
+			type: SUBMIT_FIELD,
+			field: field,
+			node: Cms.findNode(state.main.tree, state.main.editingField.path)
+		});
+	};
+};
 export const cancelEditField = () => ({
 	type: CANCEL_EDIT_FIELD
 });

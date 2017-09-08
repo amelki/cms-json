@@ -46,7 +46,7 @@ class Content extends React.Component {
 				<section id="right">
 					{right}
 				</section>
-				{editingField} ? <FieldEditor/> : ''
+				{editingField && <FieldEditor on={editingField}/>}
 			</div>
 		);
 	}
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
 		tree: state.main.tree,
 		selection: selection,
 		node: node,
-		editingField: state.editingField
+		editingField: state.main.editingField
 	};
 };
 

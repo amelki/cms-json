@@ -51,8 +51,8 @@ const apply = (action, state, node, parentNode) => {
 			}
 			break;
 		case Actions.SUBMIT_FIELD:
-			const index = (typeof state.editingField.index !== 'undefined') ? state.editingField.index : node.model.children.length;
-			node.model.fields[index] = state.editingField.field;
+			const index = (typeof state.editingField.index !== 'undefined') ? state.editingField.index : node.model.fields.length;
+			node.model.fields[index] = {...action.field};
 			// TODO: handle the case where the field already exists (involves refactoring data...)
 			state.editingField = null;
 			break;
@@ -81,9 +81,7 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 			return newState;
 		case Actions.EDIT_FIELD:
 			let editingField = {};
-			if (typeof action.index !== 'undefined') {
-				editingField = { path: action.node.path, index: action.index };
-			}
+			editingField = { path: action.node.path, index: action.index };
 			return {
 				...state,
 				editingField
@@ -151,7 +149,7 @@ export const navigationReducer = (state = { latestNode: '' }, action) => {
 	switch (action.type) {
 		case Actions.ON_NAVIGATE:
 			if (action.current.startsWith('/node/')) {
-				// We were on a node, and qui the tree (eg: /json). We save the latestNode
+				// We were on a node, and quit the tree (eg: /json). We save the latestNode
 				return {
 					latestNode: action.current.substring('/node/'.length)
 				}
