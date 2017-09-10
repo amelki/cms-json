@@ -41,7 +41,7 @@ const mapStateToProps = state => {
 		mode = 'model';
 	}
 	return {
-		enabled: (state.main.stale || state.main.busy),
+		enabled: ((state.main.stale || state.main.busy) && !state.main.editingField),
 		mode: mode,
 		editorLink: state.navigation.latestNode ? ('/node/' + state.navigation.latestNode) : '/'
 	};

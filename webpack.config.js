@@ -7,7 +7,7 @@ const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&t
 
 module.exports = {
 	devtool: 'eval-source-map',
-	entry: { app: [path.join(__dirname, 'app/main.js'), hotMiddlewareScript] },
+	entry: {app: [path.join(__dirname, 'app/main.js'), hotMiddlewareScript]},
 	output: {
 		path: path.join(__dirname, '/dist/'),
 		filename: '[name].js',
@@ -46,6 +46,27 @@ module.exports = {
 			{
 				test: /(\.css|\.scss)$/,
 				loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
-			}]
+			},
+			{
+				test: /\.(ttf|eot|woff|woff2|svg)$/,
+				loader: 'file-loader',
+				options: {
+					name: 'assets/fonts/[name].[ext]',
+				}
+			},
+			{
+				test: /\.less$/,
+				include: [
+					path.resolve(__dirname, 'node_modules/font-awesome-webpack/less')
+				],
+				use: [{
+					loader: "style-loader" // creates style nodes from JS strings
+				}, {
+					loader: "css-loader" // translates CSS into CommonJS
+				}, {
+					loader: "less-loader" // compiles Less to CSS
+				}]
+			}
+		]
 	}
 };

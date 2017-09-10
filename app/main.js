@@ -6,7 +6,7 @@ import {mainReducer, messageReducer, navigationReducer} from './reducers';
 import {Provider} from 'react-redux';
 import axios from 'axios';
 import thunkMiddleware from 'redux-thunk';
-import { createForms } from 'react-redux-form';
+import {createForms, combineForms} from 'react-redux-form';
 
 import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
@@ -31,15 +31,18 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		message: {text: ''},
 		navigation: {},
 		router: {},
-		...createForms({
-			field: {},
-		}),
+	};
+	const initialField = {
+		name: ''
 	};
 	const store = createStore(combineReducers({
 			main: mainReducer,
 			message: messageReducer,
 			navigation: navigationReducer,
-			router: routerReducer
+			router: routerReducer,
+			...createForms({
+				field: initialField
+			})
 		}),
 		initialState,
 		applyMiddleware(historyMiddleware, thunkMiddleware)

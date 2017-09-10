@@ -181,40 +181,42 @@ hr {
 }
 
 form {
-  margin-bottom: 30px;
-  max-width: 700px;
-  font-size: 16px;
-  padding-bottom: 20px;
-  border: 1px solid $colorBorderInput;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  .field {
-    strong {
-      color: $colorFontLightGray;
-      display: block;
-      margin: 10px 10px 8px 0;
-      .type {
-        float: right;
-        font-size: 12px;
-        a {
-          text-decoration: none;
+  .fields {
+    margin-bottom: 30px;
+    max-width: 700px;
+    font-size: 16px;
+    padding-bottom: 20px;
+    border: 1px solid $colorBorderInput;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    .field, .field-property {
+      label {
+        color: $colorFontLightGray;
+        display: block;
+        margin: 10px 10px 8px 0;
+        .type {
+          float: right;
+          font-size: 12px;
+          a {
+            text-decoration: none;
+          }
         }
       }
-    }
-    display: block;
-    margin-left: 2px;
-    margin-right: 2px;
-    text-align: left;
-    padding: 10px 23px 20px;
-    &:not(:last-child) {
-      border-bottom: 1px solid lighten($colorDefaultBackground, 4%);
-    }
-    .description {
-      margin-bottom: 4px;
-    }
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.03);
+      display: block;
+      margin-left: 2px;
+      margin-right: 2px;
+      text-align: left;
+      padding: 10px 23px 20px;
+      &:not(:last-child) {
+        border-bottom: 1px solid lighten($colorDefaultBackground, 4%);
+      }
+      .description {
+        margin-bottom: 4px;
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
     }
   }
 }
@@ -321,6 +323,7 @@ textarea {
   }
 }
 
+
 .btn {
   display: inline-block;
   cursor: pointer;
@@ -342,6 +345,9 @@ textarea {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
     box-shadow: none
+  }
+  &:hover {
+    opacity: 0.9;
   }
   &.cmd {
     text-decoration: none;
@@ -428,3 +434,96 @@ table {
     }
   }
 }
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+  .title {
+    font-size: 24px;
+  }
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: $colorDefaultBackground;
+//  background-color: #fefefe;
+  margin: 120px auto auto auto; /* 15% from the top and centered */
+  padding: 20px;
+//  border: 1px solid #888;
+//  box-shadow: 0 3px 3px rgba(40, 40, 40, 0.8);
+  border-radius: 5px;
+  width: 800px;
+  form {
+    margin-top: 30px;
+    .fields {
+      max-width: inherit;
+    }
+  }
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.styled-select {
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+  &:before, &:after {
+    content: "";
+    position: absolute;
+  }
+  &:after {
+    color: $colorFontAlmostWhite;
+    font-family: "Fontawesome", serif;
+    font-size: inherit;
+    content: "\f107";
+    padding: 5px;
+    pointer-events: none;
+    right: 5px;
+    top: 7px;
+    vertical-align: middle;
+  }
+  select {
+    color: $colorFontAlmostWhite;
+    cursor: pointer;
+    // Sass specific RGBA mixin
+    background: $colorInputBackground;
+//    background: rgba(white,0.3);
+    border: 1px solid $colorBorderInput;
+    font-size: 16px;
+//    padding: 0.5em 2em 0.5em 0.5em;
+    padding: 8px;
+    padding-right: 30px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    &:focus {
+      border-color: $colorBorderFocusedInput;
+      outline: none;
+    }
+  }
+}
+
+

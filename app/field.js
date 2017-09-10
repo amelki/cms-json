@@ -66,10 +66,10 @@ class Field extends React.Component {
 		}
 		return (
 			<div className="field">
-				<strong>
+				<label>
 					{displayName}
 					{typeHelp}
-				</strong>
+				</label>
 				{description}
 				{input}
 			</div>
