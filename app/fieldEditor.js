@@ -5,13 +5,18 @@ import {submitField, cancelEditField} from './actions';
 
 class FieldEditor extends React.Component {
 	render() {
-		const {dispatch, on, forms} = this.props;
-		const submitClassName = (forms && !forms.field.$form.valid) ? 'btn cmd disabled' : 'btn cmd blue';
+		const {dispatch, on, form} = this.props;
+		const submitClassName = (form && !form.valid) ? 'btn cmd disabled' : 'btn cmd blue';
 		return (
-			<div className="modal" style={on ? {display: 'block'} : {display: 'none'}}>
+			<div className="modal"
+					 style={on ? {display: 'block'} : {display: 'none'}}
+					 tabIndex="0"
+					 onKeyDown={(e) =>(e.keyCode === 27 ? dispatch(cancelEditField()) : '')}>
 				<div className="modal-content">
-					<span className="close" onClick={() => dispatch(cancelEditField())}>&times;</span>
-					<div className="title">Edit Field</div>
+					<div className="title">
+						Edit Field
+						<div className="close" onClick={() => dispatch(cancelEditField())}>&times;</div>
+					</div>
 					<Form
 						model="field"
 						onSubmit={(values) => dispatch(submitField(values))}>
@@ -21,6 +26,8 @@ class FieldEditor extends React.Component {
 								<Control.text model=".name"
 															validators={{ name: (val) => val && val.length }}
 															validateOn="change"
+															autoFocus
+															autoComplete="off"
 								/>
 							</div>
 							<div className="field">
@@ -28,7 +35,7 @@ class FieldEditor extends React.Component {
 								<div className="styled-select">
 									<Control.select model=".type">
 										<option value="string">String</option>
-										<option value="md">Markdown</option>
+										<option value="markdown">Markdown</option>
 										<option value="array">Array</option>
 										<option value="boolean">Boolean</option>
 									</Control.select>
@@ -44,4 +51,10 @@ class FieldEditor extends React.Component {
 	}
 }
 
-export default connect()(FieldEditor);
+const mapStateToProps = (state) => {
+	return {
+		form: state.forms.field.$form
+	};
+};
+
+export default connect(mapStateToProps)(FieldEditor);

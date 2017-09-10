@@ -3,12 +3,12 @@ import * as Cms from './cms';
 import md from './md';
 import Tags from "./tags";
 import { connect } from 'react-redux'
-import { inputValue, addValue } from './actions';
+import {inputValue, addValue, editField, deleteField} from './actions';
 import {TYPE_MAP_STRING} from "./cms";
 
 class Field extends React.Component {
 	render() {
-		const { field, node, index, fieldsInError, dispatch } = this.props;
+		const { field, node, index, fieldIndex, fieldsInError, dispatch } = this.props;
 		let className = field.className ? field.className : '';
 		const data = node.data;
 		const name = Cms.fieldName(field);
@@ -68,7 +68,13 @@ class Field extends React.Component {
 			<div className="field">
 				<label>
 					{displayName}
-					{typeHelp}
+					<div className="right-block">
+						{typeHelp}
+						<div className="actions">
+							<a href="#" onClick={() => dispatch(editField(node, fieldIndex))}><i className="fa fa-pencil" aria-hidden="true"/></a>
+							<a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}><i className="fa fa-times" aria-hidden="true"/></a>
+						</div>
+					</div>
 				</label>
 				{description}
 				{input}

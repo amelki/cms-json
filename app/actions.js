@@ -21,6 +21,7 @@ export const ON_NAVIGATE = 'ON_NAVIGATE';
 export const SUBMIT_FIELD = 'SUBMIT_FIELD';
 export const CANCEL_EDIT_FIELD = 'CANCEL_EDIT_FIELD';
 export const EDIT_FIELD = 'EDIT_FIELD';
+export const DELETE_FIELD = 'DELETE_FIELD';
 
 export const addChild = (node, childType) => ({
 	type: ADD_CHILD,
@@ -133,7 +134,7 @@ export const editField = (node, index) => {
 	return (dispatch, getState) => {
 		let field ;
 		if (typeof index !== 'undefined') {
-			field = node.model.fields[index];
+			field = Cms.getField(node.model.fields[index]);
 		} else {
 			field = { name: '' }
 		}
@@ -145,6 +146,11 @@ export const editField = (node, index) => {
 		});
 	}
 };
+export const deleteField = (node, fieldIndex) => ({
+	type: DELETE_FIELD,
+	node,
+	fieldIndex
+});
 export const submitField = (field) => {
 	return (dispatch, getState) => {
 		const state = getState();

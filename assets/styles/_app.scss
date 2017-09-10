@@ -190,16 +190,42 @@ form {
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
-    .field, .field-property {
+    .field {
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+        label .right-block .actions a .fa {
+          color: lighten($colorDefaultBackground, 30%);
+        }
+      }
       label {
         color: $colorFontLightGray;
         display: block;
         margin: 10px 10px 8px 0;
-        .type {
-          float: right;
-          font-size: 12px;
-          a {
-            text-decoration: none;
+        position: relative;
+        .right-block {
+          position: absolute;
+          top: 0;
+          right: -10px;
+          .type {
+            display: inline-block;
+            font-size: 12px;
+            a {
+              text-decoration: none;
+            }
+          }
+          .actions {
+            display: inline-block;
+            margin-left: 15px;
+            a {
+              .fa {
+                color: transparent;
+                font-size: 14px;
+                margin-left: 5px;
+                &:hover {
+                  color: lighten($colorDefaultBackground, 50%);
+                }
+              }
+            }
           }
         }
       }
@@ -213,9 +239,6 @@ form {
       }
       .description {
         margin-bottom: 4px;
-      }
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.03);
       }
     }
   }
@@ -449,40 +472,34 @@ table {
   background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
   .title {
     font-size: 24px;
-  }
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: $colorDefaultBackground;
-//  background-color: #fefefe;
-  margin: 120px auto auto auto; /* 15% from the top and centered */
-  padding: 20px;
-//  border: 1px solid #888;
-//  box-shadow: 0 3px 3px rgba(40, 40, 40, 0.8);
-  border-radius: 5px;
-  width: 800px;
-  form {
-    margin-top: 30px;
-    .fields {
-      max-width: inherit;
+    position: relative;
+    .close {
+      position: absolute;
+      right: 0;
+      top: -7px;
+      color: $colorFontLightGray;
+      float: right;
+      font-size: 32px;
+      &:hover, &:focus {
+        color: darken($colorFontLightGray, 20%);
+        text-decoration: none;
+        cursor: pointer;
+      }
     }
   }
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+  .modal-content {
+    background-color: $colorDefaultBackground;
+    margin: 120px auto auto auto; /* 15% from the top and centered */
+    padding: 20px;
+    border-radius: 5px;
+    width: 800px;
+    form {
+      margin-top: 20px;
+      .fields {
+        max-width: inherit;
+      }
+    }
+  }
 }
 
 .styled-select {

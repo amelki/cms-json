@@ -9,7 +9,7 @@ const Item = ({node, selection, dispatch}) => {
 	const fields = [];
 	if (node.model.fields) {
 		for (let i = 0; i < node.model.fields.length; i++) {
-			fields.push(<Field key={i} node={node} field={node.model.fields[i]} index={selection.index}/>);
+			fields.push(<Field key={i} node={node} field={node.model.fields[i]} fieldIndex={i} index={selection.index}/>);
 		}
 	}
 	return <div>
