@@ -19,11 +19,11 @@ const Item = ({node, selection, dispatch}) => {
 			}
 			{
 				Cms.isItem(node) &&
-				<Link key="backBtn" id="backBtn" className="btn" to={'/node/' + selection.treePath}>Back to list</Link>
+				<Link key="backBtn" id="backBtn" className="btn cmd" to={'/node/' + selection.treePath}>Back to list</Link>
 			}
 			{
 				Cms.isItem(node) &&
-				<a key="addFieldBtn" className="btn" href="#" onClick={() => dispatch(editField(node))}>Add field</a>
+				<a key="addFieldBtn" className="btn cmd" href="#" onClick={() => dispatch(editField(node))}>Add field</a>
 			}
 		</form>
 	</div>;

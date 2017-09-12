@@ -43,13 +43,13 @@ class List extends Component {
 					(nodeType === Cms.TYPE_TREE)
 						? (
 							<span>
-								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_TREE, router.history))}>Add Node</a>
-								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_LIST_OBJECT, router.history))}>Add List</a>
-								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>
-								<a id="addBtn" className="btn" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_STRING, router.history))}>Add String Map</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_TREE, router.history))}>Add Node</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_LIST_OBJECT, router.history))}>Add List</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_STRING, router.history))}>Add String Map</a>
 							</span>
 					)
-						: <a id="addBtn" className="btn" onClick={(event) => dispatch(addItem(node))}>Add Item</a>
+						: <a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addItem(node))}>Add Item</a>
 				}
 			</div>
 		);

@@ -72,10 +72,15 @@ class Field extends React.Component {
 					<div className="right-block">
 						{typeHelp}
 						<div className="actions">
-							<a href="#" onClick={() => dispatch(editField(node, fieldIndex))}><i className="fa fa-pencil" aria-hidden="true"/></a>
+							<a href="#" onClick={() => dispatch(editField(node, fieldIndex))}>
+								<i title="Edit Field" className="fa fa-pencil" aria-hidden="true"/>
+							</a>
 							{
 								Cms.canDeleteFieldAt(node, fieldIndex)
-								&& <a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}><i className="fa fa-times" aria-hidden="true"/></a>
+								&&
+								<a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}>
+									<i title="Delete Field" className="fa fa-times" aria-hidden="true"/>
+								</a>
 							}
 						</div>
 					</div>
