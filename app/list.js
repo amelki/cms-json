@@ -16,19 +16,19 @@ class List extends Component {
 			case Cms.TYPE_TREE:
 				if (node.model.children) {
 					for (let i = 0; i < node.model.children.length; i++) {
-						rows.push(<Row key={i} id={i} index={i} node={node} selection={selection}/>);
+						rows.push(<Row key={i} id={i} dataIndex={i} node={node} selection={selection}/>);
 					}
 				}
 				break;
 			case Cms.TYPE_LIST_OBJECT:
 				for (let i = 0; i < node.data.length; i++) {
-					rows.push(<Row key={i} id={i} index={i} node={node} selection={selection}/>);
+					rows.push(<Row key={i} id={i} dataIndex={i} node={node} selection={selection}/>);
 				}
 				break;
 			case Cms.TYPE_MAP_OBJECT:
 			case Cms.TYPE_MAP_STRING:
 				for (let p in node.data) {
-					rows.push(<Row key={p} id={p} index={p} node={node} selection={selection}/>);
+					rows.push(<Row key={p} id={p} dataIndex={p} node={node} selection={selection}/>);
 				}
 				break;
 		}

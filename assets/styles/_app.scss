@@ -121,7 +121,7 @@ hr {
   z-index: 100;
   background-color: $colorNavBar;
   margin: 0;
-  padding: 0;
+  padding: 0 10px;
   height: $topNav;
   vertical-align: top;
   .nav {
@@ -202,6 +202,12 @@ form {
         display: block;
         margin: 10px 10px 8px 0;
         position: relative;
+        .name {
+          i {
+            padding-left: 5px;
+            font-size: 14px;
+          }
+        }
         .right-block {
           position: absolute;
           top: 0;
@@ -376,6 +382,9 @@ textarea {
     text-decoration: none;
     margin-left: 10px;
     margin-right: 10px;
+    &:first-of-type {
+      margin-left: 0;
+    }
     border-radius: 4px;
     box-sizing: border-box;
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.5);
@@ -498,6 +507,11 @@ table {
       .fields {
         max-width: inherit;
       }
+    }
+    .modal-body {
+      font-size: 18px;
+      margin-top: 30px;
+      margin-bottom: 30px;
     }
   }
 }

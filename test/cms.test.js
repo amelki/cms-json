@@ -82,7 +82,7 @@ const testTreePathAndIndex = (path, expectedFullPath, expectedTreePath, expected
 			const res = Cms.treePathAndIndex(tree, path);
 			expect(res.fullPath).toBe(expectedFullPath);
 			expect(res.treePath).toBe(expectedTreePath);
-			expect(res.index).toBe(expectedIndex);
+			expect(res.dataIndex).toBe(expectedIndex);
 		});
 	});
 };
@@ -167,7 +167,7 @@ const testAddMapItem = (path, requestedName, expectedNewNames) => {
 				expectedNewNames = [ expectedNewNames ];
 			}
 			expectedNewNames.forEach(expectedNewName => {
-				const newKey = Cms.addItem(node, requestedName).index;
+				const newKey = Cms.addItem(node, requestedName).dataIndex;
 				expect(newKey).toBe(expectedNewName);
 			});
 		});
@@ -200,3 +200,124 @@ testAddNode("nav", Cms.TYPE_LIST_OBJECT, "New List", [ "New List", "New List (2)
 testAddNode("nav", Cms.TYPE_LIST_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
 testAddNode("nav", Cms.TYPE_MAP_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
 testAddNode("nav", Cms.TYPE_TREE, "Header", [ "Header (2)", "Header (3)" ]);
+
+const testGetFieldNamed = (path, fieldName) => {
+	test(`getFieldName(${path}, ${fieldName})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			const field = Cms.getFieldNamed(node, fieldName);
+			expect(field).toBeDefined();
+			expect(field.name).toBe(fieldName);
+		});
+	});
+};
+
+testGetFieldNamed("nav/header", 'Url');
+testGetFieldNamed("nav/footer", 'Target');
+testGetFieldNamed("nav/footer/1", 'Target');
+testGetFieldNamed("pages", 'Search Enabled');
+
+const testDeleteField = (path, fieldName) => {
+	test(`deleteField(${path}, ${fieldName})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			const field = Cms.getFieldNamed(node, fieldName);
+			const fieldIndex = Cms.getFieldIndex(node, field);
+			Cms.getDataItems(node).forEach(item => {
+				expect(item[Cms.slugify(field.name)]).toBeDefined();
+			});
+			Cms.deleteFieldAt(node, fieldIndex);
+			Cms.getDataItems(node).forEach(item => {
+				expect(item[Cms.slugify(field.name)]).toBeUndefined();
+			});
+		});
+	});
+};
+const testDeleteFieldError = (path, fieldName) => {
+	test(`deleteFieldError(${path}, ${fieldName})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			const field = Cms.getFieldNamed(node, fieldName);
+			const fieldIndex = Cms.getFieldIndex(node, field);
+			expect(() => Cms.deleteFieldAt(node, fieldIndex)).toThrow(Error);
+		});
+	});
+};
+
+testDeleteField("nav/header", 'Url');
+testDeleteField("nav/footer", 'Label');
+testDeleteField("messages/errors", 'Title');
+testDeleteFieldError("messages/errors", 'Identifier');
+testDeleteFieldError("messages/tooltips", 'Identifier');
+testDeleteFieldError("messages/tooltips", 'Message');
+
+const testUpdateField = (path, fieldName, field, expectedData) => {
+	test(`updateField(${path}, ${fieldName})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			const prevField = Cms.getFieldNamed(node, fieldName);
+			const fieldIndex = Cms.getFieldIndex(node, prevField);
+			expect(node.model.fields).not.toContainEqual(field);
+			Cms.updateFieldAt(node, fieldIndex, field);
+			expect(node.model.fields).toContainEqual(field);
+			expect(node.data).toEqual(expectedData);
+		});
+	});
+};
+
+testUpdateField("nav/header", 'Url', "theUrl", [
+	{
+		"label": "Home",
+		"theurl": "/home"
+	},
+	{
+		"label": "Product",
+		"theurl": "/product"
+	},
+	{
+		"label": "Blog",
+		"theurl": "/blog"
+	}
+]);
+testUpdateField("nav/header", 'Url', { name: "Url", type: 'boolean' }, [
+	{
+		"label": "Home",
+		"url": true
+	},
+	{
+		"label": "Product",
+		"url": true
+	},
+	{
+		"label": "Blog",
+		"url": true
+	}
+]);
+testUpdateField("messages/errors", 'Identifier', "Id", {
+	"internalError": {
+		"title": "Internal Error",
+		"message": "An internal error occurred"
+	},
+	"connectionError": {
+		"title": "Network Error",
+		"message": "There seem to be network issues"
+	}
+});
+testUpdateField("messages/errors", 'Title', "theTitle", {
+	"internalError": {
+		"thetitle": "Internal Error",
+		"message": "An internal error occurred"
+	},
+	"connectionError": {
+		"thetitle": "Network Error",
+		"message": "There seem to be network issues"
+	}
+});
+testUpdateField("messages/tooltips", 'Identifier', "Id", {
+	"welcome": "Welcome to my web site",
+	"sendEmail": "click to send an email"
+});
+testUpdateField("messages/tooltips", 'Message', "Msg", {
+	"welcome": "Welcome to my web site",
+	"sendEmail": "click to send an email"
+});

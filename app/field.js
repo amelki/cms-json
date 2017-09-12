@@ -8,7 +8,8 @@ import {TYPE_MAP_STRING} from "./cms";
 
 class Field extends React.Component {
 	render() {
-		const { field, node, index, fieldIndex, fieldsInError, dispatch } = this.props;
+		const { field, node, dataIndex, fieldIndex, fieldsInError, dispatch } = this.props;
+		const isKey = Cms.isKeyField(field);
 		let className = field.className ? field.className : '';
 		const data = node.data;
 		const name = Cms.fieldName(field);
@@ -21,7 +22,7 @@ class Field extends React.Component {
 			className += ' error';
 		} else {
 			if (Cms.isMapType(node) && Cms.isKeyField(field)) {
-				value = index;
+				value = dataIndex;
 			} else if (nodeType === TYPE_MAP_STRING && !Cms.isKeyField(field)) {
 				value = data;
 			} else {
@@ -67,12 +68,15 @@ class Field extends React.Component {
 		return (
 			<div className="field">
 				<label>
-					{displayName}
+					<span className="name">{displayName} { isKey && <i className="fa fa-key" title="Key field"/> }</span>
 					<div className="right-block">
 						{typeHelp}
 						<div className="actions">
 							<a href="#" onClick={() => dispatch(editField(node, fieldIndex))}><i className="fa fa-pencil" aria-hidden="true"/></a>
-							<a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}><i className="fa fa-times" aria-hidden="true"/></a>
+							{
+								Cms.canDeleteFieldAt(node, fieldIndex)
+								&& <a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}><i className="fa fa-times" aria-hidden="true"/></a>
+							}
 						</div>
 					</div>
 				</label>

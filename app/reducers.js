@@ -13,9 +13,9 @@ const apply = (action, state, node, parentNode) => {
 			break;
 		case Actions.DELETE_ITEM:
 			if (Cms.getNodeType(node) === Cms.TYPE_LIST_OBJECT) {
-				node.data.splice(action.index, 1);
+				node.data.splice(action.dataIndex, 1);
 			} else {
-				delete node.data[action.index];
+				delete node.data[action.dataIndex];
 			}
 			break;
 		case Actions.MOVE_ITEM:
@@ -25,6 +25,7 @@ const apply = (action, state, node, parentNode) => {
 			node.data[target] = sourceItem;
 			break;
 		case Actions.INPUT_VALUE:
+			// TODO move to Cms
 			const {event, field} = action;
 			let value = event.target.value;
 			switch (field.type) {
@@ -38,7 +39,7 @@ const apply = (action, state, node, parentNode) => {
 			}
 			if (Cms.isMapType(node) && Cms.isKeyField(field)) {
 				if (value && value.length > 0 && !parentNode.data[value]) {
-					delete parentNode.data[node.index];
+					delete parentNode.data[node.dataIndex];
 					parentNode.data[value] = node.data;
 					// Request navigation to the new path
 					state.path = parentNode.path + '/' + value;
@@ -51,14 +52,45 @@ const apply = (action, state, node, parentNode) => {
 			}
 			break;
 		case Actions.SUBMIT_FIELD:
-			const index = (typeof state.editingField.index !== 'undefined') ? state.editingField.index : node.model.fields.length;
-			node.model.fields[index] = {...action.field};
-			// TODO: handle the case where the field already exists (involves refactoring data...)
-			state.editingField = null;
+			Cms.updateFieldAt(node, action.fieldIndex, action.field);
+			break;
+		case Actions.DELETE_FIELD:
+			Cms.deleteFieldAt(node, action.fieldIndex);
 			break;
 		case Actions.ADD_VALUE:
-			node.data[Cms.fieldName(action.field)] = action.value;
+			node.data[Cms.fieldName(action.fieldIndex)] = action.value;
 			break;
+	}
+};
+
+export const editingFieldReducer = (state = {fieldIndex: '', path: ''}, action = { node: {}, fieldIndex: '' }) => {
+	switch (action.type) {
+		case Actions.EDIT_FIELD:
+			return {
+				path: action.node.path,
+				fieldIndex: action.fieldIndex
+			};
+		case Actions.SUBMIT_FIELD:
+		case Actions.CANCEL_EDIT_FIELD:
+			return null;
+		default:
+			return state;
+	}
+};
+
+export const confirmReducer = (state = null, action) => {
+	switch (action.type) {
+		case Actions.SHOW_CONFIRM:
+			return {
+				ok: action.ok,
+				title: action.title,
+				body: action.body
+			};
+		case Actions.CANCEL_CONFIRM:
+		case Actions.DELETE_FIELD:
+			return null;
+		default:
+			return state;
 	}
 };
 
@@ -71,6 +103,7 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 		case Actions.INPUT_VALUE:
 		case Actions.ADD_VALUE:
 		case Actions.SUBMIT_FIELD:
+		case Actions.DELETE_FIELD:
 			// For now, use JSON parse/stringify.
 			// If performance becomes an issue, we could write our own custom deep copy
 			// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
@@ -79,18 +112,6 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 			const selection = Cms.treePathAndIndex(newState.tree, action.node.path);
 			apply(action, newState, newNode, Cms.isSelectionItem(selection) ? Cms.findNode(newState.tree, selection.treePath) : null);
 			return newState;
-		case Actions.EDIT_FIELD:
-			let editingField = {};
-			editingField = { path: action.node.path, index: action.index };
-			return {
-				...state,
-				editingField
-			};
-		case Actions.CANCEL_EDIT_FIELD:
-			return {
-				...state,
-				editingField: null
-			};
 		case Actions.CLEAR_FIELD_ERRORS:
 			return {
 				...state,

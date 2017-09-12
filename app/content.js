@@ -4,6 +4,7 @@ import Tree from './tree';
 import List from './list';
 import Item from './item';
 import FieldEditor from './fieldEditor';
+import Confirm from './confirm';
 import { connect } from 'react-redux';
 import styles from './main.scss';
 
@@ -25,7 +26,7 @@ class Content extends React.Component {
 				case Cms.TYPE_LIST_OBJECT:
 				case Cms.TYPE_MAP_OBJECT:
 				case Cms.TYPE_MAP_STRING:
-					if (selection && (selection.index !== -1)) {
+					if (selection && (selection.dataIndex !== -1)) {
 						right = <Item node={node} selection={selection}/>;
 					} else {
 						right = <List node={node} selection={selection}/>;
@@ -47,6 +48,7 @@ class Content extends React.Component {
 					{right}
 				</section>
 				{editingField && <FieldEditor on={editingField}/>}
+				<Confirm/>
 			</div>
 		);
 	}
@@ -57,7 +59,7 @@ const mapStateToProps = (state) => {
 	let selection = {
 		fullPath: '',
 		treePath: '',
-		index: -1
+		dataIndex: -1
 	};
 	if (routerPath.startsWith('/node/')) {
 		selection = Cms.treePathAndIndex(state.main.tree, routerPath.substring('/node/'.length));
@@ -69,7 +71,7 @@ const mapStateToProps = (state) => {
 		tree: state.main.tree,
 		selection: selection,
 		node: node,
-		editingField: state.main.editingField
+		editingField: state.editingField
 	};
 };
 

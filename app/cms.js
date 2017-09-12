@@ -2,6 +2,10 @@ export const TYPE_TREE = "tree";
 export const TYPE_MAP_OBJECT = "map<object>";
 export const TYPE_MAP_STRING = "map<string>";
 export const TYPE_LIST_OBJECT = "list<object>";
+export const FIELD_TYPE_STRING = "string";
+export const FIELD_TYPE_BOOLEAN = "boolean";
+export const FIELD_TYPE_ARRAY = "array";
+export const FIELD_TYPE_MARKDOWN = "markdown";
 
 export const getNodeType = (node) => {
 	if (node.model.type) {
@@ -13,6 +17,32 @@ export const getNodeType = (node) => {
 			return TYPE_TREE;
 		}
 	}
+};
+
+export const getFieldAt = (node, fieldIndex) => {
+	if (fieldIndex < 0) {
+		throw new Error(`Negative field index`);
+	}
+	if (node.model.fields && fieldIndex < node.model.fields.length) {
+		return getField(node.model.fields[fieldIndex]);
+	}
+	throw new Error(`No field at index ${fieldIndex} for node ${node.name}`);
+};
+
+export const getFieldNamed = (node, name) => {
+	return getFields(node).filter(f => f.name === name)[0];
+};
+
+export const getFieldIndex = (node, field) => {
+	field = getField(field);
+	const fields = getFields(node);
+	for (let i = 0; i < fields.length; i++) {
+		const f = fields[i];
+		if (field.name === f.name) {
+			return i;
+		}
+	}
+	throw new Error(`Cannot find fieldIndex for field ${field.name} in node ${node.name}`);
 };
 
 export const getField = (f) => {
@@ -56,13 +86,13 @@ export const treePathAndIndex = (tree, path) => {
 	let res = _treePathAndIndex(tree, Array.isArray(path) ? path : path.split('/'), {
 		fullPath: path,
 		treePath: [],
-		index: -1
+		dataIndex: -1
 	});
 	res.treePath = res.treePath.join('/');
 	return res;
 };
 
-export const isSelectionItem = (selection) => selection.index !== -1;
+export const isSelectionItem = (selection) => selection.dataIndex !== -1;
 
 const _treePathAndIndex = function(node, path, result) {
 	if (path.length > 0) {
@@ -73,11 +103,11 @@ const _treePathAndIndex = function(node, path, result) {
 		} else {
 			switch (getNodeType(node)) {
 				case TYPE_LIST_OBJECT:
-					result.index = parseInt(p);
+					result.dataIndex = parseInt(p);
 					break;
 				case TYPE_MAP_OBJECT:
 				case TYPE_MAP_STRING:
-					result.index = p;
+					result.dataIndex = p;
 					break;
 				default:
 					throw new Error('No child for path ${path}');
@@ -96,7 +126,7 @@ const _findChild = (node, slug) => {
 	throw new Error(`Could not find child with slug ${slug} in node ${node.model.name}`);
 };
 
-const _items = (node) => {
+export const getDataItems = (node) => {
 	switch (getNodeType(node)) {
 		case TYPE_LIST_OBJECT:
 			return node.data;
@@ -111,7 +141,7 @@ const _items = (node) => {
 const _findNewListItemName = (node, newName, idx) => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const fieldName = defaultFieldName(node.model);
-	const items = _items(node);
+	const items = getDataItems(node);
 	for (let i = 0; i < items.length; i++) {
 		let item = items[i];
 		let name = item[fieldName];
@@ -148,29 +178,29 @@ const _findNewNodeName = (node, newName, idx) => {
 export const addItem = (node, requestedName) => {
 	const nodeType = getNodeType(node);
 	let item;
-	let index;
+	let dataIndex;
 	switch (nodeType) {
 		case TYPE_MAP_OBJECT:
 			item = {};
-			index = _findNewMapKey(node, requestedName, 1);
-			node.data[index] = item;
+			dataIndex = _findNewMapKey(node, requestedName, 1);
+			node.data[dataIndex] = item;
 			break;
 		case TYPE_MAP_STRING:
 			item = "New value";
-			index = _findNewMapKey(node, requestedName, 1);
-			node.data[index] = item;
+			dataIndex = _findNewMapKey(node, requestedName, 1);
+			node.data[dataIndex] = item;
 			break;
 		case TYPE_LIST_OBJECT:
 			item = {
 				[defaultFieldName(node.model)] : _findNewListItemName(node, requestedName, 1)
 			};
 			node.data.push(item);
-			index = node.data.length - 1;
+			dataIndex = node.data.length - 1;
 			break;
 		default:
 			throw new Error(`Cannot add item to node of type ${nodeType}`);
 	}
-	return { index, item };
+	return { dataIndex, item };
 };
 
 export const addNode = (node, requestedName, nodeType) => {
@@ -210,8 +240,90 @@ export const addNode = (node, requestedName, nodeType) => {
 			data: newData,
 			path: node.path + '/' + slugify(newModel.name),
 			parent: node,
+			dataIndex: -1
 		}
 	);
+};
+
+/**
+ * Get the node holding the 'struct' data: either this node, or its parent, if the data held
+ * is an 'item' (from a map or an array)
+ */
+const _getStructNode = (node) => {
+	if (node.dataIndex !== -1) {
+		return node.parent;
+	}
+	return node;
+};
+
+const _checkDeleteFieldAt = (node, fieldIndex) => {
+	const field = getFieldAt(node, fieldIndex);
+	if (field.key) {
+		throw new Error(`Cannot delete: field ${field.name} is a key field for node '${node.name}'`);
+	}
+	const nodeType = getNodeType(node);
+	if (nodeType === TYPE_MAP_STRING) {
+		throw new Error(`Cannot delete: field ${field.name} is the value field for node '${node.name}', which is a map(string)`);
+	}
+	return field;
+};
+
+export const canDeleteFieldAt = (node, fieldIndex) => {
+	try {
+		_checkDeleteFieldAt(node, fieldIndex);
+	} catch (err) {
+		return false;
+	}
+	return true;
+};
+
+export const deleteFieldAt = (node, fieldIndex) => {
+	const field = _checkDeleteFieldAt(node, fieldIndex);
+	const structNode = _getStructNode(node);
+	getDataItems(structNode).forEach(item => delete item[slugify(field.name)]);
+	node.model.fields.splice(fieldIndex, 1);
+};
+
+export const updateFieldAt = (node, fieldIndex, field) => {
+	if (typeof fieldIndex === 'undefined' || fieldIndex === -1) {
+		// The field does not exist, just compute the new model index
+		fieldIndex = node.model.fields.length;
+	} else {
+		// Field exists already, we need to perform a data refactoring
+		const newField = getField(field);
+		const prevField = getField(node.model.fields[fieldIndex]);
+		const structNode = _getStructNode(node);
+		const nodeType = getNodeType(structNode);
+		if (newField.name !== prevField.name
+			&& [TYPE_LIST_OBJECT, TYPE_MAP_OBJECT].includes(nodeType)
+			&& !newField.key) {
+				getDataItems(structNode).forEach(item => {
+					item[slugify(newField.name)] = item[slugify(prevField.name)];
+					delete item[slugify(prevField.name)];
+				});
+		}
+		if (newField.type !== prevField.type) {
+			getDataItems(structNode).forEach(item => {
+				item[slugify(newField.name)] = _convert(item[slugify(newField.name)], prevField.type, newField.type);
+			});
+		}
+	}
+	// Update the model
+	node.model.fields[fieldIndex] = field;
+};
+
+const _convert = (value, prevFieldType, newFieldType) => {
+	switch (newFieldType) {
+		case FIELD_TYPE_STRING:
+		case FIELD_TYPE_MARKDOWN:
+			return value ? "" + value : "";
+		case FIELD_TYPE_BOOLEAN:
+			return !!value;
+		case FIELD_TYPE_ARRAY:
+			return [ value ];
+		default:
+			throw new Error(`Unknown type: ${newFieldType}`);
+	}
 };
 
 export const findDeepest = (node, path) => _findDeepest(node, ensureArray(path), 0);
@@ -240,19 +352,19 @@ const _findNode = (node, path) => {
 					data: node.data[next] || (getNodeType(childModel) === TYPE_LIST_OBJECT ? [] : {}),
 					parent: node,
 					path: (node.path ? (node.path + '/') : '') + next,
-					index: -1
+					dataIndex: -1
 				}, path.slice(1));
 			}
 		}
 		throw new Error(`Could not find child named ${next} in node ${node.model.name}`);
 	} else if (nodeType === TYPE_LIST_OBJECT) {
-		const index = parseInt(next);
+		const dataIndex = parseInt(next);
 		return {
 			model: node.model,
-			data: node.data[index] || {},
+			data: node.data[dataIndex] || {},
 			parent: node,
 			path: (node.path ? (node.path + '/') : '') + next,
-			index: index
+			dataIndex: dataIndex
 		};
 	} else {
 		// Map
@@ -261,7 +373,7 @@ const _findNode = (node, path) => {
 			data: node.data[next] || (nodeType === TYPE_MAP_OBJECT ? {} : ""),
 			parent: node,
 			path: (node.path ? (node.path + '/') : '') + next,
-			index: next
+			dataIndex: next
 		};
 	}
 };

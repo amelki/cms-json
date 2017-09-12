@@ -22,6 +22,8 @@ export const SUBMIT_FIELD = 'SUBMIT_FIELD';
 export const CANCEL_EDIT_FIELD = 'CANCEL_EDIT_FIELD';
 export const EDIT_FIELD = 'EDIT_FIELD';
 export const DELETE_FIELD = 'DELETE_FIELD';
+export const SHOW_CONFIRM = 'SHOW_CONFIRM';
+export const CANCEL_CONFIRM = 'CANCEL_CONFIRM';
 
 export const addChild = (node, childType) => ({
 	type: ADD_CHILD,
@@ -32,10 +34,10 @@ export const addItem = (node) => ({
 	type: ADD_ITEM,
 	node: node
 });
-export const deleteItem = (node, index) => ({
+export const deleteItem = (node, dataIndex) => ({
 	type: DELETE_ITEM,
 	node,
-	index
+	dataIndex
 });
 export const moveItem = (node, source, target) => ({
 	type: MOVE_ITEM,
@@ -130,11 +132,11 @@ export const addValue = (node, field, value) => ({
 	field,
 	value
 });
-export const editField = (node, index) => {
+export const editField = (node, fieldIndex) => {
 	return (dispatch, getState) => {
 		let field ;
-		if (typeof index !== 'undefined') {
-			field = Cms.getField(node.model.fields[index]);
+		if (typeof fieldIndex !== 'undefined') {
+			field = Cms.getField(node.model.fields[fieldIndex]);
 		} else {
 			field = { name: '' }
 		}
@@ -142,26 +144,40 @@ export const editField = (node, index) => {
 		dispatch({
 			type: EDIT_FIELD,
 			node,
-			index
+			fieldIndex
 		});
 	}
 };
-export const deleteField = (node, fieldIndex) => ({
-	type: DELETE_FIELD,
-	node,
-	fieldIndex
-});
 export const submitField = (field) => {
 	return (dispatch, getState) => {
 		const state = getState();
 		dispatch({
 			type: SUBMIT_FIELD,
 			field: field,
-			node: Cms.findNode(state.main.tree, state.main.editingField.path)
+			node: Cms.findNode(state.main.tree, state.editingField.path),
+			fieldIndex: state.editingField.fieldIndex
 		});
 	};
 };
 export const cancelEditField = () => ({
 	type: CANCEL_EDIT_FIELD
 });
-
+export const deleteField = (node, fieldIndex) => {
+	return (dispatch, getState) => {
+		dispatch({
+			type: SHOW_CONFIRM,
+			ok: () => {
+				dispatch({
+					type: DELETE_FIELD,
+					node,
+					fieldIndex
+				});
+			},
+			title: 'Confirm delete field',
+			body: `Are you sure you want to delete the field '${Cms.getField(node.model.fields[fieldIndex]).name}' ?`
+		});
+	};
+};
+export const cancelConfirm = () => ({
+	type: CANCEL_CONFIRM
+});

@@ -5,7 +5,7 @@ import {submitField, cancelEditField} from './actions';
 
 class FieldEditor extends React.Component {
 	render() {
-		const {dispatch, on, form} = this.props;
+		const {dispatch, on, form, newField} = this.props;
 		const submitClassName = (form && !form.valid) ? 'btn cmd disabled' : 'btn cmd blue';
 		return (
 			<div className="modal"
@@ -14,7 +14,7 @@ class FieldEditor extends React.Component {
 					 onKeyDown={(e) =>(e.keyCode === 27 ? dispatch(cancelEditField()) : '')}>
 				<div className="modal-content">
 					<div className="title">
-						Edit Field
+						{ newField ? 'Add Field' : 'Edit Field' }
 						<div className="close" onClick={() => dispatch(cancelEditField())}>&times;</div>
 					</div>
 					<Form
@@ -53,7 +53,8 @@ class FieldEditor extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		form: state.forms.field.$form
+		form: state.forms.field.$form,
+		newField: typeof state.editingField.fieldIndex === 'undefined' || state.editingField.fieldIndex === -1
 	};
 };
 

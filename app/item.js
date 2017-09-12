@@ -9,7 +9,7 @@ const Item = ({node, selection, dispatch}) => {
 	const fields = [];
 	if (node.model.fields) {
 		for (let i = 0; i < node.model.fields.length; i++) {
-			fields.push(<Field key={i} node={node} field={node.model.fields[i]} fieldIndex={i} index={selection.index}/>);
+			fields.push(<Field key={i} node={node} field={node.model.fields[i]} fieldIndex={i} dataIndex={selection.dataIndex}/>);
 		}
 	}
 	return <div>
@@ -27,19 +27,6 @@ const Item = ({node, selection, dispatch}) => {
 			}
 		</form>
 	</div>;
-	// const res = [];
-	// if (node.model.fields) {
-	// 	const fields = [];
-	// 	for (let i = 0; i < node.model.fields.length; i++) {
-	// 		fields.push(<Field key={i} node={node} field={node.model.fields[i]} index={selection.index}/>);
-	// 	}
-	// 	res.push(<form key="form">{fields}</form>);
-	// }
-	// if (Cms.isItem(node)) {
-	// 	res.push(<Link key="backBtn" id="backBtn" className="btn" to={'/node/' + selection.treePath}>Back to list</Link>);
-	// 	res.push(<a key="addFieldBtn" className="btn" href="#" onClick={() => dispatch(editField(node))}>Add field</a>);
-	// }
-	// return <div>{res}</div>;
 };
 
 export default connect()(Item);
