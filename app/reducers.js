@@ -12,7 +12,7 @@ const apply = (action, state, node, parentNode) => {
 			state.path = newNode.path;
 			break;
 		case Actions.DELETE_NODE:
-			if (action.selection.treePath === node.path) {
+			if (action.selection.treePath && action.selection.treePath.startsWith(node.path)) {
 				state.path = (node.parent && node.parent.path) ? node.parent.path : '';
 			}
 			Cms.deleteNode(node);

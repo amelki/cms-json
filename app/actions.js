@@ -25,6 +25,7 @@ export const DELETE_FIELD = 'DELETE_FIELD';
 export const SHOW_CONFIRM = 'SHOW_CONFIRM';
 export const CANCEL_CONFIRM = 'CANCEL_CONFIRM';
 export const DELETE_NODE = 'DELETE_NODE';
+export const RESET_NAVIGATE_TO = 'RESET_NAVIGATE_TO';
 
 export const addChild = (node, childType) => ({
 	type: ADD_CHILD,
@@ -182,7 +183,7 @@ export const deleteField = (node, fieldIndex) => {
 		});
 	};
 };
-export const deleteNode = (node, selection) => {
+export const deleteNode = (node, selection, history) => {
 	return (dispatch, getState) => {
 		dispatch({
 			type: SHOW_CONFIRM,
@@ -192,9 +193,22 @@ export const deleteNode = (node, selection) => {
 					node,
 					selection
 				});
+				navigate(dispatch, getState, history);
 			},
 			title: 'Confirm delete node',
 			body: `Are you sure you want to delete the node '${node.model.name}' ?`
 		});
 	};
 };
+
+const navigate = (dispatch, getState, history) => {
+	const navigateTo = getState().main.path;
+	if (navigateTo !== null) {
+		history.push(navigateTo);
+		dispatch(resetNavigateTo());
+	}
+};
+
+export const resetNavigateTo = () => ({
+	type: RESET_NAVIGATE_TO
+});

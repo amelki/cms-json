@@ -51,6 +51,9 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		applyMiddleware(historyMiddleware, thunkMiddleware)
 	);
 	store.subscribe(watch(store.getState, 'main.path')((newVal, oldVal, objectPath) => {
+		// In some cases, we need to defer the navigation after all reducers have been applied
+		// This is the case of 'key' fields, which, each tme a character is typed, must trigger a navigation
+		// If we don't defer, then the edited key field looses focus each time a character is entered.
 		if (newVal !== oldVal) {
 			if (newVal === '') {
 				history.push('/');

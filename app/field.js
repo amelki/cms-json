@@ -5,6 +5,7 @@ import Tags from "./tags";
 import { connect } from 'react-redux'
 import {inputValue, addValue, editField, deleteField} from './actions';
 import {TYPE_MAP_STRING} from "./cms";
+import {withRouter} from "react-router";
 
 class Field extends React.Component {
 	render() {

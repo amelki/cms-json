@@ -4,6 +4,7 @@ import * as Cms from './cms';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 import {deleteNode} from "./actions";
+import {withRouter} from "react-router";
 
 const Tree = ({node, selection, dispatch}) => {
 	const all = [];
@@ -34,9 +35,9 @@ const generateUUID = () => { // Public Domain/MIT
 		d = Math.floor(d / 16);
 		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
 	});
-}
+};
 
-const Node = ({node, path, selection, depth, dispatch}) => {
+const _Node = ({node, path, selection, depth, dispatch, history}) => {
 	const newPath = path + "/" + Cms.slugify(node.model.name);
 	const linkClass = (('/' + selection.treePath) === newPath) ? 'selected' : '';
 	const prefix = "/node";
@@ -62,7 +63,7 @@ const Node = ({node, path, selection, depth, dispatch}) => {
 	const handleDeleteNode = (event) => {
 		event.stopPropagation();
 		event.preventDefault();
-		dispatch(deleteNode(node, selection));
+		dispatch(deleteNode(node, selection, history));
 	};
 	return (
 		<span>
@@ -79,6 +80,8 @@ const Node = ({node, path, selection, depth, dispatch}) => {
 		</span>
 	);
 };
+
+const Node = withRouter(_Node);
 
 Node.propTypes = {
 	node: PropTypes.object.isRequired,
