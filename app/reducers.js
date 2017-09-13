@@ -11,6 +11,12 @@ const apply = (action, state, node, parentNode) => {
 			const newNode = Cms.addNode(node, "New " + action.childType, action.childType);
 			state.path = newNode.path;
 			break;
+		case Actions.DELETE_NODE:
+			if (action.selection.treePath === node.path) {
+				state.path = (node.parent && node.parent.path) ? node.parent.path : '';
+			}
+			Cms.deleteNode(node);
+			break;
 		case Actions.DELETE_ITEM:
 			if (Cms.getNodeType(node) === Cms.TYPE_LIST_OBJECT) {
 				node.data.splice(action.dataIndex, 1);
@@ -88,6 +94,7 @@ export const confirmReducer = (state = null, action) => {
 			};
 		case Actions.CANCEL_CONFIRM:
 		case Actions.DELETE_FIELD:
+		case Actions.DELETE_NODE:
 			return null;
 		default:
 			return state;
@@ -104,6 +111,7 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 		case Actions.ADD_VALUE:
 		case Actions.SUBMIT_FIELD:
 		case Actions.DELETE_FIELD:
+		case Actions.DELETE_NODE:
 			// For now, use JSON parse/stringify.
 			// If performance becomes an issue, we could write our own custom deep copy
 			// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript

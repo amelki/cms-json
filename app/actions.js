@@ -24,6 +24,7 @@ export const EDIT_FIELD = 'EDIT_FIELD';
 export const DELETE_FIELD = 'DELETE_FIELD';
 export const SHOW_CONFIRM = 'SHOW_CONFIRM';
 export const CANCEL_CONFIRM = 'CANCEL_CONFIRM';
+export const DELETE_NODE = 'DELETE_NODE';
 
 export const addChild = (node, childType) => ({
 	type: ADD_CHILD,
@@ -162,6 +163,9 @@ export const submitField = (field) => {
 export const cancelEditField = () => ({
 	type: CANCEL_EDIT_FIELD
 });
+export const cancelConfirm = () => ({
+	type: CANCEL_CONFIRM
+});
 export const deleteField = (node, fieldIndex) => {
 	return (dispatch, getState) => {
 		dispatch({
@@ -178,6 +182,19 @@ export const deleteField = (node, fieldIndex) => {
 		});
 	};
 };
-export const cancelConfirm = () => ({
-	type: CANCEL_CONFIRM
-});
+export const deleteNode = (node, selection) => {
+	return (dispatch, getState) => {
+		dispatch({
+			type: SHOW_CONFIRM,
+			ok: () => {
+				dispatch({
+					type: DELETE_NODE,
+					node,
+					selection
+				});
+			},
+			title: 'Confirm delete node',
+			body: `Are you sure you want to delete the node '${node.model.name}' ?`
+		});
+	};
+};

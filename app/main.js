@@ -52,7 +52,11 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 	);
 	store.subscribe(watch(store.getState, 'main.path')((newVal, oldVal, objectPath) => {
 		if (newVal !== oldVal) {
-			history.push('/node/' + newVal);
+			if (newVal === '') {
+				history.push('/');
+			} else {
+				history.push('/node/' + newVal);
+			}
 		}
 	}));
 	store.subscribe(watch(store.getState, 'router.location.pathname')((newVal, oldVal, objectPath) => {

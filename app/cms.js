@@ -73,6 +73,35 @@ export const findNode = (node, path) => {
 	return _findNode(node, path);
 };
 
+export const getChildren = (node) => {
+	const children = [];
+	if (node.model.children && node.model.children.length > 0) {
+		node.model.children.forEach(modelChild => {
+			children.push({
+				model: modelChild,
+				data: node.data[slugify(modelChild.name)],
+				parent: node,
+				path: (node.path ? (node.path + '/') : '') + slugify(modelChild.name),
+				fieldIndex: -1
+			});
+		});
+	}
+	return children;
+};
+
+export const deleteNode = (node) => {
+	const parentNode = node.parent;
+	const modelChildren = parentNode.model.children;
+	for (let i = 0; i < modelChildren.length; i++) {
+		const modelChild = modelChildren[i];
+		if (modelChild.name === node.model.name) {
+			modelChildren.splice(i, 1);
+			delete parentNode.data[slugify(node.model.name)];
+			return;
+		}
+	}
+	throw new Error(`Could not delete node '${node.model.name}'`);
+};
 
 /**
  * Removes the last path fragment if it is a number

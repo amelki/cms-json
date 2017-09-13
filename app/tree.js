@@ -2,45 +2,54 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import * as Cms from './cms';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
+import {deleteNode} from "./actions";
 
-const Tree = ({model, selection}) => {
+const Tree = ({node, selection, dispatch}) => {
 	const all = [];
-	if (model.children && model.children.length > 0) {
-		for (let i = 0; i < model.children.length; i++) {
-			const child = model.children[i];
-			all.push(<Node key={i} node={child} path={''} selection={selection} depth={1}/>);
-		}
-		return <nav>
-			<ul>{all}</ul>
-		</nav>;
-	}
-	return <span/>;
+	const children = Cms.getChildren(node);
+	let keyCount = 0;
+	children.forEach(child => {
+		all.push(<Node key={keyCount++} node={child} path={''} selection={selection} depth={1} dispatch={dispatch}/>);
+	});
+	return <nav>
+		<ul>{all}</ul>
+	</nav>;
 };
 
-export default Tree;
+export default connect()(Tree);
 
 Tree.propTypes = {
-	model: PropTypes.object.isRequired,
+	node: PropTypes.object.isRequired,
 	selection: PropTypes.object.isRequired
 };
 
-export const Node = ({node, path, selection, depth}) => {
-	const newPath = path + "/" + Cms.slugify(node.name);
+const generateUUID = () => { // Public Domain/MIT
+	let d = new Date().getTime();
+	if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+		d += performance.now(); //use high-precision timer if available
+	}
+	return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+		const r = (d + Math.random() * 16) % 16 | 0;
+		d = Math.floor(d / 16);
+		return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+	});
+}
+
+const Node = ({node, path, selection, depth, dispatch}) => {
+	const newPath = path + "/" + Cms.slugify(node.model.name);
 	const linkClass = (('/' + selection.treePath) === newPath) ? 'selected' : '';
 	const prefix = "/node";
-	let subList = "";
-	if (node.children && node.children.length > 0) {
-		const children = [];
-		const newDepth = depth + 1;
-		for (let i = 0; i < node.children.length; i++) {
-			const child = node.children[i];
-			children.push(<Node key={i} node={child} path={newPath} selection={selection} depth={newDepth}/>);
-		}
-		subList = children;
+	const subList = [];
+	const children = Cms.getChildren(node);
+	const newDepth = depth + 1;
+	for (let i = 0; i < children.length; i++) {
+		const child = children[i];
+		subList.push(<Node key={i} node={child} path={newPath} selection={selection} depth={newDepth} dispatch={dispatch}/>);
 	}
 	const space = (20 * depth) + 'px';
-	let labelContent = [ <span key="name">{node.name}</span> ];
-	const nodeType = Cms.getNodeType({ model: node });
+	let labelContent = [ <span key="name">{node.model.name}</span> ];
+	const nodeType = Cms.getNodeType(node);
 	switch (nodeType) {
 		case Cms.TYPE_LIST_OBJECT:
 			labelContent.push(<span key="type" className="node-type">{"\u005b\u005d"}</span>);
@@ -50,10 +59,21 @@ export const Node = ({node, path, selection, depth}) => {
 			labelContent.push(<span key="type" className="node-type">{"\u007b\u007d"}</span>);
 			break;
 	}
+	const handleDeleteNode = (event) => {
+		event.stopPropagation();
+		event.preventDefault();
+		dispatch(deleteNode(node, selection));
+	};
 	return (
 		<span>
 			<li>
-				<Link className={linkClass} style={{paddingLeft: space}} to={ prefix + newPath }>{labelContent}</Link>
+				<Link className={linkClass} style={{paddingLeft: space}} to={ prefix + newPath }>
+					{labelContent}
+					<div className="actions">
+						<span><i className="fa fa-pencil"/></span>
+						<span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span>
+					</div>
+				</Link>
 			</li>
 			{subList}
 		</span>
@@ -66,4 +86,3 @@ Node.propTypes = {
 	selection: PropTypes.object.isRequired,
 	depth: PropTypes.number.isRequired
 };
-

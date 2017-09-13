@@ -86,7 +86,7 @@ hr {
       &:last-of-type {
         border-bottom: none
       }
-      a {
+      & > a {
         display: block;
         line-height: 25px;
         margin-top: 1px;
@@ -98,11 +98,26 @@ hr {
           color: $colorFontSelectedWhite;
           background-color: rgba(255, 255, 255, 0.1);
           border-color: rgba(255, 255, 255, 0.1);
+          .actions {
+            display: inline-block;
+          }
         }
         &.selected {
           color: $colorFontSelectedWhite;
           border-color: $colorPastelRed;
           background-color: $colorSelectedDark;
+        }
+        .actions {
+          display: none;
+          float: right;
+          .fa {
+            color: lighten($colorDefaultBackground, 30%);
+            font-size: 14px;
+            margin-left: 5px;
+            &:hover {
+              color: lighten($colorDefaultBackground, 50%);
+            }
+          }
         }
       }
     }

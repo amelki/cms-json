@@ -41,7 +41,7 @@ class Content extends React.Component {
 						<header>
 							<h1>{tree.model.name}</h1>
 						</header>
-						<Tree model={tree.model} selection={ selection }/>
+						<Tree node={tree} selection={ selection }/>
 					</div>
 				</aside>
 				<section id="right">
