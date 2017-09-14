@@ -21,6 +21,9 @@ export const ON_NAVIGATE = 'ON_NAVIGATE';
 export const SUBMIT_FIELD = 'SUBMIT_FIELD';
 export const CANCEL_EDIT_FIELD = 'CANCEL_EDIT_FIELD';
 export const EDIT_FIELD = 'EDIT_FIELD';
+export const EDIT_NODE = 'EDIT_NODE';
+export const SUBMIT_NODE = 'SUBMIT_NODE';
+export const CANCEL_EDIT_NODE = 'CANCEL_EDIT_NODE';
 export const DELETE_FIELD = 'DELETE_FIELD';
 export const SHOW_CONFIRM = 'SHOW_CONFIRM';
 export const CANCEL_CONFIRM = 'CANCEL_CONFIRM';
@@ -199,6 +202,16 @@ export const deleteNode = (node, selection, history) => {
 			body: `Are you sure you want to delete the node '${node.model.name}' ?`
 		});
 	};
+};
+
+export const editNode = (node) => {
+	return (dispatch) => {
+		dispatch(actions.change('modelNode', node.model));
+		dispatch({
+			type: EDIT_NODE,
+			node
+		});
+	}
 };
 
 const navigate = (dispatch, getState, history) => {

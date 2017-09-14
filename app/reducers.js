@@ -2,7 +2,8 @@ import * as Cms from './cms';
 import md from './md';
 import * as Actions from './actions';
 
-const apply = (action, state, node, parentNode) => {
+const apply = (action, state, node) => {
+	const parentNode = node.parent;
 	switch (action.type) {
 		case Actions.ADD_ITEM:
 			Cms.addItem(node, "New " + node.model.name);
@@ -84,6 +85,20 @@ export const editingFieldReducer = (state = {fieldIndex: '', path: ''}, action =
 	}
 };
 
+export const editingNodeReducer = (state = { path: '' }, action = { node: {} }) => {
+	switch (action.type) {
+		case Actions.EDIT_NODE:
+			return {
+				path: action.node.path
+			};
+		case Actions.SUBMIT_NODE:
+		case Actions.CANCEL_EDIT_NODE:
+			return null;
+		default:
+			return state;
+	}
+};
+
 export const confirmReducer = (state = null, action) => {
 	switch (action.type) {
 		case Actions.SHOW_CONFIRM:
@@ -117,8 +132,7 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 			// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
 			const newState = Object.assign({}, JSON.parse(JSON.stringify(state)), { stale: true, busy: false });
 			const newNode = Cms.findNode(newState.tree, action.node.path);
-			const selection = Cms.treePathAndIndex(newState.tree, action.node.path);
-			apply(action, newState, newNode, Cms.isSelectionItem(selection) ? Cms.findNode(newState.tree, selection.treePath) : null);
+			apply(action, newState, newNode);
 			return newState;
 		case Actions.CLEAR_FIELD_ERRORS:
 			return {

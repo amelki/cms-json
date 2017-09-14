@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import App from './app';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {mainReducer, editingFieldReducer, messageReducer, navigationReducer, confirmReducer} from './reducers';
+import {
+	mainReducer, editingFieldReducer, messageReducer, navigationReducer, confirmReducer,
+	editingNodeReducer
+} from './reducers';
 import {Provider} from 'react-redux';
 import axios from 'axios';
 import thunkMiddleware from 'redux-thunk';
@@ -28,6 +31,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 			fieldsInError: {},
 		},
 		editingField: null,
+		editingNode: null,
 		confirm: null,
 		message: {text: ''},
 		navigation: {},
@@ -39,6 +43,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 	const store = createStore(combineReducers({
 			main: mainReducer,
 			editingField: editingFieldReducer,
+			editingNode: editingNodeReducer,
 			message: messageReducer,
 			navigation: navigationReducer,
 			confirm: confirmReducer,
