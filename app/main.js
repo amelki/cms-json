@@ -37,9 +37,6 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		navigation: {},
 		router: {},
 	};
-	const initialField = {
-		name: ''
-	};
 	const store = createStore(combineReducers({
 			main: mainReducer,
 			editingField: editingFieldReducer,
@@ -49,7 +46,8 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 			confirm: confirmReducer,
 			router: routerReducer,
 			...createForms({
-				field: initialField
+				field: { name: '' },
+				modelNode: { name: '' }
 			})
 		}),
 		initialState,
@@ -59,7 +57,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		// In some cases, we need to defer the navigation after all reducers have been applied
 		// This is the case of 'key' fields, which, each tme a character is typed, must trigger a navigation
 		// If we don't defer, then the edited key field looses focus each time a character is entered.
-		if (newVal !== oldVal) {
+		if (newVal !== null && newVal !== oldVal) {
 			if (newVal === '') {
 				history.push('/');
 			} else {

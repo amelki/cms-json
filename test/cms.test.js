@@ -1,4 +1,5 @@
 import * as Cms from '../app/cms.js';
+import {slugify} from "../app/cms";
 const fs = require("fs");
 const Promise = require("bluebird");
 const readFile = Promise.promisify(fs.readFile);
@@ -321,3 +322,21 @@ testUpdateField("messages/tooltips", 'Message', "Msg", {
 	"welcome": "Welcome to my web site",
 	"sendEmail": "click to send an email"
 });
+
+const testRenameNode = (path, name) => {
+	test(`renameNode(${path}, ${name})`, () => {
+		return loadTree().then(tree => {
+			const node = Cms.findNode(tree, path);
+			const previousName = node.model.name;
+			const prev = node.parent.data[Cms.slugify(node.model.name)];
+			Cms.renameNode(node, name);
+			expect(node.model.name).toBe(name);
+			expect(node.parent.data[slugify(name)]).toEqual(prev);
+			expect(node.parent.data[slugify(previousName)]).toBeUndefined();
+		});
+	});
+};
+
+testRenameNode('nav/header', 'headers');
+testRenameNode('nav', 'navigation');
+testRenameNode('messages/errors', 'erreurs');

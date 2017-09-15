@@ -3,11 +3,12 @@ import {Link} from 'react-router-dom';
 import * as Cms from './cms';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import {deleteNode, editNode} from "./actions";
+import {cancelEditNode, deleteNode, editNode, submitNode} from "./actions";
 import {withRouter} from "react-router";
 import {Control, Form} from "react-redux-form";
+import {actions} from 'react-redux-form';
 
-const _Node = ({node, selection, depth, dispatch, history, editingNode}) => {
+const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNodeFormModel}) => {
 	const linkClass = (selection.treePath === node.path) ? 'selected' : '';
 	const editing = editingNode && editingNode.path === node.path;
 	const space = (20 * depth) + 'px';
@@ -33,22 +34,40 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode}) => {
 		event.preventDefault();
 		dispatch(editNode(node, selection));
 	};
+	const className = modelNodeFormModel.name.valid ? '' : 'error';
 	return (
 		<span>
 			<li>
 				<Link className={linkClass} style={{paddingLeft: space}} to={'/node/' + node.path}>
 					{
 						editing
-							? <Form model={"modelNode"}><Control.text model=".name"/></Form>
-							: <span key="name">{node.model.name}</span>
+							?
+							<Form model={"modelNode"} onSubmit={(values) => dispatch(submitNode(node, values, history))}>
+								<Control.text model=".name"
+															updateOn="change"
+															className={className}
+															autoFocus
+															autoComplete="off"
+															validators={{name: (val) => val && val.length}}
+															validateOn="change"
+															onFocus={event => event.target.select()}
+															onKeyDown={(e) =>(e.keyCode === 27 ? dispatch(cancelEditNode()) : '')}
+															onBlur={event => dispatch(cancelEditNode())}
+								/>
+							</Form>
+							:
+							<span key="name">{node.model.name}</span>
 					}
 					{
-						typeLabel && <span key="type" className="node-type">{typeLabel}</span>
+						!editing && typeLabel && <span key="type" className="node-type">{typeLabel}</span>
 					}
-					<div className="actions">
-						<span onClick={(event) => handleEditNode(event)}><i className="fa fa-pencil"/></span>
-						<span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span>
-					</div>
+					{
+						!editing &&
+						<div className="actions">
+							<span onClick={(event) => handleEditNode(event)}><i className="fa fa-pencil"/></span>
+							<span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span>
+						</div>
+					}
 				</Link>
 			</li>
 			{
@@ -63,7 +82,7 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode}) => {
 
 const mapStateToProps = (state) => {
 	return {
-		form: state.forms.field.$form,
+		modelNodeFormModel: state.forms.modelNode,
 		editingNode: state.editingNode
 	};
 };

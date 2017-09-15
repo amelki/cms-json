@@ -61,6 +61,10 @@ const apply = (action, state, node) => {
 		case Actions.SUBMIT_FIELD:
 			Cms.updateFieldAt(node, action.fieldIndex, action.field);
 			break;
+		case Actions.SUBMIT_NODE:
+			Cms.renameNode(node, action.model.name);
+			state.path = node.path;
+			break;
 		case Actions.DELETE_FIELD:
 			Cms.deleteFieldAt(node, action.fieldIndex);
 			break;
@@ -124,6 +128,7 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 		case Actions.MOVE_ITEM:
 		case Actions.INPUT_VALUE:
 		case Actions.ADD_VALUE:
+		case Actions.SUBMIT_NODE:
 		case Actions.SUBMIT_FIELD:
 		case Actions.DELETE_FIELD:
 		case Actions.DELETE_NODE:
@@ -165,6 +170,11 @@ export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: fa
 			return {
 				...state,
 				busy: false
+			};
+		case Actions.RESET_NAVIGATE_TO:
+			return {
+				...state,
+				path: null
 			};
 		default:
 			return state;

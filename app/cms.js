@@ -121,8 +121,6 @@ export const treePathAndIndex = (tree, path) => {
 	return res;
 };
 
-export const isSelectionItem = (selection) => selection.dataIndex !== -1;
-
 const _treePathAndIndex = function(node, path, result) {
 	if (path.length > 0) {
 		const p = path[0];
@@ -285,6 +283,15 @@ const _getStructNode = (node) => {
 	return node;
 };
 
+export const renameNode = function (node, name) {
+	const previousName = node.model.name;
+	node.model.name = name;
+	node.parent.data[slugify(name)] = node.parent.data[slugify(previousName)];
+	node.path = node.parent.path ? (node.parent.path + '/' + slugify(name)) : slugify(name);
+	node.treePath = node.path;
+	delete node.parent.data[slugify(previousName)];
+};
+
 const _checkDeleteFieldAt = (node, fieldIndex) => {
 	const field = getFieldAt(node, fieldIndex);
 	if (field.key) {
@@ -376,11 +383,13 @@ const _findNode = (node, path) => {
 		for (let c = 0; c < node.model.children.length; c++) {
 			const childModel = node.model.children[c];
 			if (slugify(childModel.name) === next) {
+				let treePath = (node.path ? (node.path + '/') : '') + next;
 				return _findNode({
 					model: childModel,
 					data: node.data[next] || (getNodeType(childModel) === TYPE_LIST_OBJECT ? [] : {}),
 					parent: node,
-					path: (node.path ? (node.path + '/') : '') + next,
+					path: treePath,
+					treePath: treePath,
 					dataIndex: -1
 				}, path.slice(1));
 			}
@@ -393,6 +402,7 @@ const _findNode = (node, path) => {
 			data: node.data[dataIndex] || {},
 			parent: node,
 			path: (node.path ? (node.path + '/') : '') + next,
+			treePath: node.path,
 			dataIndex: dataIndex
 		};
 	} else {
@@ -402,6 +412,7 @@ const _findNode = (node, path) => {
 			data: node.data[next] || (nodeType === TYPE_MAP_OBJECT ? {} : ""),
 			parent: node,
 			path: (node.path ? (node.path + '/') : '') + next,
+			treePath: node.path,
 			dataIndex: next
 		};
 	}

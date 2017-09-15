@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux'
-import { addItem, addChildAndNavigate } from './actions';
+import {addItem, addChild} from './actions';
 import Row from './row';
 import * as Cms from './cms';
 
@@ -43,10 +43,10 @@ class List extends Component {
 					(nodeType === Cms.TYPE_TREE)
 						? (
 							<span>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_TREE, router.history))}>Add Node</a>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_LIST_OBJECT, router.history))}>Add List</a>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChildAndNavigate(node, Cms.TYPE_MAP_STRING, router.history))}>Add String Map</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, Cms.TYPE_TREE, router.history))}>Add Node</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, Cms.TYPE_LIST_OBJECT, router.history))}>Add List</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, Cms.TYPE_MAP_STRING, router.history))}>Add String Map</a>
+								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, Cms.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>
 							</span>
 					)
 						: <a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addItem(node))}>Add Item</a>

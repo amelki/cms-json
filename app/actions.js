@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as Cms from './cms';
-import { actions } from 'react-redux-form';
+import {actions} from 'react-redux-form';
 
 export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';
@@ -58,14 +58,6 @@ export const onNavigate = (previousRouterPath, newRouterPath) => ({
 	previous: previousRouterPath,
 	current: newRouterPath
 });
-
-export const addChildAndNavigate = (node, childType, history) => {
-	return (dispatch, getState) => {
-		dispatch(addChild(node, childType));
-		// change history state here
-//		history.push(Cms.findNode());
-	}
-};
 
 export const load = () => {
 	return dispatch => {
@@ -139,11 +131,11 @@ export const addValue = (node, field, value) => ({
 });
 export const editField = (node, fieldIndex) => {
 	return (dispatch, getState) => {
-		let field ;
+		let field;
 		if (typeof fieldIndex !== 'undefined') {
 			field = Cms.getField(node.model.fields[fieldIndex]);
 		} else {
-			field = { name: '' }
+			field = {name: ''}
 		}
 		dispatch(actions.change('field', field));
 		dispatch({
@@ -213,6 +205,14 @@ export const editNode = (node) => {
 		});
 	}
 };
+export const cancelEditNode = () => ({
+	type: CANCEL_EDIT_NODE
+});
+export const submitNode = (node, model) => ({
+	type: SUBMIT_NODE,
+	model,
+	node
+});
 
 const navigate = (dispatch, getState, history) => {
 	const navigateTo = getState().main.path;
