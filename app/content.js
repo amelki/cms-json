@@ -7,6 +7,7 @@ import FieldEditor from './fieldEditor';
 import Confirm from './confirm';
 import { connect } from 'react-redux';
 import styles from './main.scss';
+import Node from "./node";
 
 class Content extends React.Component {
 
@@ -38,9 +39,6 @@ class Content extends React.Component {
 			<div id="content">
 				<aside id="left">
 					<div className="inner">
-						<header>
-							<h1>{tree.model.name}</h1>
-						</header>
 						<Tree node={tree} selection={ selection }/>
 					</div>
 				</aside>

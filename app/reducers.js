@@ -120,7 +120,7 @@ export const confirmReducer = (state = null, action) => {
 	}
 };
 
-export const mainReducer = (state = {data: {}, model: {}, stale: false, busy: false}, action) => {
+export const mainReducer = (state = {tree: {}, stale: false, busy: false}, action) => {
 	switch (action.type) {
 		case Actions.ADD_CHILD:
 		case Actions.ADD_ITEM:

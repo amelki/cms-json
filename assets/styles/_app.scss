@@ -80,11 +80,26 @@ hr {
   }
   nav {
     padding-bottom: 70px;
+    hr {
+      border: none;
+      height: 1px;
+      background-color: rgba(255, 255, 255, 0.1);
+      margin-left: 10px;
+      margin-right: 10px;
+    }
     li {
       list-style-type: none;
       border-bottom: 1px solid #333;
+      position: relative;
       &:last-of-type {
         border-bottom: none
+      }
+      &.root {
+        font-size: 22px;
+        & > a {
+          color: $colorFontAlmostWhite;
+        }
+        margin-top: 20px;
       }
       & > a {
         display: block;
@@ -109,7 +124,8 @@ hr {
         }
         .actions {
           display: none;
-          float: right;
+          position: absolute;
+          right: 5px;
           .fa {
             color: lighten($colorDefaultBackground, 30%);
             font-size: 14px;

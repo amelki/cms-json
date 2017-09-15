@@ -11,7 +11,7 @@ import {actions} from 'react-redux-form';
 const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNodeFormModel}) => {
 	const linkClass = (selection.treePath === node.path) ? 'selected' : '';
 	const editing = editingNode && editingNode.path === node.path;
-	const space = (20 * depth) + 'px';
+	const space = (depth === 0) ? '20px' : ((20 * depth) + 'px');
 	const typeLabel = (() => {
 		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
@@ -37,7 +37,7 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNod
 	const className = modelNodeFormModel.name.valid ? '' : 'error';
 	return (
 		<span>
-			<li>
+			<li className={ depth === 0 ? 'root' : '' }>
 				<Link className={linkClass} style={{paddingLeft: space}} to={'/node/' + node.path}>
 					{
 						editing
@@ -65,11 +65,12 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNod
 						!editing &&
 						<div className="actions">
 							<span onClick={(event) => handleEditNode(event)}><i className="fa fa-pencil"/></span>
-							<span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span>
+							{ depth > 0 && <span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span> }
 						</div>
 					}
 				</Link>
 			</li>
+			{ depth === 0 && <hr/> }
 			{
 				Cms.getChildren(node).map(child => <Node key={child.path}
 																								 node={child}

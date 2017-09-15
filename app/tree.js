@@ -8,7 +8,8 @@ const Tree = ({node, selection}) =>
 	<nav>
 		<ul>
 			{
-				Cms.getChildren(node).map(child => <Node key={child.path} node={child} selection={selection} depth={1}/>)
+				<Node node={node} selection={selection} depth={0}/>
+//				Cms.getChildren(node).map(child => <Node key={child.path} node={child} selection={selection} depth={1}/>)
 			}
 		</ul>
 	</nav>;

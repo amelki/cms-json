@@ -24,7 +24,8 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		main: {
 			tree: {
 				model: values[0].data,
-				data: values[1].data
+				data: values[1].data,
+				path: ''
 			},
 			stale: false,
 			busy: false,

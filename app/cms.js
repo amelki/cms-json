@@ -67,6 +67,9 @@ export const isKeyField = (field) => {
 };
 
 export const findNode = (node, path) => {
+	if (path === '') {
+		return node;
+	}
 	if (typeof path === 'string') {
 		path = path.split('/');
 	}
@@ -112,7 +115,7 @@ export const deleteNode = (node) => {
  * @returns {*}
  */
 export const treePathAndIndex = (tree, path) => {
-	let res = _treePathAndIndex(tree, Array.isArray(path) ? path : path.split('/'), {
+	let res = _treePathAndIndex(tree, Array.isArray(path) ? path : (path.length > 0 ? path.split('/') : ''), {
 		fullPath: path,
 		treePath: [],
 		dataIndex: -1
@@ -286,10 +289,12 @@ const _getStructNode = (node) => {
 export const renameNode = function (node, name) {
 	const previousName = node.model.name;
 	node.model.name = name;
-	node.parent.data[slugify(name)] = node.parent.data[slugify(previousName)];
-	node.path = node.parent.path ? (node.parent.path + '/' + slugify(name)) : slugify(name);
-	node.treePath = node.path;
-	delete node.parent.data[slugify(previousName)];
+	if (node.parent) {
+		node.parent.data[slugify(name)] = node.parent.data[slugify(previousName)];
+		node.path = node.parent.path ? (node.parent.path + '/' + slugify(name)) : slugify(name);
+		node.treePath = node.path;
+		delete node.parent.data[slugify(previousName)];
+	}
 };
 
 const _checkDeleteFieldAt = (node, fieldIndex) => {
