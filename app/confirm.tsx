@@ -1,19 +1,28 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {Control, Form} from 'react-redux-form';
-import {submitField, cancelEditField, cancelConfirm} from './actions';
+import * as React from "react";
+import {connect, DispatchProp} from 'react-redux';
+import {cancelConfirm} from "./actions";
 
-class Confirm extends React.Component {
-	cancel() {
-		const {dispatch} = this.props;
-		return () => dispatch(cancelConfirm());
+interface Props extends DispatchProp<() => object> {
+	on: boolean,
+	title: string,
+	body: string,
+	ok: () => any
+}
+
+class Confirm extends React.Component<Props, {}> {
+
+	cancel(): any {
+		return () => {
+			this.props.dispatch(cancelConfirm());
+		};
 	}
-	render() {
+
+	public render(): React.ReactElement<{}> {
 		const {on, title, body, ok} = this.props;
 		return (
 			<div className="modal"
-					 style={on ? {display: 'block'} : {display: 'none'}}
-					 tabIndex="0"
+					 style={on ? { display: 'block' } : { display: 'none' }}
+					 tabIndex={0}
 					 onKeyDown={(e) =>(e.keyCode === 27 ? this.cancel() : '')}>
 				<div className="modal-content">
 					<div className="title">

@@ -14,7 +14,11 @@ module.exports = {
     filename: '[name]-[hash].min.js',
     publicPath: '/'
   },
-  plugins: [
+	resolve: {
+		// Add '.ts' and '.tsx' as resolvable extensions.
+		extensions: [".ts", ".tsx", ".js", ".json"]
+	},
+	plugins: [
     new HtmlWebpackPlugin({
       template: 'app/index.tpl.html',
       inject: 'body',
@@ -31,20 +35,36 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
-  module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        "presets": ["es2015", "stage-0", "react"],
-				"plugins": ["transform-decorators-legacy"]
-      }
-    }, {
-      test: /\.json?$/,
-      loader: 'json'
-    },
-      {test: /(\.css|\.scss)$/, loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']}
-    ]
-  }
+	module: {
+		loaders: [
+			{test: /\.json$/, loader: "json-loader"},
+			{test: /\.styl$/, loader: "style-loader!css-loader!stylus-loader"},
+			{
+				test: /(\.css|\.scss)$/,
+				loaders: ['style-loader', 'css-loader?sourceMap', 'sass-loader?sourceMap']
+			},
+			{
+				test: /\.(ttf|eot|woff|woff2|svg)$/,
+				loader: 'file-loader',
+				options: {
+					name: 'assets/fonts/[name].[ext]',
+				}
+			},
+			{
+				test: /\.less$/,
+				include: [
+					path.resolve(__dirname, 'node_modules/font-awesome-webpack/less')
+				],
+				use: [{
+					loader: "style-loader" // creates style nodes from JS strings
+				}, {
+					loader: "css-loader" // translates CSS into CommonJS
+				}, {
+					loader: "less-loader" // compiles Less to CSS
+				}]
+			},
+			{ test: /\.(t|j)sx?$/, use: { loader: 'awesome-typescript-loader' } },
+			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+		]
+	}
 };

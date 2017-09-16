@@ -6,13 +6,18 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
-	devtool: 'eval-source-map',
+	devtool: 'source-map',
 	entry: {app: [path.join(__dirname, 'app/main.js'), hotMiddlewareScript]},
 	output: {
 		path: path.join(__dirname, '/dist/'),
 		filename: '[name].js',
 		publicPath: '/'
 	},
+	resolve: {
+		// Add '.ts' and '.tsx' as resolvable extensions.
+		extensions: [".ts", ".tsx", ".js", ".json"]
+	},
+
 	devServer: {
 		headers: {
 			'Access-Control-Allow-Origin': '*'
@@ -32,15 +37,6 @@ module.exports = {
 	],
 	module: {
 		loaders: [
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				loader: 'babel-loader',
-				query: {
-					"presets": ["react", "es2015", "stage-0", "react-hmre"],
-					"plugins": ["transform-decorators-legacy"]
-				}
-			},
 			{test: /\.json$/, loader: "json-loader"},
 			{test: /\.styl$/, loader: "style-loader!css-loader!stylus-loader"},
 			{
@@ -66,7 +62,9 @@ module.exports = {
 				}, {
 					loader: "less-loader" // compiles Less to CSS
 				}]
-			}
+			},
+			{ test: /\.(t|j)sx?$/, use: { loader: 'awesome-typescript-loader' } },
+			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
 		]
 	}
 };

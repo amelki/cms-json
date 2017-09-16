@@ -82,14 +82,3 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		document.getElementById('root')
 	);
 });
-
-// const NoMatch = () => {
-// 	return (
-// 		<div>
-// 			<h4>
-// 				404 Page Not Found
-// 			</h4>
-// 			<Link to="/"> Go back to homepage </Link>
-// 		</div>
-// 	);
-// };

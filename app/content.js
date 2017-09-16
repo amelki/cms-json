@@ -1,13 +1,15 @@
 import React from 'react';
 import * as Cms from './cms';
-import Tree from './tree';
+import Tree from './tree.tsx';
+
 import List from './list';
 import Item from './item';
 import FieldEditor from './fieldEditor';
-import Confirm from './confirm';
+import Confirm from './confirm.tsx';
 import { connect } from 'react-redux';
-import styles from './main.scss';
-import Node from "./node";
+//import styles from './main.scss';
+// Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
+const styles = require('./main.scss');
 
 class Content extends React.Component {
 
