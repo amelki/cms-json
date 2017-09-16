@@ -154,7 +154,10 @@ export const mainReducer = (state = {tree: {}, stale: false, busy: false}, actio
 			return {
 				tree: {
 					model: action.model,
-					data: action.data
+					data: action.data,
+					path: '',
+					treePath: '',
+					dataIndex: -1
 				},
 				fieldsInError: {},
 				stale: false,
