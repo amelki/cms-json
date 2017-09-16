@@ -7,7 +7,7 @@ const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&t
 
 module.exports = {
 	devtool: 'source-map',
-	entry: {app: [path.join(__dirname, 'app/main.js'), hotMiddlewareScript]},
+	entry: {app: [path.join(__dirname, 'app/main.tsx'), hotMiddlewareScript]},
 	output: {
 		path: path.join(__dirname, '/dist/'),
 		filename: '[name].js',

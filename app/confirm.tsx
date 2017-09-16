@@ -13,7 +13,7 @@ class Confirm extends React.Component<Props, {}> {
 
 	cancel(): any {
 		return () => {
-			this.props.dispatch(cancelConfirm());
+			this.props.dispatch!(cancelConfirm());
 		};
 	}
 

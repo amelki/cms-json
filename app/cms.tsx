@@ -7,7 +7,43 @@ export const FIELD_TYPE_BOOLEAN = "boolean";
 export const FIELD_TYPE_ARRAY = "array";
 export const FIELD_TYPE_MARKDOWN = "markdown";
 
-export const getNodeType = (node) => {
+enum NodeType {
+	TYPE_TREE = 'tree',
+	TYPE_MAP_OBJECT = 'map<object>',
+	TYPE_MAP_STRING = "map<string>",
+	TYPE_LIST_OBJECT = "list<object>"
+}
+
+interface Model {
+	name: string;
+	children?: Model[];
+	type: string;
+	list?: boolean;
+	fields?: any[];
+}
+
+interface Field {
+	name: string,
+	type: string,
+	key: boolean
+}
+
+interface Node {
+	model: Model;
+	data: any;
+	parent: Node;
+	path: string,
+	treePath: string,
+	fieldIndex: number
+}
+
+interface Path {
+	fullPath: string,
+	treePath: any,
+	dataIndex: any
+}
+
+export const getNodeType = (node: Node) : string => {
 	if (node.model.type) {
 		return node.model.type;
 	} else {
@@ -19,21 +55,21 @@ export const getNodeType = (node) => {
 	}
 };
 
-export const getFieldAt = (node, fieldIndex) => {
+export const getFieldAt = (node: Node, fieldIndex: number) : Field => {
 	if (fieldIndex < 0) {
 		throw new Error(`Negative field index`);
 	}
 	if (node.model.fields && fieldIndex < node.model.fields.length) {
 		return getField(node.model.fields[fieldIndex]);
 	}
-	throw new Error(`No field at index ${fieldIndex} for node ${node.name}`);
+	throw new Error(`No field at index ${fieldIndex} for node ${node.model.name}`);
 };
 
-export const getFieldNamed = (node, name) => {
+export const getFieldNamed = (node: Node, name : string) : Field => {
 	return getFields(node).filter(f => f.name === name)[0];
 };
 
-export const getFieldIndex = (node, field) => {
+export const getFieldIndex = (node : Node, field : Field) => {
 	field = getField(field);
 	const fields = getFields(node);
 	for (let i = 0; i < fields.length; i++) {
@@ -42,31 +78,31 @@ export const getFieldIndex = (node, field) => {
 			return i;
 		}
 	}
-	throw new Error(`Cannot find fieldIndex for field ${field.name} in node ${node.name}`);
+	throw new Error(`Cannot find fieldIndex for field ${field.name} in node ${node.model.name}`);
 };
 
-export const getField = (f) => {
+export const getField = (f : any) : Field => {
 	return typeof f === 'string' ? { name: f } : f;
 };
 
-export const getFields = (node) => {
+export const getFields = (node : Node) : Field[] => {
 	const fields = node.model.fields;
 	if (fields) {
 		return fields.map(f => typeof f === 'string' ? { name: f } : f);
 	}
-	return fields;
+	return [];
 };
 
-export const isMapType = (node) => {
+export const isMapType = (node : Node) : boolean => {
 	const nodeType = getNodeType(node);
 	return [ TYPE_MAP_STRING, TYPE_MAP_OBJECT ].includes(nodeType);
 };
 
-export const isKeyField = (field) => {
+export const isKeyField = (field : Field) : boolean => {
 	return typeof field === 'object' && field.key;
 };
 
-export const findNode = (node, path) => {
+export const findNode = (node : Node, path : any) => {
 	if (path === '') {
 		return node;
 	}
@@ -76,15 +112,17 @@ export const findNode = (node, path) => {
 	return _findNode(node, path);
 };
 
-export const getChildren = (node) => {
-	const children = [];
+export const getChildren = (node: Node) : Node[] => {
+	const children:Node[] = [];
 	if (node.model.children && node.model.children.length > 0) {
 		node.model.children.forEach(modelChild => {
+			let childPath = (node.path ? (node.path + '/') : '') + slugify(modelChild.name);
 			children.push({
 				model: modelChild,
 				data: node.data[slugify(modelChild.name)],
 				parent: node,
-				path: (node.path ? (node.path + '/') : '') + slugify(modelChild.name),
+				path: childPath,
+				treePath: childPath,
 				fieldIndex: -1
 			});
 		});
@@ -92,9 +130,9 @@ export const getChildren = (node) => {
 	return children;
 };
 
-export const deleteNode = (node) => {
+export const deleteNode = (node : Node) : void => {
 	const parentNode = node.parent;
-	const modelChildren = parentNode.model.children;
+	const modelChildren = parentNode.model.children!;
 	for (let i = 0; i < modelChildren.length; i++) {
 		const modelChild = modelChildren[i];
 		if (modelChild.name === node.model.name) {
@@ -114,7 +152,7 @@ export const deleteNode = (node) => {
  * @param path
  * @returns {*}
  */
-export const treePathAndIndex = (tree, path) => {
+export const treePathAndIndex = (tree: Node, path: string) : Path => {
 	let res = _treePathAndIndex(tree, Array.isArray(path) ? path : (path.length > 0 ? path.split('/') : ''), {
 		fullPath: path,
 		treePath: [],
@@ -124,7 +162,7 @@ export const treePathAndIndex = (tree, path) => {
 	return res;
 };
 
-const _treePathAndIndex = function(node, path, result) {
+const _treePathAndIndex = function(node: Node, path: any, result) : Path {
 	if (path.length > 0) {
 		const p = path[0];
 		if (node.model.children && node.model.children.length > 0) {
@@ -147,16 +185,26 @@ const _treePathAndIndex = function(node, path, result) {
 	return result;
 };
 
-const _findChild = (node, slug) => {
-	for (let i = 0; i < node.model.children.length; i++) {
-		if (slugify(node.model.children[i].name) === slug) {
-			return { model: node.model.children[i], data: node.data[slug], parent: node };
+const _findChild = (node: Node, slug: string) : Node => {
+	if (node.model.children) {
+		for (let i = 0; i < node.model.children.length; i++) {
+			if (slugify(node.model.children[i].name) === slug) {
+				let childPath = node.path + '/' + slug;
+				return {
+					model: node.model.children[i],
+					data: node.data[slug],
+					parent: node,
+					path: childPath,
+					treePath: childPath,
+					fieldIndex: -1
+				};
+			}
 		}
 	}
 	throw new Error(`Could not find child with slug ${slug} in node ${node.model.name}`);
 };
 
-export const getDataItems = (node) => {
+export const getDataItems = (node: Node): any[] => {
 	switch (getNodeType(node)) {
 		case TYPE_LIST_OBJECT:
 			return node.data;
@@ -168,7 +216,7 @@ export const getDataItems = (node) => {
 	}
 };
 
-const _findNewListItemName = (node, newName, idx) => {
+const _findNewListItemName = (node: Node, newName: string, idx: number): string => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const fieldName = defaultFieldName(node.model);
 	const items = getDataItems(node);
@@ -182,7 +230,7 @@ const _findNewListItemName = (node, newName, idx) => {
 	return fullName;
 };
 
-const _findNewMapKey = (node, newName, idx) => {
+const _findNewMapKey = (node: Node, newName: string, idx: number) => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	if (typeof node.data[fullName] !== 'undefined') {
 		return _findNewMapKey(node, newName, idx + 1);
@@ -190,7 +238,7 @@ const _findNewMapKey = (node, newName, idx) => {
 	return fullName;
 };
 
-const _findNewNodeName = (node, newName, idx) => {
+const _findNewNodeName = (node: Node, newName: string, idx: number): string => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const children = node.model.children;
 	if (children) {
@@ -205,7 +253,7 @@ const _findNewNodeName = (node, newName, idx) => {
 	return fullName;
 };
 
-export const addItem = (node, requestedName) => {
+export const addItem = (node: Node, requestedName: string) => {
 	const nodeType = getNodeType(node);
 	let item;
 	let dataIndex;
@@ -233,10 +281,10 @@ export const addItem = (node, requestedName) => {
 	return { dataIndex, item };
 };
 
-export const addNode = (node, requestedName, nodeType) => {
-	const newModel = {
+export const addNode = (node: Node, requestedName: string, nodeType: string): Node => {
+	const newModel: Model = {
 		name : _findNewNodeName(node, requestedName, 1),
-		type: nodeType
+		type: nodeType,
 	};
 	let newData;
 	switch (nodeType) {
@@ -262,13 +310,15 @@ export const addNode = (node, requestedName, nodeType) => {
 	}
 	node.model.children.push(newModel);
 	node.data[slugify(newModel.name)] = newData;
+	let path = node.path + '/' + slugify(newModel.name);
 	return Object.assign(
 		{},
 		node,
 		{
 			model: newModel,
 			data: newData,
-			path: node.path + '/' + slugify(newModel.name),
+			path: path,
+			treePath: path,
 			parent: node,
 			dataIndex: -1
 		}

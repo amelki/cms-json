@@ -36,6 +36,7 @@
   "dependencies": {
     "@types/react": "^16.0.5",
     "@types/react-dom": "^15.5.4",
+    "@types/redux": "^3.6.0",
     "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "colors": "^1.1.2",
@@ -89,6 +90,7 @@
     "mocha": "^3.5.0",
     "mocha-jsdom": "^1.0.0",
     "node-sass": "^4.5.3",
+    "object-path": "^0.11.4",
     "postcss-loader": "^2.0.6",
     "react": "^15.6.1",
     "react-addons-test-utils": "^15.6.0",
