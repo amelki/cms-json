@@ -1,4 +1,5 @@
-import * as Cms from '../app/cms.tsx';
+import {} from 'jest';
+import * as Cms from '../app/cms';
 import {slugify} from "../app/cms";
 const fs = require("fs");
 const Promise = require("bluebird");
