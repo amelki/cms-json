@@ -1,6 +1,7 @@
 import {} from 'jest';
 import * as Cms from '../app/cms';
 import {slugify} from "../app/cms";
+import {Field, NodeType, normalizeModel, TreeModel} from "../app/model";
 const fs = require("fs");
 const Promise = require("bluebird");
 const readFile = Promise.promisify(fs.readFile);
@@ -23,8 +24,9 @@ const loadTree = () => {
 				return jsonTree;
 			});
 	return promise.then(json => {
+		let normalizedModel = normalizeModel(JSON.parse(json.model));
 		return {
-			model: JSON.parse(json.model),
+			model: normalizedModel,
 			data: JSON.parse(json.data)
 		}
 	});
@@ -33,9 +35,11 @@ const loadTree = () => {
 test(`findNode(messages)`, () => {
 	return loadTree().then(tree => {
 		const node = Cms.findNode(tree, "messages");
+		expect(Cms.getNodeType(node)).toBe(NodeType.TYPE_TREE);
+		const treeModel : TreeModel = <TreeModel> node.model;
 		expect(node.model.name).toBe("Messages");
-		expect(node.model.children.length).toBe(2);
-		expect(node.model.children[0].name).toBe("Errors");
+		expect(treeModel.children.length).toBe(2);
+		expect(treeModel.children[0].name).toBe("Errors");
 		expect(node.data.errors).toBeDefined();
 		expect(node.path).toBe('messages');
 	});
@@ -83,7 +87,7 @@ const testTreePathAndIndex = (path, expectedFullPath, expectedTreePath, expected
 		return loadTree().then(tree => {
 			const res = Cms.treePathAndIndex(tree, path);
 			expect(res.fullPath).toBe(expectedFullPath);
-			expect(res.treePath).toBe(expectedTreePath);
+			expect(res.treePath.join('/')).toBe(expectedTreePath);
 			expect(res.dataIndex).toBe(expectedIndex);
 		});
 	});
@@ -184,7 +188,7 @@ testAddMapItem("messages/tooltips", "anotherTooltip", [ "anotherTooltip", "anoth
 const testAddNode = (path, nodeType, requestedName, expectedNewNames) => {
 	test(`addNode(${path}, ${nodeType})`, () => {
 		return loadTree().then(tree => {
-			const node = Cms.findNode(tree, path);
+			const node : Cms.Node<TreeModel> = <Cms.Node<TreeModel>> Cms.findNode(tree, path);
 			if (!Array.isArray(expectedNewNames)) {
 				expectedNewNames = [ expectedNewNames ];
 			}
@@ -196,12 +200,12 @@ const testAddNode = (path, nodeType, requestedName, expectedNewNames) => {
 	});
 };
 
-testAddNode("nav", Cms.TYPE_TREE, "New Node", [ "New Node", "New Node (2)", "New Node (3)" ]);
-testAddNode("nav", Cms.TYPE_MAP_OBJECT, "New Map", [ "New Map", "New Map (2)", "New Map (3)" ]);
-testAddNode("nav", Cms.TYPE_LIST_OBJECT, "New List", [ "New List", "New List (2)", "New List (3)" ]);
-testAddNode("nav", Cms.TYPE_LIST_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
-testAddNode("nav", Cms.TYPE_MAP_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
-testAddNode("nav", Cms.TYPE_TREE, "Header", [ "Header (2)", "Header (3)" ]);
+testAddNode("nav", NodeType.TYPE_TREE, "New Node", [ "New Node", "New Node (2)", "New Node (3)" ]);
+testAddNode("nav", NodeType.TYPE_MAP_OBJECT, "New Map", [ "New Map", "New Map (2)", "New Map (3)" ]);
+testAddNode("nav", NodeType.TYPE_LIST_OBJECT, "New List", [ "New List", "New List (2)", "New List (3)" ]);
+testAddNode("nav", NodeType.TYPE_LIST_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
+testAddNode("nav", NodeType.TYPE_MAP_OBJECT, "Header", [ "Header (2)", "Header (3)" ]);
+testAddNode("nav", NodeType.TYPE_TREE, "Header", [ "Header (2)", "Header (3)" ]);
 
 const testGetFieldNamed = (path, fieldName) => {
 	test(`getFieldName(${path}, ${fieldName})`, () => {
@@ -259,6 +263,9 @@ const testUpdateField = (path, fieldName, field, expectedData) => {
 			const node = Cms.findNode(tree, path);
 			const prevField = Cms.getFieldNamed(node, fieldName);
 			const fieldIndex = Cms.getFieldIndex(node, prevField);
+			if (typeof field === 'string') {
+				field = new Field(field);
+			}
 			expect(node.model.fields).not.toContainEqual(field);
 			Cms.updateFieldAt(node, fieldIndex, field);
 			expect(node.model.fields).toContainEqual(field);
