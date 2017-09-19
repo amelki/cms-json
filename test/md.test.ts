@@ -1,4 +1,4 @@
-const converter = require('../app/md.js');
+const converter = require('../app/md');
 
 const md = "# foo\n\n*   bar\n*   hux";
 const html = '<h1 id="foo">foo</h1>\n<ul>\n<li>bar</li>\n<li>hux</li>\n</ul>\n';

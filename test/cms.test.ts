@@ -1,7 +1,7 @@
 import {} from 'jest';
 import * as Cms from '../app/cms';
 import {slugify} from "../app/cms";
-import {Field, NodeType, normalizeModel, TreeModel} from "../app/model";
+import {Field, FieldType, NodeType, normalizeModel, TreeModel} from "../app/model";
 const fs = require("fs");
 const Promise = require("bluebird");
 const readFile = Promise.promisify(fs.readFile);
@@ -31,6 +31,27 @@ const loadTree = () => {
 		}
 	});
 };
+
+test('testNormalizeModel', () => {
+	const model = {
+		name: 'Foo',
+		children: [],
+		fields: [ 'field1', { name: 'field2' }, { name: 'field3', type: 'boolean' } ]
+	};
+	const normalized = normalizeModel(model);
+	expect(normalized.getFieldNamed('field1').type).toBe(FieldType.String);
+	expect(normalized.getFieldNamed('field2').type).toBe(FieldType.String);
+	expect(normalized.getFieldNamed('field3').type).toBe(FieldType.Boolean);
+});
+
+test('checkNormalize', () => {
+	return loadTree().then(tree => {
+		const pages = Cms.findNode(tree, "pages");
+		expect(pages.model.getFieldNamed('Search Enabled').type).toBe(FieldType.Boolean);
+		expect(pages.model.getFieldNamed('Description').type).toBe(FieldType.TextArea);
+		expect(pages.model.getFieldNamed('Description').className).toBe('short');
+	});
+});
 
 test(`findNode(messages)`, () => {
 	return loadTree().then(tree => {
@@ -87,7 +108,7 @@ const testTreePathAndIndex = (path, expectedFullPath, expectedTreePath, expected
 		return loadTree().then(tree => {
 			const res = Cms.treePathAndIndex(tree, path);
 			expect(res.fullPath).toBe(expectedFullPath);
-			expect(res.treePath.join('/')).toBe(expectedTreePath);
+			expect(res.treePath).toBe(expectedTreePath);
 			expect(res.dataIndex).toBe(expectedIndex);
 		});
 	});
@@ -336,11 +357,11 @@ const testRenameNode = (path, name) => {
 		return loadTree().then(tree => {
 			const node = Cms.findNode(tree, path);
 			const previousName = node.model.name;
-			const prev = node.parent.data[Cms.slugify(node.model.name)];
+			const prev = node.parent!.data[Cms.slugify(node.model.name)];
 			Cms.renameNode(node, name);
 			expect(node.model.name).toBe(name);
-			expect(node.parent.data[slugify(name)]).toEqual(prev);
-			expect(node.parent.data[slugify(previousName)]).toBeUndefined();
+			expect(node.parent!.data[slugify(name)]).toEqual(prev);
+			expect(node.parent!.data[slugify(previousName)]).toBeUndefined();
 		});
 	});
 };

@@ -1,12 +1,13 @@
 import React from 'react';
 import * as Cms from './cms';
-import Tree from './tree.tsx';
 
 import List from './list';
 import Item from './item';
 import FieldEditor from './fieldEditor';
-import Confirm from './confirm.tsx';
+import Confirm from './components/confirm.tsx';
 import { connect } from 'react-redux';
+import { NodeType } from "./model";
+import Node from './components/tree';
 //import styles from './main.scss';
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('./main.scss');
@@ -19,16 +20,16 @@ class Content extends React.Component {
 		if (node) {
 			const nodeType = Cms.getNodeType(node);
 			switch (nodeType) {
-				case Cms.TYPE_TREE:
+				case NodeType.TYPE_TREE:
 					right =
 						<span>
 							<Item node={node} selection={selection}/>
 							<List node={node} selection={selection}/>
 						</span>;
 					break;
-				case Cms.TYPE_LIST_OBJECT:
-				case Cms.TYPE_MAP_OBJECT:
-				case Cms.TYPE_MAP_STRING:
+				case NodeType.TYPE_LIST_OBJECT:
+				case NodeType.TYPE_MAP_OBJECT:
+				case NodeType.TYPE_MAP_STRING:
 					if (selection && (selection.dataIndex !== -1)) {
 						right = <Item node={node} selection={selection}/>;
 					} else {
@@ -41,7 +42,9 @@ class Content extends React.Component {
 			<div id="content">
 				<aside id="left">
 					<div className="inner">
-						<Tree node={tree} selection={ selection }/>
+						<nav>
+							<ul><Node node={tree} selection={selection} depth={0}/></ul>
+						</nav>
 					</div>
 				</aside>
 				<section id="right">

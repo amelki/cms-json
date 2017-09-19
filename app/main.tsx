@@ -11,34 +11,18 @@ import axios from 'axios';
 import thunkMiddleware from 'redux-thunk';
 import {createForms} from 'react-redux-form';
 
-import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux'
+import {ConnectedRouter, routerReducer, routerMiddleware, RouterState} from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory';
 import watch from './watch';
 import {clearFieldErrors, onNavigate} from "./actions";
+import AppState, {makeAppState} from "./state";
 
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
 Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-	const initialState = {
-		main: {
-			tree: {
-				model: values[0].data,
-				data: values[1].data,
-				path: ''
-			},
-			stale: false,
-			busy: false,
-			fieldsInError: {},
-		},
-		editingField: null,
-		editingNode: null,
-		confirm: null,
-		message: {text: ''},
-		navigation: {},
-		router: {},
-	};
-	const store = createStore(combineReducers({
+	const initialState = makeAppState(values[0].data, values[1].data);
+	const store = createStore<AppState>(combineReducers({
 			main: mainReducer,
 			editingField: editingFieldReducer,
 			editingNode: editingNodeReducer,

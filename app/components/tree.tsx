@@ -1,24 +1,34 @@
-import React from 'react';
+import * as React from "react";
 import {Link} from 'react-router-dom';
-import * as Cms from './cms';
-import PropTypes from 'prop-types';
-import {connect} from "react-redux";
-import {cancelEditNode, deleteNode, editNode, submitNode} from "./actions";
+import * as Cms from '../cms';
+import {connect, Dispatch} from "react-redux";
+import {cancelEditNode, deleteNode, editNode, submitNode} from "../actions";
 import {withRouter} from "react-router";
 import {Control, Form} from "react-redux-form";
-import {actions} from 'react-redux-form';
+import {NodeType, Model, TreeModel} from '../model';
+import {Node, Path} from '../cms';
 
-const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNodeFormModel}) => {
+interface Props {
+	node: Node<Model>;
+	selection: Path;
+	depth: number;
+	history: object;
+	editingNode: any;
+	modelNodeFormModel: any;
+	dispatch: Dispatch<any>;
+}
+
+const _Tree: React.SFC<Props> = ({node, selection, depth, dispatch, history, editingNode, modelNodeFormModel}) => {
 	const linkClass = (selection.treePath === node.path) ? 'selected' : '';
 	const editing = editingNode && editingNode.path === node.path;
 	const space = (depth === 0) ? '20px' : ((20 * depth) + 'px');
 	const typeLabel = (() => {
 		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
-			case Cms.TYPE_LIST_OBJECT:
+			case NodeType.TYPE_LIST_OBJECT:
 				return "\u005b\u005d";
-			case Cms.TYPE_MAP_OBJECT:
-			case Cms.TYPE_MAP_STRING:
+			case NodeType.TYPE_MAP_OBJECT:
+			case NodeType.TYPE_MAP_STRING:
 				return "\u007b\u007d";
 			default:
 				return null;
@@ -32,17 +42,17 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNod
 	const handleEditNode = (event) => {
 		event.stopPropagation();
 		event.preventDefault();
-		dispatch(editNode(node, selection));
+		dispatch(editNode(node));
 	};
-	const className = modelNodeFormModel.name.valid ? '' : 'error';
+	const className = (modelNodeFormModel && !modelNodeFormModel.name.valid)? 'error' : '';
 	return (
 		<span>
-			<li className={ depth === 0 ? 'root' : '' }>
+			<li className={depth === 0 ? 'root' : ''}>
 				<Link className={linkClass} style={{paddingLeft: space}} to={'/node/' + node.path}>
 					{
 						editing
 							?
-							<Form model={"modelNode"} onSubmit={(values) => dispatch(submitNode(node, values, history))}>
+							<Form model={"modelNode"} onSubmit={(values) => dispatch(submitNode(node, values))}>
 								<Control.text model=".name"
 															updateOn="change"
 															className={className}
@@ -50,8 +60,8 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNod
 															autoComplete="off"
 															validators={{name: (val) => val && val.length}}
 															validateOn="change"
-															onFocus={event => event.target.select()}
-															onKeyDown={(e) =>(e.keyCode === 27 ? dispatch(cancelEditNode()) : '')}
+															onFocus={event => (event.target as HTMLInputElement).select()}
+															onKeyDown={(e) => (e.keyCode === 27 ? dispatch(cancelEditNode()) : '')}
 															onBlur={event => dispatch(cancelEditNode())}
 								/>
 							</Form>
@@ -65,17 +75,18 @@ const _Node = ({node, selection, depth, dispatch, history, editingNode, modelNod
 						!editing &&
 						<div className="actions">
 							<span onClick={(event) => handleEditNode(event)}><i className="fa fa-pencil"/></span>
-							{ depth > 0 && <span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span> }
+							{depth > 0 && <span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span>}
 						</div>
 					}
 				</Link>
 			</li>
-			{ depth === 0 && <hr/> }
+			{depth === 0 && <hr/>}
 			{
-				Cms.getChildren(node).map(child => <Node key={child.path}
-																								 node={child}
-																								 selection={selection}
-																								 depth={depth + 1}/>)
+				Cms.getNodeType(node) === NodeType.TYPE_TREE
+				&& Cms.getChildren(node as Node<TreeModel>).map(child => <Tree key={child.path}
+																																			 node={child}
+																																			 selection={selection}
+																																			 depth={depth + 1}/>)
 			}
 			</span>
 	);
@@ -88,12 +99,6 @@ const mapStateToProps = (state) => {
 	};
 };
 
-const Node = withRouter(connect(mapStateToProps)(_Node));
+const Tree = withRouter(connect(mapStateToProps)(_Tree));
 
-export default Node;
-
-Node.propTypes = {
-	node: PropTypes.object.isRequired,
-	selection: PropTypes.object.isRequired,
-	depth: PropTypes.number.isRequired
-};
+export default Tree;

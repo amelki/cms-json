@@ -1,18 +1,18 @@
-import {Field, FieldType, ListModel, Model, NodeType, ObjectMapModel, StringMapModel, TreeModel} from '../app/model';
+import {Field, FieldType, ListModel, Model, NodeType, ObjectMapModel, StringMapModel, TreeModel} from './model';
 
 export interface Node<M extends Model> {
 	model: M;
 	data: any;
-	parent: Node<TreeModel>;
+	parent: Node<TreeModel> | null;
 	path: string,
 	treePath: string,
 	fieldIndex: number,
 	dataIndex: any
 }
 
-interface Path {
+export interface Path {
 	fullPath: string,
-	treePath: string[],
+	treePath: string,
 	dataIndex: any
 }
 
@@ -81,7 +81,7 @@ export const getChildren = <M extends Model>  (node: Node<TreeModel>): Node<M>[]
 };
 
 export const deleteNode = <M extends Model> (node: Node<M>): void => {
-	const parentNode = node.parent;
+	const parentNode = node.parent!;
 	const modelChildren = (<TreeModel> parentNode.model).children!;
 	for (let i = 0; i < modelChildren.length; i++) {
 		const modelChild = modelChildren[i];
@@ -105,7 +105,7 @@ export const deleteNode = <M extends Model> (node: Node<M>): void => {
 export const treePathAndIndex = <M extends Model> (tree: Node<Model>, path: string): Path => {
 	let res = _treePathAndIndex(tree, path.split('/'), {
 		fullPath: path,
-		treePath: [],
+		treePath: '',
 		dataIndex: -1
 	});
 	return res;
@@ -117,7 +117,7 @@ const _treePathAndIndex = (node: Node<Model>, path: string[], result: Path): Pat
 		const nodeType = getNodeType(node);
 		switch (nodeType) {
 			case NodeType.TYPE_TREE:
-				result.treePath = [ ...result.treePath , p ];
+				result.treePath = result.treePath === '' ? p : (result.treePath + '/' + p);
 				_treePathAndIndex(_findChild(<Node<TreeModel>> node, p), path.slice(1), result);
 				break;
 			case NodeType.TYPE_LIST_OBJECT:
@@ -276,7 +276,7 @@ export const addNode = <M extends Model> (node: Node<TreeModel>, requestedName: 
  */
 const _getStructNode = (node : Node<Model>) : Node<Model> => {
 	if (node.dataIndex !== -1) {
-		return node.parent;
+		return node.parent!;
 	}
 	return node;
 };
@@ -440,6 +440,8 @@ export const fieldDisplayName = (field : Field) : string => field.name;
 
 export const slugify = (str : string) : string => str.replace(/\s/g, '_').replace(/\//g, '-').toLowerCase();
 
-export const isItem = (node) => node.model.isItem();
+export const isItem = (node) => {
+	return node.model.isItem();
+};
 
 const ensureArray = path => typeof path === 'string' ? path.split('/') : path;

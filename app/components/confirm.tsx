@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect, DispatchProp} from 'react-redux';
-import {cancelConfirm} from "./actions";
+import {cancelConfirm} from "../actions";
 
 interface Props extends DispatchProp<() => object> {
 	on: boolean,

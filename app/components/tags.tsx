@@ -1,13 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
 import { WithContext as ReactTags } from 'react-tag-input';
 
-export default class Tags extends React.Component {
+interface Tag {
+	id: number;
+	text: string;
+}
+
+interface State {
+	tags: Tag[];
+}
+
+export default class Tags extends React.Component<any, any> {
+	state: State;
 	constructor(props) {
 		super(props);
 		let tags = props.value ? props.value : [];
-		this.state = {};
-		this.state.tags = [];
+		this.state = { tags: [] };
 		for (let i = 0; i < tags.length; i++) {
 			let tag = tags[i];
 			this.state.tags.push({ id: i, text: tag });
@@ -20,7 +28,7 @@ export default class Tags extends React.Component {
 
 	notifyChange() {
 		let tags = this.state.tags;
-		let array = [];
+		let array: string[] = [];
 		for (let j = 0; j < tags.length; j++) {
 			let t = tags[j];
 			array.push(t.text);
@@ -58,11 +66,11 @@ export default class Tags extends React.Component {
 	}
 
 	render() {
-		const { tags, suggestions } = this.state;
+		const { tags } = this.state;
 		return (
 			<div>
 				<ReactTags tags={tags}
-									 suggestions={suggestions}
+									 suggestions={[]}
 									 handleDelete={this.handleDelete}
 									 handleAddition={this.handleAddition}
 									 handleDrag={this.handleDrag} />

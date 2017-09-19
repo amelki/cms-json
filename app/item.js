@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Field from './field';
+import Field from './components/field';
 import * as Cms from "./cms";
 import {connect} from "react-redux";
 import {editField} from "./actions";

@@ -1,6 +1,8 @@
 import * as Cms from './cms';
-import md from './md';
+import * as Markdown from './md';
 import * as Actions from './actions';
+import { NodeType } from "./model";
+import {cloneMain, Main, makeMain} from "./state";
 
 const apply = (action, state, node) => {
 	const parentNode = node.parent;
@@ -19,7 +21,7 @@ const apply = (action, state, node) => {
 			Cms.deleteNode(node);
 			break;
 		case Actions.DELETE_ITEM:
-			if (Cms.getNodeType(node) === Cms.TYPE_LIST_OBJECT) {
+			if (Cms.getNodeType(node) === NodeType.TYPE_LIST_OBJECT) {
 				node.data.splice(action.dataIndex, 1);
 			} else {
 				delete node.data[action.dataIndex];
@@ -37,7 +39,7 @@ const apply = (action, state, node) => {
 			let value = event.target.value;
 			switch (field.type) {
 				case 'markdown':
-					value = md.html(value);
+					value = Markdown.html(value);
 					break;
 				case 'boolean':
 					// Do not try to grab the state from the checkbox itself (event.target.checked has a surprising behavior...)
@@ -52,7 +54,7 @@ const apply = (action, state, node) => {
 					state.path = parentNode.path + '/' + value;
 					delete state.fieldsInError[node.path];
 				} else {
-					state.fieldsInError[node.path] = { field: field, value: value };
+					state.fieldsInError.set(node.path, { name: field.name, value: value });
 				}
 			} else {
 				node.data[Cms.fieldName(field)] = value;
@@ -74,7 +76,7 @@ const apply = (action, state, node) => {
 	}
 };
 
-export const editingFieldReducer = (state = {fieldIndex: '', path: ''}, action = { node: {}, fieldIndex: '' }) => {
+export const editingFieldReducer = (state = {fieldIndex: '', path: ''}, action) => {
 	switch (action.type) {
 		case Actions.EDIT_FIELD:
 			return {
@@ -89,7 +91,7 @@ export const editingFieldReducer = (state = {fieldIndex: '', path: ''}, action =
 	}
 };
 
-export const editingNodeReducer = (state = { path: '' }, action = { node: {} }) => {
+export const editingNodeReducer = (state = { path: '' }, action) => {
 	switch (action.type) {
 		case Actions.EDIT_NODE:
 			return {
@@ -120,7 +122,7 @@ export const confirmReducer = (state = null, action) => {
 	}
 };
 
-export const mainReducer = (state = {tree: {}, stale: false, busy: false}, action) => {
+export const mainReducer = (state : Main = makeMain(), action) => {
 	switch (action.type) {
 		case Actions.ADD_CHILD:
 		case Actions.ADD_ITEM:
@@ -135,14 +137,16 @@ export const mainReducer = (state = {tree: {}, stale: false, busy: false}, actio
 			// For now, use JSON parse/stringify.
 			// If performance becomes an issue, we could write our own custom deep copy
 			// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
-			const newState = Object.assign({}, JSON.parse(JSON.stringify(state)), { stale: true, busy: false });
+			const newState = cloneMain(state);
+			newState.stale = true;
+			newState.busy = false;
 			const newNode = Cms.findNode(newState.tree, action.node.path);
 			apply(action, newState, newNode);
 			return newState;
 		case Actions.CLEAR_FIELD_ERRORS:
 			return {
 				...state,
-				fieldsInError: {}
+				fieldsInError: new Map()
 			};
 		case Actions.LOAD_START:
 		case Actions.SAVE_START:
@@ -159,7 +163,7 @@ export const mainReducer = (state = {tree: {}, stale: false, busy: false}, actio
 					treePath: '',
 					dataIndex: -1
 				},
-				fieldsInError: {},
+				fieldsInError: new Map(),
 				stale: false,
 				busy: false
 			};

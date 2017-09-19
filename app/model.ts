@@ -11,7 +11,8 @@ export enum FieldType {
 	Boolean = 'boolean',
 	Markdown = 'markdown',
 	Array = 'array',
-	TextArea = 'textarea'
+	TextArea = 'textarea',
+	Html = 'html'
 }
 
 export class Model {
@@ -94,6 +95,8 @@ export class Field {
 		this.name = name;
 		this.type = type || FieldType.String;
 		this.key = key || false;
+		this.description = description!;
+		this.className = className!;
 	}
 }
 
@@ -103,7 +106,7 @@ const normalizeField = (field: any) : Field => {
 	} else {
 		return new Field(
 			field.name,
-			<FieldType>FieldType[field.type] || FieldType.String,
+			field.type || FieldType.String,
 			field.key || false,
 			field.description || null,
 			field.className || null

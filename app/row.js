@@ -5,6 +5,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
 import { deleteItem, moveItem } from './actions';
+import { NodeType } from "./model";
 
 const rowSource = {
 	beginDrag(props) {
@@ -75,18 +76,18 @@ class Row extends Component {
 		let label, dest;
 		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
-			case Cms.TYPE_TREE:
+			case NodeType.TYPE_TREE:
 				if (node.model.children) {
 					label = node.model.children[dataIndex].name;
 					dest = '/node/' + selection.treePath + '/' + Cms.slugify(label);
 				}
 				break;
-			case Cms.TYPE_LIST_OBJECT:
+			case NodeType.TYPE_LIST_OBJECT:
 				label = node.data[dataIndex][Cms.defaultFieldName(node.model)];
 				dest = '/node/' + selection.treePath + '/' + dataIndex;
 				break;
-			case Cms.TYPE_MAP_OBJECT:
-			case Cms.TYPE_MAP_STRING:
+			case NodeType.TYPE_MAP_OBJECT:
+			case NodeType.TYPE_MAP_STRING:
 				label = dataIndex;
 				dest = '/node/' + selection.treePath + '/' + dataIndex;
 				break;

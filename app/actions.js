@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as Cms from './cms';
 import {actions} from 'react-redux-form';
+import { normalizeModel } from './model';
 
 export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';
@@ -64,7 +65,7 @@ export const load = () => {
 		dispatch(loadStart());
 		dispatch(logInfo('Loading model and data files'));
 		Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-			const model = values[0].data;
+			const model = normalizeModel(values[0].data);
 			const data = values[1].data;
 			dispatch(loadEnd(model, data));
 			dispatch(logInfo('Model and data files loaded from server'));
