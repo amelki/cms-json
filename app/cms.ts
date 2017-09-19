@@ -103,7 +103,7 @@ export const deleteNode = <M extends Model> (node: Node<M>): void => {
  * @returns {*}
  */
 export const treePathAndIndex = <M extends Model> (tree: Node<Model>, path: string): Path => {
-	let res = _treePathAndIndex(tree, path.split('/'), {
+	let res = _treePathAndIndex(tree, path === '' ? [] : path.split('/'), {
 		fullPath: path,
 		treePath: '',
 		dataIndex: -1

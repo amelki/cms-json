@@ -1,12 +1,19 @@
-import React from 'react';
+import React, {ReactElement} from 'react';
 import {Link} from 'react-router-dom';
-import Field from './components/field';
-import * as Cms from "./cms";
-import {connect} from "react-redux";
-import {editField} from "./actions";
+import Field from './field';
+import * as Cms from "../cms";
+import {connect, Dispatch} from "react-redux";
+import {editField} from "../actions";
+import {Model} from "../model";
 
-const Item = ({node, selection, dispatch}) => {
-	const fields = [];
+interface Props {
+	node: Cms.Node<Model>;
+	selection: Cms.Path,
+	dispatch: Dispatch<any>
+}
+
+const Item: React.SFC<Props> = ({node, selection, dispatch}) => {
+	const fields = [] as ReactElement<any>[];
 	if (node.model.fields) {
 		for (let i = 0; i < node.model.fields.length; i++) {
 			fields.push(<Field key={i} node={node} field={node.model.fields[i]} fieldIndex={i} dataIndex={selection.dataIndex}/>);
@@ -23,7 +30,7 @@ const Item = ({node, selection, dispatch}) => {
 			}
 			{
 				Cms.isItem(node) &&
-				<a key="addFieldBtn" className="btn cmd" href="#" onClick={() => dispatch(editField(node))}>Add field</a>
+				<a key="addFieldBtn" className="btn cmd" href="#" onClick={() => dispatch(editField(node, -1))}>Add field</a>
 			}
 		</form>
 	</div>;

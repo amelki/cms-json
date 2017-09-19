@@ -1,12 +1,12 @@
-import {Field, Model, normalizeModel, TreeModel} from "./model";
-import {Node} from "./cms";
+import { normalizeModel, TreeModel } from "./model";
+import { Node } from "./cms";
 import { RouterState } from 'react-router-redux';
 
 export default interface AppState {
-	main: Main;
-	editingField: any;
+	main: MainState;
+	editingField: EditingFieldState | null;
 	editingNode: any;
-	message: Message;
+	message: MessageState;
 	navigation;
 	confirm;
 	router: RouterState;
@@ -21,7 +21,8 @@ export const makeAppState = (model, data) : AppState => {
 		editingField: null,
 		editingNode: null,
 		message: {
-			text: ''
+			text: '',
+			level: Level.info
 		},
 		navigation: { latestNode : '' },
 		confirm: null,
@@ -29,8 +30,13 @@ export const makeAppState = (model, data) : AppState => {
 	}
 };
 
-export interface Message {
+export enum Level {
+	error, info
+}
+
+export interface MessageState {
 	text: string;
+	level: Level;
 }
 
 export interface FieldInError {
@@ -38,7 +44,12 @@ export interface FieldInError {
 	value: any;
 }
 
-export interface Main {
+export interface EditingFieldState {
+	path: string;
+	fieldIndex: number;
+}
+
+export interface MainState {
 	tree: Node<TreeModel>;
 	stale: boolean;
 	busy: boolean;
@@ -46,7 +57,7 @@ export interface Main {
 	fieldsInError: Map<string, FieldInError>;
 }
 
-export const makeMain = (model?, data?) : Main => {
+export const makeMain = (model?, data?) : MainState => {
 	let treeModel = model ? (<TreeModel> normalizeModel(model)) : { name: 'New Web Site', children: [], fields: [] };
 	return {
 		tree: {
@@ -62,10 +73,10 @@ export const makeMain = (model?, data?) : Main => {
 		busy: false,
 		path: '',
 		fieldsInError: new Map()
-	} as Main;
+	} as MainState;
 };
 
-export const cloneMain = (main: Main) : Main => {
+export const cloneMain = (main: MainState) : MainState => {
 	const _fieldsInError : Map<string, FieldInError> = new Map();
 	main.fieldsInError.forEach((fieldInError, key) => {
 		_fieldsInError.set(key, { name: fieldInError.name, value: fieldInError.value });

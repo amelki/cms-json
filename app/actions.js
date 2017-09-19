@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as Cms from './cms';
 import {actions} from 'react-redux-form';
-import { normalizeModel } from './model';
+import {FieldType, normalizeModel} from './model';
 
 export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';
@@ -133,10 +133,13 @@ export const addValue = (node, field, value) => ({
 export const editField = (node, fieldIndex) => {
 	return (dispatch, getState) => {
 		let field;
-		if (typeof fieldIndex !== 'undefined') {
+		if (fieldIndex >= 0) {
 			field = Cms.getField(node.model.fields[fieldIndex]);
 		} else {
-			field = {name: ''}
+			field = {
+				name: '',
+				type: FieldType.String
+			}
 		}
 		dispatch(actions.change('field', field));
 		dispatch({

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import * as Cms from './cms';
+import * as Cms from '../cms';
 import { Link } from 'react-router-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 import { connect } from 'react-redux'
-import { deleteItem, moveItem } from './actions';
-import { NodeType } from "./model";
+import { deleteItem, moveItem } from '../actions';
+import { NodeType } from "../model";
 
 const rowSource = {
 	beginDrag(props) {

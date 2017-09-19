@@ -1,10 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux';
-import { load, save } from './actions';
+import {ActionCreator, connect} from 'react-redux';
+import { load, save } from '../actions';
 
-const Header = ({ enabled, mode, editorLink, load, save}) => (
+interface Props {
+	enabled: boolean;
+	mode: string,
+	editorLink: string,
+	load: any,
+	save: any
+}
+
+const Header: React.SFC<Props> = ({enabled, mode, editorLink, load, save}) => (
 	<div id="navbar">
 		<div className="nav">
 			<a href="#"

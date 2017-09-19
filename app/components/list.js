@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux'
-import {addItem, addChild} from './actions';
+import {addItem, addChild} from '../actions';
 import Row from './row';
-import * as Cms from './cms';
-import { NodeType } from "./model";
+import * as Cms from '../cms';
+import { NodeType } from "../model";
 
 @DragDropContext(HTML5Backend)
 class List extends Component {

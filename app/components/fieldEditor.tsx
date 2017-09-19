@@ -1,16 +1,21 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import {connect, Dispatch} from 'react-redux';
 import {Control, Form} from 'react-redux-form';
-import {submitField, cancelEditField} from './actions';
+import {submitField, cancelEditField} from '../actions';
 
-class FieldEditor extends React.Component {
-	render() {
-		const {dispatch, on, form, newField} = this.props;
+interface Props {
+	on: boolean;
+	newField: boolean;
+	form: any;
+	dispatch: Dispatch<any>;
+}
+
+const FieldEditor: React.SFC<Props> = ({dispatch, on, form, newField}) => {
 		const submitClassName = (form && !form.valid) ? 'btn cmd disabled' : 'btn cmd blue';
 		return (
 			<div className="modal"
 					 style={on ? {display: 'block'} : {display: 'none'}}
-					 tabIndex="0"
+					 tabIndex={0}
 					 onKeyDown={(e) =>(e.keyCode === 27 ? dispatch(cancelEditField()) : '')}>
 				<div className="modal-content">
 					<div className="title">
@@ -48,13 +53,12 @@ class FieldEditor extends React.Component {
 				</div>
 			</div>
 		);
-	}
-}
+};
 
 const mapStateToProps = (state) => {
 	return {
 		form: state.forms.field.$form,
-		newField: typeof state.editingField.fieldIndex === 'undefined' || state.editingField.fieldIndex === -1
+		newField: state.editingField.fieldIndex === -1
 	};
 };
 

@@ -1,17 +1,17 @@
 import * as Cms from './cms';
 import * as Markdown from './md';
 import * as Actions from './actions';
-import { NodeType } from "./model";
-import {cloneMain, Main, makeMain} from "./state";
+import {Model, NodeType, TreeModel} from "./model";
+import {cloneMain, MainState, makeMain} from "./state";
 
-const apply = (action, state, node) => {
-	const parentNode = node.parent;
+const apply = (action, state: MainState, node: Cms.Node<Model>) => {
+	const parentNode = node.parent!;
 	switch (action.type) {
 		case Actions.ADD_ITEM:
 			Cms.addItem(node, "New " + node.model.name);
 			break;
 		case Actions.ADD_CHILD:
-			const newNode = Cms.addNode(node, "New " + action.childType, action.childType);
+			const newNode = Cms.addNode(node as Cms.Node<TreeModel>, "New " + action.childType, action.childType);
 			state.path = newNode.path;
 			break;
 		case Actions.DELETE_NODE:
@@ -47,7 +47,7 @@ const apply = (action, state, node) => {
 					break;
 			}
 			if (Cms.isMapType(node) && Cms.isKeyField(field)) {
-				if (value && value.length > 0 && !parentNode.data[value]) {
+				if (value && value.length > 0 && !parentNode!.data[value]) {
 					delete parentNode.data[node.dataIndex];
 					parentNode.data[value] = node.data;
 					// Request navigation to the new path
@@ -76,7 +76,7 @@ const apply = (action, state, node) => {
 	}
 };
 
-export const editingFieldReducer = (state = {fieldIndex: '', path: ''}, action) => {
+export const editingFieldReducer = (state = {fieldIndex: -1, path: ''}, action) => {
 	switch (action.type) {
 		case Actions.EDIT_FIELD:
 			return {
@@ -122,7 +122,7 @@ export const confirmReducer = (state = null, action) => {
 	}
 };
 
-export const mainReducer = (state : Main = makeMain(), action) => {
+export const mainReducer = (state : MainState = makeMain(), action) => {
 	switch (action.type) {
 		case Actions.ADD_CHILD:
 		case Actions.ADD_ITEM:

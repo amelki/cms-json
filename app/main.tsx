@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from 'react-dom'
-import App from './app';
+import App from './components/app';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {
 	mainReducer, editingFieldReducer, messageReducer, navigationReducer, confirmReducer,
