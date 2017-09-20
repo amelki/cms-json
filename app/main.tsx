@@ -38,7 +38,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 		initialState,
 		applyMiddleware(historyMiddleware, thunkMiddleware)
 	);
-	store.subscribe(watch(store.getState, 'main.path')((newVal, oldVal, objectPath) => {
+	store.subscribe(watch(store.getState, 'main.path')((newVal, oldVal/*, objectPath */) => {
 		// In some cases, we need to defer the navigation after all reducers have been applied
 		// This is the case of 'key' fields, which, each tme a character is typed, must trigger a navigation
 		// If we don't defer, then the edited key field looses focus each time a character is entered.
@@ -50,7 +50,7 @@ Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => 
 			}
 		}
 	}));
-	store.subscribe(watch(store.getState, 'router.location.pathname')((newVal, oldVal, objectPath) => {
+	store.subscribe(watch(store.getState, 'router.location.pathname')((newVal, oldVal/*, objectPath */) => {
 		if (newVal !== oldVal) {
 			// Clear field errors when navigating to any other path
 			store.dispatch(clearFieldErrors());

@@ -4,11 +4,11 @@ import Field from './field';
 import * as Cms from "../cms";
 import {connect, Dispatch} from "react-redux";
 import {editField} from "../actions";
-import {Model} from "../model";
+import {Model, Node, Path} from "../model";
 
 interface Props {
-	node: Cms.Node<Model>;
-	selection: Cms.Path,
+	node: Node<Model>;
+	selection: Path,
 	dispatch: Dispatch<any>
 }
 

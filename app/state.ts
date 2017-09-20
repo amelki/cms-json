@@ -1,5 +1,5 @@
 import { normalizeModel, TreeModel } from "./model";
-import { Node } from "./cms";
+import { Node } from "./model";
 import { RouterState } from 'react-router-redux';
 
 export default interface AppState {
@@ -15,7 +15,7 @@ export default interface AppState {
 	forms?: any;
 }
 
-export const makeAppState = (model, data) : AppState => {
+export const makeAppState = (model: object, data: object) : AppState => {
 	return {
 		main: makeMain(model ,data),
 		editingField: null,

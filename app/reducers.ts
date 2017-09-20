@@ -1,17 +1,17 @@
 import * as Cms from './cms';
 import * as Markdown from './md';
 import * as Actions from './actions';
-import {Model, NodeType, TreeModel} from "./model";
+import {Model, Node, NodeType, TreeModel} from "./model";
 import {cloneMain, MainState, makeMain} from "./state";
 
-const apply = (action, state: MainState, node: Cms.Node<Model>) => {
+const apply = (action, state: MainState, node: Node<Model>) => {
 	const parentNode = node.parent!;
 	switch (action.type) {
 		case Actions.ADD_ITEM:
 			Cms.addItem(node, "New " + node.model.name);
 			break;
 		case Actions.ADD_CHILD:
-			const newNode = Cms.addNode(node as Cms.Node<TreeModel>, "New " + action.childType, action.childType);
+			const newNode = Cms.addNode(node as Node<TreeModel>, "New " + action.childType, action.childType);
 			state.path = newNode.path;
 			break;
 		case Actions.DELETE_NODE:
@@ -122,7 +122,7 @@ export const confirmReducer = (state = null, action) => {
 	}
 };
 
-export const mainReducer = (state : MainState = makeMain(), action) => {
+export const mainReducer = (state : MainState = makeMain(), action) : MainState => {
 	switch (action.type) {
 		case Actions.ADD_CHILD:
 		case Actions.ADD_ITEM:
@@ -155,18 +155,7 @@ export const mainReducer = (state : MainState = makeMain(), action) => {
 				busy: true
 			};
 		case Actions.LOAD_END:
-			return {
-				tree: {
-					model: action.model,
-					data: action.data,
-					path: '',
-					treePath: '',
-					dataIndex: -1
-				},
-				fieldsInError: new Map(),
-				stale: false,
-				busy: false
-			};
+			return makeMain(action.model, action.data);
 		case Actions.SAVE_END:
 			return {
 				...state,
@@ -215,6 +204,8 @@ export const navigationReducer = (state = { latestNode: '' }, action) => {
 				}
 			}
 			return state;
+		case Actions.LOAD_END:
+			return { latestNode: '' };
 		default:
 			return state;
 	}

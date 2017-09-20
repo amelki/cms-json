@@ -7,6 +7,9 @@ import Row from './row';
 import * as Cms from '../cms';
 import { NodeType } from "../model";
 
+// Not migrated yet
+// Should be done following https://stackoverflow.com/questions/40111314/react-dnd-typescript-support
+
 @DragDropContext(HTML5Backend)
 class List extends Component {
 	render() {

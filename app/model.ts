@@ -100,6 +100,22 @@ export class Field {
 	}
 }
 
+export interface Node<M extends Model> {
+	model: M;
+	data: any;
+	parent: Node<TreeModel> | null;
+	path: string,
+	treePath: string,
+	fieldIndex: number,
+	dataIndex: any
+}
+
+export interface Path {
+	fullPath: string,
+	treePath: string,
+	dataIndex: any
+}
+
 const normalizeField = (field: any) : Field => {
 	if (typeof field === 'string') {
 		return new Field(field, FieldType.String);

@@ -6,7 +6,7 @@ import {connect, Dispatch} from 'react-redux'
 import {inputValue, addValue, editField, deleteField} from '../actions';
 import {withRouter} from "react-router";
 import {Field, Model, NodeType} from "../model";
-import {Node} from "../cms";
+import {Node} from "../model";
 
 interface Props {
 	field: Field;

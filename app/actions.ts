@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as Cms from './cms';
 import {actions} from 'react-redux-form';
-import {FieldType, normalizeModel} from './model';
+import {FieldType, Model, Node, NodeType, normalizeModel, TreeModel} from './model';
 
 export const ADD_CHILD = 'ADD_CHILD';
 export const ADD_ITEM = 'ADD_ITEM';
@@ -31,16 +31,16 @@ export const CANCEL_CONFIRM = 'CANCEL_CONFIRM';
 export const DELETE_NODE = 'DELETE_NODE';
 export const RESET_NAVIGATE_TO = 'RESET_NAVIGATE_TO';
 
-export const addChild = (node, childType) => ({
+export const addChild = (node : Node<TreeModel>, childType: NodeType) => ({
 	type: ADD_CHILD,
 	node: node,
 	childType: childType
 });
-export const addItem = (node) => ({
+export const addItem = (node : Node<Model>) => ({
 	type: ADD_ITEM,
 	node: node
 });
-export const deleteItem = (node, dataIndex) => ({
+export const deleteItem = (node : Node<Model>, dataIndex : number | string) => ({
 	type: DELETE_ITEM,
 	node,
 	dataIndex
@@ -99,13 +99,11 @@ export const save = () => {
 		});
 	}
 };
-const saveStart = (message) => ({
-	type: SAVE_START,
-	message
+const saveStart = () => ({
+	type: SAVE_START
 });
-const saveEnd = (message) => ({
-	type: SAVE_END,
-	message
+const saveEnd = () => ({
+	type: SAVE_END
 });
 const saveError = () => ({
 	type: SAVE_ERROR
@@ -131,7 +129,7 @@ export const addValue = (node, field, value) => ({
 	value
 });
 export const editField = (node, fieldIndex) => {
-	return (dispatch, getState) => {
+	return (dispatch/*, getState */) => {
 		let field;
 		if (fieldIndex >= 0) {
 			field = Cms.getField(node.model.fields[fieldIndex]);
@@ -167,7 +165,7 @@ export const cancelConfirm = () => ({
 	type: CANCEL_CONFIRM
 });
 export const deleteField = (node, fieldIndex) => {
-	return (dispatch, getState) => {
+	return (dispatch /*, getState */) => {
 		dispatch({
 			type: SHOW_CONFIRM,
 			ok: () => {

@@ -1,20 +1,15 @@
-import {Field, FieldType, ListModel, Model, NodeType, ObjectMapModel, StringMapModel, TreeModel} from './model';
-
-export interface Node<M extends Model> {
-	model: M;
-	data: any;
-	parent: Node<TreeModel> | null;
-	path: string,
-	treePath: string,
-	fieldIndex: number,
-	dataIndex: any
-}
-
-export interface Path {
-	fullPath: string,
-	treePath: string,
-	dataIndex: any
-}
+import {
+	Field,
+	FieldType,
+	ListModel,
+	Model,
+	Node,
+	NodeType,
+	ObjectMapModel,
+	Path,
+	StringMapModel,
+	TreeModel
+} from './model';
 
 export const getNodeType = <M extends Model>(node: Node<M>): NodeType => {
 	return node.model.type;
@@ -103,12 +98,11 @@ export const deleteNode = <M extends Model> (node: Node<M>): void => {
  * @returns {*}
  */
 export const treePathAndIndex = <M extends Model> (tree: Node<Model>, path: string): Path => {
-	let res = _treePathAndIndex(tree, path === '' ? [] : path.split('/'), {
+	return _treePathAndIndex(tree, path === '' ? [] : path.split('/'), {
 		fullPath: path,
 		treePath: '',
 		dataIndex: -1
 	});
-	return res;
 };
 
 const _treePathAndIndex = (node: Node<Model>, path: string[], result: Path): Path => {
@@ -353,6 +347,7 @@ const _convert = (value : any, prevFieldType : FieldType, newFieldType : FieldTy
 		case FieldType.String:
 		case FieldType.Markdown:
 		case FieldType.TextArea:
+		case FieldType.Html:
 			return value ? "" + value : "";
 		case FieldType.Boolean:
 			return !!value;
@@ -423,16 +418,6 @@ const _findNode = (node : Node<Model>, path : string[]) : Node<Model> => {
 export const defaultFieldName = (model : Model) => {
 	return slugify(model.fields[0].name);
 };
-
-// const _findKey = (model) => {
-// 	if (model.fields && model.fields.length > 0) {
-// 		let keys = model.fields.filter(f => f.key);
-// 		if (keys.length === 1) {
-// 			return keys[0];
-// 		}
-// 	}
-// 	throw new Error(`Could not find a field marked as key for model ${model.name}`);
-// };
 
 export const fieldName = (field : Field) : string => slugify(field.name);
 

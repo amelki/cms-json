@@ -6,10 +6,10 @@ import Item from './item';
 import FieldEditor from './fieldEditor';
 import Confirm from './confirm';
 import {connect} from 'react-redux';
-import {Model, NodeType, TreeModel} from "../model";
+import {Model, Node, NodeType, TreeModel} from "../model";
 import Tree from './tree';
 import AppState, { EditingFieldState } from "../state";
-import {Node, Path} from '../cms';
+import {Path} from '../model';
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('../main.scss');
 

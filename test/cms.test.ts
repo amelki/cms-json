@@ -1,7 +1,7 @@
-import {} from 'jest';
 import * as Cms from '../app/cms';
-import {slugify} from "../app/cms";
-import {Field, FieldType, NodeType, normalizeModel, TreeModel} from "../app/model";
+import {slugify} from '../app/cms';
+import {Field, FieldType, Node, NodeType, normalizeModel, TreeModel} from "../app/model";
+
 const fs = require("fs");
 const Promise = require("bluebird");
 const readFile = Promise.promisify(fs.readFile);
@@ -209,7 +209,7 @@ testAddMapItem("messages/tooltips", "anotherTooltip", [ "anotherTooltip", "anoth
 const testAddNode = (path, nodeType, requestedName, expectedNewNames) => {
 	test(`addNode(${path}, ${nodeType})`, () => {
 		return loadTree().then(tree => {
-			const node : Cms.Node<TreeModel> = <Cms.Node<TreeModel>> Cms.findNode(tree, path);
+			const node : Node<TreeModel> = <Node<TreeModel>> Cms.findNode(tree, path);
 			if (!Array.isArray(expectedNewNames)) {
 				expectedNewNames = [ expectedNewNames ];
 			}

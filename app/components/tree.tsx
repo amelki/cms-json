@@ -5,8 +5,8 @@ import {connect, Dispatch} from "react-redux";
 import {cancelEditNode, deleteNode, editNode, submitNode} from "../actions";
 import {withRouter} from "react-router";
 import {Control, Form} from "react-redux-form";
-import {NodeType, Model, TreeModel} from '../model';
-import {Node, Path} from '../cms';
+import {NodeType, Model, TreeModel, Node} from '../model';
+import {Path} from '../model';
 
 interface Props {
 	node: Node<Model>;

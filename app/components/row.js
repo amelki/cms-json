@@ -7,6 +7,9 @@ import { connect } from 'react-redux'
 import { deleteItem, moveItem } from '../actions';
 import { NodeType } from "../model";
 
+// Not migrated yet
+// Should be done following https://stackoverflow.com/questions/40111314/react-dnd-typescript-support
+
 const rowSource = {
 	beginDrag(props) {
 		return {
