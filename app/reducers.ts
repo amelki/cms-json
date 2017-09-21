@@ -1,9 +1,13 @@
 import * as Cms from './cms';
 import * as Markdown from './md';
-import {ActionTypes, DefaultAction} from './actions';
 import {Model, Node, NodeType, TreeModel} from "./model";
-import {cloneMain, MainState, makeMain} from "./state";
-import { LogInfoAction, LogErrorAction } from "./actions";
+import {cloneMain, MainState, makeMain, MessageState, NavigationState} from "./state";
+import {
+	LogInfoAction, LogErrorAction, ActionTypes, DefaultAction, NavigateAction, LoadEndAction,
+	AddChildAction, AddItemAction, DeleteItemAction, MoveItemAction, InputValueAction, AddValueAction, SubmitNodeAction,
+	SubmitFieldAction, DeleteFieldAction, DeleteNodeAction, ClearFieldErrorsAction, LoadStartAction, SaveStartAction,
+	SaveEndAction, LoadErrorAction, ResetNavigateToAction, ShowConfirmAction, CancelConfirmAction
+} from "./actions";
 
 const apply = (action, state: MainState, node: Node<Model>) => {
 	const parentNode = node.parent!;
@@ -55,7 +59,7 @@ const apply = (action, state: MainState, node: Node<Model>) => {
 					state.path = parentNode.path + '/' + value;
 					delete state.fieldsInError[node.path];
 				} else {
-					state.fieldsInError.set(node.path, { name: field.name, value: value });
+					state.fieldsInError.set(node.path, {name: field.name, value: value});
 				}
 			} else {
 				node.data[Cms.fieldName(field)] = value;
@@ -92,7 +96,7 @@ export const editingFieldReducer = (state = {fieldIndex: -1, path: ''}, action) 
 	}
 };
 
-export const editingNodeReducer = (state = { path: '' }, action) => {
+export const editingNodeReducer = (state = {path: ''}, action) => {
 	switch (action.type) {
 		case ActionTypes.EDIT_NODE:
 			return {
@@ -106,7 +110,13 @@ export const editingNodeReducer = (state = { path: '' }, action) => {
 	}
 };
 
-export const confirmReducer = (state = null, action) => {
+type ConfirmState = {
+	ok : () => void,
+	title : string,
+	body: string
+} | null;
+
+export const confirmReducer = (state : ConfirmState = null, action : ShowConfirmAction | CancelConfirmAction | DeleteFieldAction | DeleteNodeAction) => {
 	switch (action.type) {
 		case ActionTypes.SHOW_CONFIRM:
 			return {
@@ -123,7 +133,29 @@ export const confirmReducer = (state = null, action) => {
 	}
 };
 
-export const mainReducer = (state : MainState = makeMain(), action) : MainState => {
+type TreeAction = AddChildAction
+	| AddItemAction
+	| DeleteItemAction
+	| MoveItemAction
+	| InputValueAction
+	| AddValueAction
+	| SubmitNodeAction
+	| SubmitFieldAction
+	| DeleteFieldAction
+	| DeleteNodeAction
+	| LoadEndAction;
+
+type OtherMainActions = ClearFieldErrorsAction
+	| LoadStartAction
+	| SaveStartAction
+	| LoadEndAction
+	| SaveEndAction
+	| DefaultAction
+	| LoadErrorAction
+	| ResetNavigateToAction;
+
+
+export const mainReducer = (state: MainState = makeMain(), action: TreeAction | OtherMainActions): MainState => {
 	switch (action.type) {
 		case ActionTypes.ADD_CHILD:
 		case ActionTypes.ADD_ITEM:
@@ -178,9 +210,8 @@ export const mainReducer = (state : MainState = makeMain(), action) : MainState 
 	}
 };
 
-type LogAction = LogInfoAction | LogErrorAction | DefaultAction;
-
-export const messageReducer = (state = { text: '', level: '' }, action : LogAction) => {
+export const messageReducer = (state: MessageState | null = null,
+															 action: LogInfoAction | LogErrorAction | DefaultAction) => {
 	switch (action.type) {
 		case ActionTypes.LOG_ERROR:
 			return {
@@ -193,11 +224,12 @@ export const messageReducer = (state = { text: '', level: '' }, action : LogActi
 				level: 'info'
 			};
 		default:
-		  	return state;
+			return state;
 	}
 };
 
-export const navigationReducer = (state = { latestNode: '' }, action) => {
+export const navigationReducer = (state: NavigationState | null = null,
+																	action: NavigateAction | LoadEndAction | DefaultAction) => {
 	switch (action.type) {
 		case ActionTypes.ON_NAVIGATE:
 			if (action.current.startsWith('/node/')) {
@@ -208,7 +240,7 @@ export const navigationReducer = (state = { latestNode: '' }, action) => {
 			}
 			return state;
 		case ActionTypes.LOAD_END:
-			return { latestNode: '' };
+			return null;
 		default:
 			return state;
 	}

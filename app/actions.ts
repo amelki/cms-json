@@ -1,9 +1,10 @@
 import axios from 'axios';
 import * as Cms from './cms';
-import {actions} from 'react-redux-form';
-import {FieldType, Model, Node, NodeType, normalizeModel, TreeModel} from './model';
-import {ActionCreator} from "react-redux";
+import {actions, ModelAction} from 'react-redux-form';
+import {Field, FieldType, Model, Node, NodeType, normalizeModel, Path, TreeModel} from './model';
+import {ActionCreator, Dispatch} from "react-redux";
 import {Action} from "redux";
+import AppState from "./state";
 
 export const enum ActionTypes {
 	ADD_CHILD,
@@ -36,71 +37,92 @@ export const enum ActionTypes {
 	DEFAULT_ACTION = "__any_other_action_type__"
 }
 
-export type LOG_INFO = 'App/LOG_INFO';
-export const LOG_INFO : LOG_INFO = 'App/LOG_INFO';
-
-export type LOG_ERROR = 'App/LOG_INFO';
-export const LOG_ERROR : LOG_ERROR = 'App/LOG_INFO';
-
-
-interface AddChildAction extends Action {
-	node: Node<TreeModel>,
-	childType: NodeType
-}
-
-export interface LogInfoAction extends Action {
-	type: ActionTypes.LOG_INFO,
-	message: string;
-}
-export interface LogErrorAction extends Action  {
-	type: ActionTypes.LOG_ERROR,
-	message: string;
-}
-export interface DefaultAction extends Action  {
+export interface DefaultAction extends Action {
 	type: ActionTypes.DEFAULT_ACTION
 }
 
-const logInfo : ActionCreator<LogInfoAction> = (message : string) : LogInfoAction => ({
-	message,
-	type: ActionTypes.LOG_INFO
-});
-const logError : ActionCreator<LogErrorAction> = (message : string) : LogErrorAction => ({
-	message,
-	type: ActionTypes.LOG_ERROR
+export interface LogErrorAction extends Action {
+	type: ActionTypes.LOG_ERROR;
+	message: string;
+}
+export const logError: ActionCreator<LogErrorAction> = (message: string): LogErrorAction => ({
+	type: ActionTypes.LOG_ERROR,
+	message
 });
 
-export const addChild : ActionCreator<AddChildAction> = (node : Node<TreeModel>, childType: NodeType) : AddChildAction => ({
+export interface LogInfoAction extends Action {
+	type: ActionTypes.LOG_INFO;
+	message: string;
+}
+export const logInfo: ActionCreator<LogInfoAction> = (message: string): LogInfoAction => ({
+	type: ActionTypes.LOG_INFO,
+	message
+});
+
+export interface AddChildAction extends Action {
+	type: ActionTypes.ADD_CHILD,
+	node: Node<TreeModel>,
+	childType: NodeType
+}
+export const addChild: ActionCreator<AddChildAction> = (node: Node<TreeModel>, childType: NodeType): AddChildAction => ({
 	type: ActionTypes.ADD_CHILD,
 	node: node,
 	childType: childType
 });
 
-export const addItem = (node : Node<Model>) => ({
+export interface AddItemAction extends Action {
+	type: ActionTypes.ADD_ITEM,
+	node: Node<Model>
+}
+export const addItem: ActionCreator<AddItemAction> = (node: Node<Model>) : AddItemAction => ({
 	type: ActionTypes.ADD_ITEM,
 	node: node
 });
-export const deleteItem = (node : Node<Model>, dataIndex : number | string) => ({
+
+export interface DeleteItemAction extends Action {
+	type: ActionTypes.DELETE_ITEM,
+	node: Node<Model>,
+	dataIndex: number | string
+}
+export const deleteItem : ActionCreator<DeleteItemAction> = (node: Node<Model>, dataIndex: number | string) : DeleteItemAction => ({
 	type: ActionTypes.DELETE_ITEM,
 	node,
 	dataIndex
 });
-export const moveItem = (node, source, target) => ({
+
+export interface MoveItemAction extends Action {
+	type: ActionTypes.MOVE_ITEM,
+	node: Node<Model>,
+	source,
+	target
+}
+export const moveItem: ActionCreator<MoveItemAction> = (node: Node<Model>, source, target) : MoveItemAction => ({
 	type: ActionTypes.MOVE_ITEM,
 	node,
 	source,
 	target
 });
-export const clearFieldErrors = () => ({
+
+export interface ClearFieldErrorsAction extends Action {
+	type: ActionTypes.CLEAR_FIELD_ERRORS
+}
+export const clearFieldErrors : ActionCreator<ClearFieldErrorsAction> = () : ClearFieldErrorsAction => ({
 	type: ActionTypes.CLEAR_FIELD_ERRORS
 });
-export const onNavigate = (previousRouterPath, newRouterPath) => ({
+
+export interface NavigateAction extends Action {
+	type: ActionTypes.ON_NAVIGATE,
+	previous: string,
+	current: string
+}
+export const onNavigate: ActionCreator<NavigateAction> = (previousRouterPath: string, newRouterPath: string) => ({
 	type: ActionTypes.ON_NAVIGATE,
 	previous: previousRouterPath,
 	current: newRouterPath
 });
 
 export const load = () => {
-	return dispatch => {
+	return (dispatch: Dispatch<ActionCreator<Action>>) => {
 		dispatch(loadStart());
 		dispatch(logInfo('Loading model and data files'));
 		Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
@@ -114,17 +136,32 @@ export const load = () => {
 		});
 	}
 };
-const loadStart = () => ({
+
+export interface LoadStartAction extends Action {
+	type: ActionTypes.LOAD_START
+}
+const loadStart: ActionCreator<LoadStartAction> = () : LoadStartAction => ({
 	type: ActionTypes.LOAD_START
 });
-const loadEnd = (model, data) => ({
+
+export interface LoadEndAction extends Action {
+	type: ActionTypes.LOAD_END,
+	model,
+	data
+}
+export const loadEnd : ActionCreator<LoadEndAction> = (model, data) : LoadEndAction => ({
 	type: ActionTypes.LOAD_END,
 	model,
 	data
 });
-const loadError = () => ({
+
+export interface LoadErrorAction extends Action {
+	type: ActionTypes.LOAD_ERROR
+}
+export const loadError: ActionCreator<LoadErrorAction> = () : LoadErrorAction => ({
 	type: ActionTypes.LOAD_ERROR
 });
+
 export const save = () => {
 	return (dispatch, getState) => {
 		dispatch(saveStart());
@@ -138,28 +175,55 @@ export const save = () => {
 		});
 	}
 };
-const saveStart = () => ({
+
+export interface SaveStartAction extends Action {
+	type: ActionTypes.SAVE_START
+}
+const saveStart: ActionCreator<SaveStartAction> = () : SaveStartAction => ({
 	type: ActionTypes.SAVE_START
 });
-const saveEnd = () => ({
+
+export interface SaveEndAction extends Action {
+	type: ActionTypes.SAVE_END
+}
+const saveEnd: ActionCreator<SaveEndAction> = () : SaveEndAction => ({
 	type: ActionTypes.SAVE_END
 });
-const saveError = () => ({
+
+export interface SaveErrorAction extends Action {
+	type: ActionTypes.SAVE_ERROR
+}
+const saveError: ActionCreator<SaveErrorAction> = () : SaveErrorAction => ({
 	type: ActionTypes.SAVE_ERROR
 });
-export const inputValue = (node, field, event) => ({
+
+export interface InputValueAction extends Action {
+	type: ActionTypes.INPUT_VALUE,
+	node: Node<Model>,
+	field: Field,
+	event
+}
+export const inputValue: ActionCreator<InputValueAction> = (node: Node<Model>, field: Field, event) : InputValueAction => ({
 	type: ActionTypes.INPUT_VALUE,
 	node,
 	field,
 	event
 });
-export const addValue = (node, field, value) => ({
+
+export interface AddValueAction extends Action {
+	type: ActionTypes.ADD_VALUE,
+	node: Node<Model>,
+	field: Field,
+	value
+}
+export const addValue: ActionCreator<AddValueAction> = (node: Node<Model>, field, value) : AddValueAction => ({
 	type: ActionTypes.ADD_VALUE,
 	node,
 	field,
 	value
 });
-export const editField = (node, fieldIndex) => {
+
+export const editField = (node, fieldIndex: number) => {
 	return (dispatch/*, getState */) => {
 		let field;
 		if (fieldIndex >= 0) {
@@ -178,25 +242,54 @@ export const editField = (node, fieldIndex) => {
 		});
 	}
 };
-export const submitField = (field) => {
-	return (dispatch, getState) => {
+
+export interface SubmitFieldAction {
+	type: ActionTypes.SUBMIT_FIELD,
+	field: Field,
+	node: Node<Model>,
+	fieldIndex: number
+}
+export const submitField = (field : Field) => {
+	return (dispatch: (a: SubmitFieldAction) => SubmitFieldAction, getState: () => AppState) => {
 		const state = getState();
-		dispatch({
-			type: ActionTypes.SUBMIT_FIELD,
-			field: field,
-			node: Cms.findNode(state.main.tree, state.editingField.path),
-			fieldIndex: state.editingField.fieldIndex
-		});
+		if (state.editingField != null) {
+			dispatch({
+				type: ActionTypes.SUBMIT_FIELD,
+				field: field,
+				node: Cms.findNode(state.main.tree, state.editingField.path),
+				fieldIndex: state.editingField.fieldIndex
+			});
+		}
 	};
 };
-export const cancelEditField = () => ({
+
+export interface CancelEditFieldAction extends Action {
+	type: ActionTypes.CANCEL_EDIT_FIELD
+}
+export const cancelEditField: ActionCreator<CancelEditFieldAction> = () : CancelEditFieldAction => ({
 	type: ActionTypes.CANCEL_EDIT_FIELD
 });
-export const cancelConfirm = () => ({
+
+export interface CancelConfirmAction extends Action {
+	type: ActionTypes.CANCEL_CONFIRM
+}
+export const cancelConfirm: ActionCreator<CancelConfirmAction> = () : CancelConfirmAction => ({
 	type: ActionTypes.CANCEL_CONFIRM
 });
-export const deleteField = (node, fieldIndex) => {
-	return (dispatch /*, getState */) => {
+
+export interface ShowConfirmAction extends Action {
+	type: ActionTypes.SHOW_CONFIRM;
+	ok: () => void,
+	title: string,
+	body: string
+}
+export interface DeleteFieldAction extends Action {
+	type: ActionTypes.DELETE_FIELD;
+	node : Node<Model>;
+	fieldIndex : number
+}
+export const deleteField = (node : Node<Model>, fieldIndex : number) => {
+	return (dispatch : (action: ShowConfirmAction | DeleteFieldAction) => Action /*, getState */) => {
 		dispatch({
 			type: ActionTypes.SHOW_CONFIRM,
 			ok: () => {
@@ -211,8 +304,14 @@ export const deleteField = (node, fieldIndex) => {
 		});
 	};
 };
-export const deleteNode = (node, selection, history) => {
-	return (dispatch, getState) => {
+
+export interface DeleteNodeAction extends Action {
+	type: ActionTypes.DELETE_NODE;
+	node : Node<Model>;
+	selection : Path;
+}
+export const deleteNode = (node : Node<Model>, selection : Path, history) => {
+	return (dispatch: (action: DeleteNodeAction | ShowConfirmAction) => Action, getState : () => AppState) => {
 		dispatch({
 			type: ActionTypes.SHOW_CONFIRM,
 			ok: () => {
@@ -229,8 +328,12 @@ export const deleteNode = (node, selection, history) => {
 	};
 };
 
-export const editNode = (node) => {
-	return (dispatch) => {
+export interface EditNodeAction extends Action {
+	type: ActionTypes.EDIT_NODE,
+	node: Node<Model>
+}
+export const editNode = (node : Node<Model>) => {
+	return (dispatch : (action : EditNodeAction | ModelAction) =>  EditNodeAction) => {
 		dispatch(actions.change('modelNode', node.model));
 		dispatch({
 			type: ActionTypes.EDIT_NODE,
@@ -238,16 +341,33 @@ export const editNode = (node) => {
 		});
 	}
 };
-export const cancelEditNode = () => ({
+
+export interface CancelEditNodeAction extends Action {
+	type: ActionTypes.CANCEL_EDIT_NODE
+}
+export const cancelEditNode : ActionCreator<CancelEditNodeAction> = () : CancelEditNodeAction => ({
 	type: ActionTypes.CANCEL_EDIT_NODE
 });
-export const submitNode = (node, model) => ({
+
+export interface SubmitNodeAction extends Action {
+	type: ActionTypes.SUBMIT_NODE,
+	model : Model,
+	node : Node<Model>
+}
+export const submitNode: ActionCreator<SubmitNodeAction> = (node : Node<Model>, model: Model) : SubmitNodeAction => ({
 	type: ActionTypes.SUBMIT_NODE,
 	model,
 	node
 });
 
-const navigate = (dispatch, getState, history) => {
+export interface ResetNavigateToAction extends Action {
+	type: ActionTypes.RESET_NAVIGATE_TO
+}
+export const resetNavigateTo : ActionCreator<ResetNavigateToAction> = () : ResetNavigateToAction => ({
+	type: ActionTypes.RESET_NAVIGATE_TO
+});
+
+const navigate = (dispatch: (action: Action) => void, getState: () => AppState, history) => {
 	const navigateTo = getState().main.path;
 	if (navigateTo !== null) {
 		history.push(navigateTo);
@@ -255,6 +375,3 @@ const navigate = (dispatch, getState, history) => {
 	}
 };
 
-export const resetNavigateTo = () => ({
-	type: ActionTypes.RESET_NAVIGATE_TO
-});

@@ -5,9 +5,9 @@ import { RouterState } from 'react-router-redux';
 export default interface AppState {
 	main: MainState;
 	editingField: EditingFieldState | null;
-	editingNode: any;
+	editingNode: EditingNodeState | null;
 	message: MessageState;
-	navigation;
+	navigation : NavigationState | null;
 	confirm;
 	router: RouterState;
 	field?: any;
@@ -24,11 +24,19 @@ export const makeAppState = (model: object, data: object) : AppState => {
 			text: '',
 			level: Level.info
 		},
-		navigation: { latestNode : '' },
+		navigation: null,
 		confirm: null,
 		router: {}
 	}
 };
+
+export interface NavigationState {
+	latestNode: string;
+}
+
+export interface EditingNodeState {
+	path: string;
+}
 
 export enum Level {
 	error, info

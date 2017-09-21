@@ -7,6 +7,8 @@ import {withRouter} from "react-router";
 import {Control, Form} from "react-redux-form";
 import {NodeType, Model, TreeModel, Node} from '../model';
 import {Path} from '../model';
+import {Action} from "redux";
+import AppState from "../state";
 
 interface Props {
 	node: Node<Model>;
@@ -92,7 +94,7 @@ const _Tree: React.SFC<Props> = ({node, selection, depth, dispatch, history, edi
 	);
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state : AppState) => {
 	return {
 		modelNodeFormModel: state.forms.modelNode,
 		editingNode: state.editingNode

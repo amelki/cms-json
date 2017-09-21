@@ -51,7 +51,7 @@ const mapStateToProps = state => {
 	return {
 		enabled: ((state.main.stale || state.main.busy) && !state.editingField),
 		mode: mode,
-		editorLink: state.navigation.latestNode ? ('/node/' + state.navigation.latestNode) : '/'
+		editorLink: state.navigation ? ('/node/' + state.navigation.latestNode) : '/'
 	};
 };
 const mapDispatchToProps = dispatch => bindActionCreators({ load, save }, dispatch);
