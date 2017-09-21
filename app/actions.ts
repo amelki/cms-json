@@ -2,60 +2,99 @@ import axios from 'axios';
 import * as Cms from './cms';
 import {actions} from 'react-redux-form';
 import {FieldType, Model, Node, NodeType, normalizeModel, TreeModel} from './model';
+import {ActionCreator} from "react-redux";
+import {Action} from "redux";
 
-export const ADD_CHILD = 'ADD_CHILD';
-export const ADD_ITEM = 'ADD_ITEM';
-export const DELETE_ITEM = 'DELETE_ITEM';
-export const MOVE_ITEM = 'MOVE_ITEM';
-export const INPUT_VALUE = 'INPUT_VALUE';
-export const ADD_VALUE = 'ADD_VALUE';
-export const LOAD_START = 'LOAD_START';
-export const LOAD_END = 'LOAD_END';
-export const LOAD_ERROR = 'LOAD_ERROR';
-export const SAVE_START = 'SAVE_START';
-export const SAVE_END = 'SAVE_END';
-export const SAVE_ERROR = 'SAVE_ERROR';
-export const LOG_INFO = 'LOG_INFO';
-export const LOG_ERROR = 'LOG_ERROR';
-export const CLEAR_FIELD_ERRORS = 'CLEAR_FIELD_ERRORS';
-export const ON_NAVIGATE = 'ON_NAVIGATE';
-export const SUBMIT_FIELD = 'SUBMIT_FIELD';
-export const CANCEL_EDIT_FIELD = 'CANCEL_EDIT_FIELD';
-export const EDIT_FIELD = 'EDIT_FIELD';
-export const EDIT_NODE = 'EDIT_NODE';
-export const SUBMIT_NODE = 'SUBMIT_NODE';
-export const CANCEL_EDIT_NODE = 'CANCEL_EDIT_NODE';
-export const DELETE_FIELD = 'DELETE_FIELD';
-export const SHOW_CONFIRM = 'SHOW_CONFIRM';
-export const CANCEL_CONFIRM = 'CANCEL_CONFIRM';
-export const DELETE_NODE = 'DELETE_NODE';
-export const RESET_NAVIGATE_TO = 'RESET_NAVIGATE_TO';
+export const enum ActionTypes {
+	ADD_CHILD,
+	ADD_ITEM,
+	DELETE_ITEM,
+	MOVE_ITEM,
+	INPUT_VALUE,
+	ADD_VALUE,
+	LOAD_START,
+	LOAD_END,
+	LOAD_ERROR,
+	SAVE_START,
+	SAVE_END,
+	SAVE_ERROR,
+	LOG_INFO,
+	LOG_ERROR,
+	CLEAR_FIELD_ERRORS,
+	ON_NAVIGATE,
+	SUBMIT_FIELD,
+	CANCEL_EDIT_FIELD,
+	EDIT_FIELD,
+	EDIT_NODE,
+	SUBMIT_NODE,
+	CANCEL_EDIT_NODE,
+	DELETE_FIELD,
+	SHOW_CONFIRM,
+	CANCEL_CONFIRM,
+	DELETE_NODE,
+	RESET_NAVIGATE_TO,
+	DEFAULT_ACTION = "__any_other_action_type__"
+}
 
-export const addChild = (node : Node<TreeModel>, childType: NodeType) => ({
-	type: ADD_CHILD,
+export type LOG_INFO = 'App/LOG_INFO';
+export const LOG_INFO : LOG_INFO = 'App/LOG_INFO';
+
+export type LOG_ERROR = 'App/LOG_INFO';
+export const LOG_ERROR : LOG_ERROR = 'App/LOG_INFO';
+
+
+interface AddChildAction extends Action {
+	node: Node<TreeModel>,
+	childType: NodeType
+}
+
+export interface LogInfoAction extends Action {
+	type: ActionTypes.LOG_INFO,
+	message: string;
+}
+export interface LogErrorAction extends Action  {
+	type: ActionTypes.LOG_ERROR,
+	message: string;
+}
+export interface DefaultAction extends Action  {
+	type: ActionTypes.DEFAULT_ACTION
+}
+
+const logInfo : ActionCreator<LogInfoAction> = (message : string) : LogInfoAction => ({
+	message,
+	type: ActionTypes.LOG_INFO
+});
+const logError : ActionCreator<LogErrorAction> = (message : string) : LogErrorAction => ({
+	message,
+	type: ActionTypes.LOG_ERROR
+});
+
+export const addChild : ActionCreator<AddChildAction> = (node : Node<TreeModel>, childType: NodeType) : AddChildAction => ({
+	type: ActionTypes.ADD_CHILD,
 	node: node,
 	childType: childType
 });
+
 export const addItem = (node : Node<Model>) => ({
-	type: ADD_ITEM,
+	type: ActionTypes.ADD_ITEM,
 	node: node
 });
 export const deleteItem = (node : Node<Model>, dataIndex : number | string) => ({
-	type: DELETE_ITEM,
+	type: ActionTypes.DELETE_ITEM,
 	node,
 	dataIndex
 });
 export const moveItem = (node, source, target) => ({
-	type: MOVE_ITEM,
+	type: ActionTypes.MOVE_ITEM,
 	node,
 	source,
 	target
 });
 export const clearFieldErrors = () => ({
-	type: CLEAR_FIELD_ERRORS
+	type: ActionTypes.CLEAR_FIELD_ERRORS
 });
 export const onNavigate = (previousRouterPath, newRouterPath) => ({
-	type: ON_NAVIGATE,
+	type: ActionTypes.ON_NAVIGATE,
 	previous: previousRouterPath,
 	current: newRouterPath
 });
@@ -76,15 +115,15 @@ export const load = () => {
 	}
 };
 const loadStart = () => ({
-	type: LOAD_START
+	type: ActionTypes.LOAD_START
 });
 const loadEnd = (model, data) => ({
-	type: LOAD_END,
+	type: ActionTypes.LOAD_END,
 	model,
 	data
 });
 const loadError = () => ({
-	type: LOAD_ERROR
+	type: ActionTypes.LOAD_ERROR
 });
 export const save = () => {
 	return (dispatch, getState) => {
@@ -100,30 +139,22 @@ export const save = () => {
 	}
 };
 const saveStart = () => ({
-	type: SAVE_START
+	type: ActionTypes.SAVE_START
 });
 const saveEnd = () => ({
-	type: SAVE_END
+	type: ActionTypes.SAVE_END
 });
 const saveError = () => ({
-	type: SAVE_ERROR
-});
-const logInfo = (message) => ({
-	type: LOG_INFO,
-	message
-});
-const logError = (message) => ({
-	type: LOG_ERROR,
-	message
+	type: ActionTypes.SAVE_ERROR
 });
 export const inputValue = (node, field, event) => ({
-	type: INPUT_VALUE,
+	type: ActionTypes.INPUT_VALUE,
 	node,
 	field,
 	event
 });
 export const addValue = (node, field, value) => ({
-	type: ADD_VALUE,
+	type: ActionTypes.ADD_VALUE,
 	node,
 	field,
 	value
@@ -141,7 +172,7 @@ export const editField = (node, fieldIndex) => {
 		}
 		dispatch(actions.change('field', field));
 		dispatch({
-			type: EDIT_FIELD,
+			type: ActionTypes.EDIT_FIELD,
 			node,
 			fieldIndex
 		});
@@ -151,7 +182,7 @@ export const submitField = (field) => {
 	return (dispatch, getState) => {
 		const state = getState();
 		dispatch({
-			type: SUBMIT_FIELD,
+			type: ActionTypes.SUBMIT_FIELD,
 			field: field,
 			node: Cms.findNode(state.main.tree, state.editingField.path),
 			fieldIndex: state.editingField.fieldIndex
@@ -159,18 +190,18 @@ export const submitField = (field) => {
 	};
 };
 export const cancelEditField = () => ({
-	type: CANCEL_EDIT_FIELD
+	type: ActionTypes.CANCEL_EDIT_FIELD
 });
 export const cancelConfirm = () => ({
-	type: CANCEL_CONFIRM
+	type: ActionTypes.CANCEL_CONFIRM
 });
 export const deleteField = (node, fieldIndex) => {
 	return (dispatch /*, getState */) => {
 		dispatch({
-			type: SHOW_CONFIRM,
+			type: ActionTypes.SHOW_CONFIRM,
 			ok: () => {
 				dispatch({
-					type: DELETE_FIELD,
+					type: ActionTypes.DELETE_FIELD,
 					node,
 					fieldIndex
 				});
@@ -183,10 +214,10 @@ export const deleteField = (node, fieldIndex) => {
 export const deleteNode = (node, selection, history) => {
 	return (dispatch, getState) => {
 		dispatch({
-			type: SHOW_CONFIRM,
+			type: ActionTypes.SHOW_CONFIRM,
 			ok: () => {
 				dispatch({
-					type: DELETE_NODE,
+					type: ActionTypes.DELETE_NODE,
 					node,
 					selection
 				});
@@ -202,16 +233,16 @@ export const editNode = (node) => {
 	return (dispatch) => {
 		dispatch(actions.change('modelNode', node.model));
 		dispatch({
-			type: EDIT_NODE,
+			type: ActionTypes.EDIT_NODE,
 			node
 		});
 	}
 };
 export const cancelEditNode = () => ({
-	type: CANCEL_EDIT_NODE
+	type: ActionTypes.CANCEL_EDIT_NODE
 });
 export const submitNode = (node, model) => ({
-	type: SUBMIT_NODE,
+	type: ActionTypes.SUBMIT_NODE,
 	model,
 	node
 });
@@ -225,5 +256,5 @@ const navigate = (dispatch, getState, history) => {
 };
 
 export const resetNavigateTo = () => ({
-	type: RESET_NAVIGATE_TO
+	type: ActionTypes.RESET_NAVIGATE_TO
 });
