@@ -1,15 +1,19 @@
 import * as Cms from './cms';
 import * as Markdown from './md';
 import {Model, Node, NodeType, TreeModel} from "./model";
-import {cloneMain, MainState, makeMain, MessageState, NavigationState} from "./state";
+import {
+	cloneMain, ConfirmState, EditingFieldState, EditingNodeState, MainState, makeMain, MessageState,
+	NavigationState
+} from "./state";
 import {
 	LogInfoAction, LogErrorAction, ActionTypes, DefaultAction, NavigateAction, LoadEndAction,
 	AddChildAction, AddItemAction, DeleteItemAction, MoveItemAction, InputValueAction, AddValueAction, SubmitNodeAction,
 	SubmitFieldAction, DeleteFieldAction, DeleteNodeAction, ClearFieldErrorsAction, LoadStartAction, SaveStartAction,
-	SaveEndAction, LoadErrorAction, ResetNavigateToAction, ShowConfirmAction, CancelConfirmAction
+	SaveEndAction, LoadErrorAction, ResetNavigateToAction, ShowConfirmAction, CancelConfirmAction, EditNodeAction,
+	CancelEditNodeAction, EditFieldAction, CancelEditFieldAction
 } from "./actions";
 
-const apply = (action, state: MainState, node: Node<Model>) => {
+const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 	const parentNode = node.parent!;
 	switch (action.type) {
 		case ActionTypes.ADD_ITEM:
@@ -76,12 +80,13 @@ const apply = (action, state: MainState, node: Node<Model>) => {
 			Cms.deleteFieldAt(node, action.fieldIndex);
 			break;
 		case ActionTypes.ADD_VALUE:
-			node.data[Cms.fieldName(action.fieldIndex)] = action.value;
+			Cms.setValue(node, action.field, action.value);
 			break;
 	}
 };
 
-export const editingFieldReducer = (state = {fieldIndex: -1, path: ''}, action) => {
+export const editingFieldReducer = (state : EditingFieldState = null,
+																		action : EditFieldAction | SubmitFieldAction | CancelEditFieldAction | DefaultAction) => {
 	switch (action.type) {
 		case ActionTypes.EDIT_FIELD:
 			return {
@@ -96,7 +101,8 @@ export const editingFieldReducer = (state = {fieldIndex: -1, path: ''}, action) 
 	}
 };
 
-export const editingNodeReducer = (state = {path: ''}, action) => {
+export const editingNodeReducer = (state : EditingNodeState = null,
+																	 action : EditNodeAction | SubmitNodeAction | CancelEditNodeAction | DefaultAction) => {
 	switch (action.type) {
 		case ActionTypes.EDIT_NODE:
 			return {
@@ -109,12 +115,6 @@ export const editingNodeReducer = (state = {path: ''}, action) => {
 			return state;
 	}
 };
-
-type ConfirmState = {
-	ok : () => void,
-	title : string,
-	body: string
-} | null;
 
 export const confirmReducer = (state : ConfirmState = null, action : ShowConfirmAction | CancelConfirmAction | DeleteFieldAction | DeleteNodeAction) => {
 	switch (action.type) {

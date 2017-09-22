@@ -93,10 +93,10 @@ export const deleteItem : ActionCreator<DeleteItemAction> = (node: Node<Model>, 
 export interface MoveItemAction extends Action {
 	type: ActionTypes.MOVE_ITEM,
 	node: Node<Model>,
-	source,
-	target
+	source: number,
+	target: number
 }
-export const moveItem: ActionCreator<MoveItemAction> = (node: Node<Model>, source, target) : MoveItemAction => ({
+export const moveItem: ActionCreator<MoveItemAction> = (node: Node<Model>, source : number, target : number) : MoveItemAction => ({
 	type: ActionTypes.MOVE_ITEM,
 	node,
 	source,
@@ -223,15 +223,18 @@ export const addValue: ActionCreator<AddValueAction> = (node: Node<Model>, field
 	value
 });
 
-export const editField = (node, fieldIndex: number) => {
-	return (dispatch/*, getState */) => {
-		let field;
+export const editField = (node : Node<Model>, fieldIndex: number) => {
+	return (dispatch: (a: EditFieldAction | ModelAction) => SubmitFieldAction/*, getState: () => AppState*/) => {
+		let field : Field;
 		if (fieldIndex >= 0) {
 			field = Cms.getField(node.model.fields[fieldIndex]);
 		} else {
 			field = {
 				name: '',
-				type: FieldType.String
+				type: FieldType.String,
+				key: false,
+				description: '',
+				className: ''
 			}
 		}
 		dispatch(actions.change('field', field));
@@ -242,6 +245,12 @@ export const editField = (node, fieldIndex: number) => {
 		});
 	}
 };
+
+export interface EditFieldAction extends Action {
+	type: ActionTypes.EDIT_FIELD;
+	node: Node<Model>;
+	fieldIndex: number;
+}
 
 export interface SubmitFieldAction {
 	type: ActionTypes.SUBMIT_FIELD,

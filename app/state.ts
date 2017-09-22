@@ -34,9 +34,13 @@ export interface NavigationState {
 	latestNode: string;
 }
 
-export interface EditingNodeState {
-	path: string;
-}
+export type EditingNodeState = { path: string; } | null;
+
+export type ConfirmState = {
+	ok : () => void,
+	title : string,
+	body: string
+} | null;
 
 export enum Level {
 	error, info
@@ -52,10 +56,10 @@ export interface FieldInError {
 	value: any;
 }
 
-export interface EditingFieldState {
+export type EditingFieldState = {
 	path: string;
 	fieldIndex: number;
-}
+} | null;
 
 export interface MainState {
 	tree: Node<TreeModel>;

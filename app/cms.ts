@@ -314,6 +314,10 @@ export const deleteFieldAt = (node : Node<Model>, fieldIndex : number) : void =>
 	node.model.fields.splice(fieldIndex, 1);
 };
 
+export const setValue = (node: Node<Model>, field : Field, value : any) : void  => {
+	node.data[slugify(field.name)] = value;
+};
+
 export const updateFieldAt = (node : Node<Model>, fieldIndex : number, field : Field) => {
 	if (typeof fieldIndex === 'undefined' || fieldIndex === -1) {
 		// The field does not exist, just compute the new model index

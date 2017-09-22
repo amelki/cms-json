@@ -46,6 +46,11 @@ const FieldEditor: React.SFC<Props> = ({dispatch, on, form, newField}) => {
 									</Control.select>
 								</div>
 							</div>
+							<div className="field">
+								<label>Description</label>
+								<Control.text model=".description" autoComplete="off"
+								/>
+							</div>
 						</div>
 						<button className={submitClassName} type="submit">OK</button>
 						<button className="btn cmd" onClick={() => dispatch(cancelEditField())}>Cancel</button>
