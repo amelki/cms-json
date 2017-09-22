@@ -13,7 +13,7 @@ import { NodeType } from "../model";
 @DragDropContext(HTML5Backend)
 class List extends Component {
 	render() {
-		const { node, dispatch, selection, router } = this.props;
+		const { node, selection } = this.props;
 		const rows = [];
 		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
@@ -43,18 +43,6 @@ class List extends Component {
 					{rows}
 					</tbody>
 				</table>
-				{
-					(nodeType === NodeType.TYPE_TREE)
-						? (
-							<span>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_TREE, router.history))}>Add Node</a>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_LIST_OBJECT, router.history))}>Add List</a>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_STRING, router.history))}>Add String Map</a>
-								<a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>
-							</span>
-					)
-						: <a id="addBtn" className="btn cmd" onClick={(event) => dispatch(addItem(node))}>Add Item</a>
-				}
 			</div>
 		);
 	}

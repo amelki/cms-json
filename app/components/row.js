@@ -14,15 +14,15 @@ const rowSource = {
 	beginDrag(props) {
 		return {
 			id: props.id,
-			index: props.index,
+			index: props.dataIndex,
 		};
 	},
 };
 
 const rowTarget = {
-	hover(props, monitor, component) {
+	drop(props, monitor, component) {
 		const dragIndex = monitor.getItem().index;
-		const hoverIndex = props.index;
+		const hoverIndex = props.dataIndex;
 
 		// Don't replace items with themselves
 		if (dragIndex === hoverIndex) {
