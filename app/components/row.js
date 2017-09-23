@@ -19,6 +19,35 @@ const rowSource = {
 	},
 };
 
+const isTargeted = (props, monitor, component) => {
+	const dragIndex = monitor.getItem().index;
+	const hoverIndex = props.dataIndex;
+	// Don't replace items with themselves
+	if (dragIndex === hoverIndex) {
+		return false;
+	}
+	// Determine rectangle on screen
+	const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+	// Get vertical middle
+	const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+	// Determine mouse position
+	const clientOffset = monitor.getClientOffset();
+	// Get pixels to the top
+	const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+	// Only perform the move when the mouse has crossed half of the items height
+	// When dragging downwards, only move when the cursor is below 50%
+	// When dragging upwards, only move when the cursor is above 50%
+	// Dragging downwards
+	if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+		return false;
+	}
+	// Dragging upwards
+	if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+		return false;
+	}
+	return true;
+};
+
 const rowTarget = {
 	drop(props, monitor, component) {
 		const dragIndex = monitor.getItem().index;
@@ -75,7 +104,7 @@ const rowTarget = {
 }))
 class Row extends Component {
 	render() {
-		const { node, dataIndex, isDragging, connectDragSource, connectDropTarget, selection, dispatch } = this.props;
+		const { node, dataIndex, isDragging, connectDragSource, connectDropTarget, selection, dispatch, highlight = false } = this.props;
 		let label, dest;
 		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
@@ -96,9 +125,10 @@ class Row extends Component {
 				break;
 		}
 		const nodeChildren = node.model.children;
-		const opacity = isDragging ? 0 : 1;
+		const opacity = isDragging ? 0.2 : 1;
+		const backgroundColor = highlight ? red : '';
 		return connectDragSource(connectDropTarget(
-			<tr style={{ opacity }}>
+			<tr style={{ opacity, backgroundColor }}>
 				<td>
 					<Link to={ dest }>{ label }</Link>
 				</td>

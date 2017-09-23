@@ -310,7 +310,11 @@ export const canDeleteFieldAt = (node : Node<Model>, fieldIndex : number) : bool
 export const deleteFieldAt = (node : Node<Model>, fieldIndex : number) : void => {
 	const field = _checkDeleteFieldAt(node, fieldIndex);
 	const structNode = _getStructNode(node);
-	getDataItems(structNode).forEach(item => delete item[slugify(field.name)]);
+	if (isItem(structNode)) {
+		getDataItems(structNode).forEach(item => delete item[slugify(field.name)]);
+	} else {
+		delete node.data[slugify(field.name)];
+	}
 	node.model.fields.splice(fieldIndex, 1);
 };
 

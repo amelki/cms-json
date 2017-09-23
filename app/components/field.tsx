@@ -41,11 +41,7 @@ const FieldComponent: React.SFC<Props> = ({field, node, dataIndex, fieldIndex, f
 	const description = field.description ? <div className="description">
 		<small>{field.description}</small>
 	</div> : '';
-	let typeHelp = field.type
-		? <div className="type">
-			({field.type})
-		</div>
-		: '';
+	let typeHelp = <noscript/>;
 	let input;
 	const handleInputValue = (event) => {
 		dispatch(inputValue(node, field, event));
