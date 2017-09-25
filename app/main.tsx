@@ -16,12 +16,13 @@ import createHistory from 'history/createBrowserHistory';
 import watch from './watch';
 import {clearFieldErrors, onNavigate} from "./actions";
 import AppState, {makeAppState} from "./state";
+import {migrateSchema} from "./cms";
 
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
 Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-	const initialState = makeAppState(values[0].data, values[1].data);
+	const initialState = makeAppState(migrateSchema(values[0].data), values[1].data);
 	const store = createStore<AppState>(combineReducers({
 			main: mainReducer,
 			editingField: editingFieldReducer,

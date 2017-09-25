@@ -1,6 +1,8 @@
 import { normalizeModel, TreeModel } from "./model";
 import { Node } from "./model";
 import { RouterState } from 'react-router-redux';
+import {RootSchemaElement, SchemaElement} from "./schema";
+import {schemaToModel} from "./cms";
 
 export default interface AppState {
 	main: MainState;
@@ -15,9 +17,9 @@ export default interface AppState {
 	forms?: any;
 }
 
-export const makeAppState = (model: object, data: object) : AppState => {
+export const makeAppState = (schema: RootSchemaElement, data: object) : AppState => {
 	return {
-		main: makeMain(model ,data),
+		main: makeMain(schema, data),
 		editingField: null,
 		editingNode: null,
 		message: {
@@ -69,11 +71,12 @@ export interface MainState {
 	fieldsInError: Map<string, FieldInError>;
 }
 
-export const makeMain = (model?, data?) : MainState => {
-	let treeModel = model ? (<TreeModel> normalizeModel(model)) : { name: 'New Web Site', children: [], fields: [] };
+export const makeMain = (schema?: RootSchemaElement, data?) : MainState => {
+	let treeModel = schema ? (<TreeModel> schemaToModel(schema)) : { name: 'New Web Site', children: [], fields: [] };
 	return {
 		tree: {
 			model: treeModel,
+			schema: schema,
 			data: data || {},
 			parent: null,
 			path: '',
@@ -97,6 +100,7 @@ export const cloneMain = (main: MainState) : MainState => {
 		tree: {
 			model: (<TreeModel> normalizeModel(JSON.parse(JSON.stringify(main.tree.model)))),
 			data: JSON.parse(JSON.stringify(main.tree.data)),
+			schema: JSON.parse(JSON.stringify(main.tree.schema)),
 			parent: null,
 			path: '',
 			treePath: '',

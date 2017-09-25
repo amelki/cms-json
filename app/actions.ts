@@ -5,6 +5,8 @@ import {Field, FieldType, Model, Node, NodeType, normalizeModel, Path, TreeModel
 import {ActionCreator, Dispatch} from "react-redux";
 import {Action} from "redux";
 import AppState from "./state";
+import {migrateSchema, schemaToModel} from "./cms";
+import {RootSchemaElement} from "./schema";
 
 export const enum ActionTypes {
 	ADD_CHILD,
@@ -126,7 +128,7 @@ export const load = () => {
 		dispatch(loadStart());
 		dispatch(logInfo('Loading model and data files'));
 		Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
-			const model = normalizeModel(values[0].data);
+			const model = migrateSchema(values[0].data);
 			const data = values[1].data;
 			dispatch(loadEnd(model, data));
 			dispatch(logInfo('Model and data files loaded from server'));
@@ -146,8 +148,8 @@ const loadStart: ActionCreator<LoadStartAction> = () : LoadStartAction => ({
 
 export interface LoadEndAction extends Action {
 	type: ActionTypes.LOAD_END,
-	model,
-	data
+	model: RootSchemaElement,
+	data: object
 }
 export const loadEnd : ActionCreator<LoadEndAction> = (model, data) : LoadEndAction => ({
 	type: ActionTypes.LOAD_END,
@@ -165,7 +167,7 @@ export const loadError: ActionCreator<LoadErrorAction> = () : LoadErrorAction =>
 export const save = () => {
 	return (dispatch, getState) => {
 		dispatch(saveStart());
-		dispatch(logInfo('Loading model and data files'));
+		dispatch(logInfo('Saving model and data files'));
 		axios.post('/data.json', getState().main.data).then(() => {
 			dispatch(saveEnd());
 			dispatch(logInfo('JSON data file saved on disk'));

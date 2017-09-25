@@ -103,6 +103,7 @@ export class Field {
 
 export interface Node<M extends Model> {
 	model: M;
+	schema: SchemaElement;
 	data: any;
 	parent: Node<TreeModel> | null;
 	path: string,

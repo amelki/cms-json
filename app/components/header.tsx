@@ -34,8 +34,8 @@ const Header: React.SFC<Props> = ({enabled, mode, editorLink, load, save}) => (
 		<div className={'nav tab' + (mode === 'data' ? ' selected' : '')}>
 			<Link to="/json/data" className="white">data.json</Link>
 		</div>
-		<div className={'nav tab' + (mode === 'model' ? ' selected' : '')}>
-			<Link to="/json/model" className="white">model.json</Link>
+		<div className={'nav tab' + (mode === 'schema' ? ' selected' : '')}>
+			<Link to="/json/schema" className="white">model.json</Link>
 		</div>
 	</div>
 );
@@ -45,8 +45,8 @@ const mapStateToProps = state => {
 	let mode = 'editor';
 	if (routerPath === '/json/data') {
 		mode = 'data';
-	} else if (routerPath === '/json/model') {
-		mode = 'model';
+	} else if (routerPath === '/json/schema') {
+		mode = 'schema';
 	}
 	return {
 		enabled: ((state.main.stale || state.main.busy) && !state.editingField),

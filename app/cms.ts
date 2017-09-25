@@ -12,19 +12,19 @@ import {
 } from './model';
 import {Format, RootSchemaElement, SchemaElement, SchemaPatternProperty, schemaVersion, Type} from "./schema";
 
-export const getNodeType = <M extends Model>(node: Node<M>): NodeType => {
+export const getNodeType = (node: Node<Model>): NodeType => {
 	return node.model.type;
 };
 
-export const getFieldAt = <M extends Model>(node: Node<M>, fieldIndex: number): Field => {
+export const getFieldAt = (node: Node<Model>, fieldIndex: number): Field => {
 	return node.model.getFieldAt(fieldIndex);
 };
 
-export const getFieldNamed = <M extends Model>(node: Node<M>, name: string): Field => {
+export const getFieldNamed = (node: Node<Model>, name: string): Field => {
 	return node.model.getFieldNamed(name);
 };
 
-export const getFieldIndex = <M extends Model>(node: Node<M>, field: Field) => {
+export const getFieldIndex = (node: Node<Model>, field: Field) => {
 	field = getField(field);
 	const fields = getFields(node);
 	for (let i = 0; i < fields.length; i++) {
@@ -40,11 +40,11 @@ export const getField = (f: any): Field => {
 	return typeof f === 'string' ? {name: f} : f;
 };
 
-export const getFields = <M extends Model> (node: Node<M>): Field[] => {
+export const getFields = (node: Node<Model>): Field[] => {
 	return node.model.fields;
 };
 
-export const isMapType = <M extends Model> (node: Node<M>): boolean => {
+export const isMapType = (node: Node<Model>): boolean => {
 	return node.model.isMap();
 };
 
@@ -60,7 +60,7 @@ export const getValueField = (model : StringMapModel) : Field => {
 	return model.fields.find(f => !f.key)!;
 };
 
-export const findNode = <M extends Model> (node: Node<M>, path: any) => {
+export const findNode = (node: Node<Model>, path: any) => {
 	if (path === '') {
 		return node;
 	}
@@ -70,27 +70,30 @@ export const findNode = <M extends Model> (node: Node<M>, path: any) => {
 	return _findNode(node, path);
 };
 
-export const getChildren = <M extends Model>  (node: Node<TreeModel>): Node<M>[] => {
+export const getChildren = (node: Node<TreeModel>): Node<Model>[] => {
 	return node.model.children.map(modelChild => {
 		let childPath = (node.path ? (node.path + '/') : '') + slugify(modelChild.name);
-		return <Node<M>> {
+		return {
 			model: modelChild,
+			schema: node.schema.properties![slugify(modelChild.name)],
 			data: node.data[slugify(modelChild.name)],
 			parent: node,
 			path: childPath,
 			treePath: childPath,
-			fieldIndex: -1
+			fieldIndex: -1,
+			dataIndex: -1
 		};
 	});
 };
 
-export const deleteNode = <M extends Model> (node: Node<M>): void => {
+export const deleteNode = (node: Node<Model>): void => {
 	const parentNode = node.parent!;
 	const modelChildren = (<TreeModel> parentNode.model).children!;
 	for (let i = 0; i < modelChildren.length; i++) {
 		const modelChild = modelChildren[i];
 		if (modelChild.name === node.model.name) {
 			modelChildren.splice(i, 1);
+			delete parentNode.schema.properties![slugify(node.model.name)];
 			delete parentNode.data[slugify(node.model.name)];
 			return;
 		}
@@ -106,7 +109,7 @@ export const deleteNode = <M extends Model> (node: Node<M>): void => {
  * @param path
  * @returns {*}
  */
-export const treePathAndIndex = <M extends Model> (tree: Node<Model>, path: string): Path => {
+export const treePathAndIndex = (tree: Node<Model>, path: string): Path => {
 	return _treePathAndIndex(tree, path === '' ? [] : path.split('/'), {
 		fullPath: path,
 		treePath: '',
@@ -135,18 +138,20 @@ const _treePathAndIndex = (node: Node<Model>, path: string[], result: Path): Pat
 	return result;
 };
 
-const _findChild = <M extends Model> (node: Node<TreeModel>, slug: string): Node<M> => {
+const _findChild = (node: Node<TreeModel>, slug: string): Node<Model> => {
 	if (getNodeType(node) === NodeType.TYPE_TREE) {
 		for (let i = 0; i < node.model.children.length; i++) {
 			if (slugify(node.model.children[i].name) === slug) {
 				let childPath = node.path + '/' + slug;
-				return <Node<M>> {
+				return {
 					model: node.model.children[i],
+					schema: node.schema.properties![slug],
 					data: node.data[slug],
 					parent: node,
 					path: childPath,
 					treePath: childPath,
-					fieldIndex: -1
+					fieldIndex: -1,
+					dataIndex: -1
 				};
 			}
 		}
@@ -154,10 +159,12 @@ const _findChild = <M extends Model> (node: Node<TreeModel>, slug: string): Node
 	throw new Error(`Could not find child with slug ${slug} in node ${node.model.name}`);
 };
 
-export const getDataItems = <M extends Model> (node: Node<M>): any[] => {
+export const getDataItems = (node: Node<Model>): any[] => {
 	switch (getNodeType(node)) {
 		case NodeType.TYPE_LIST_OBJECT:
 			return node.data;
+		case NodeType.TYPE_TREE:
+			return [ node.data ];
 		case NodeType.TYPE_MAP_OBJECT:
 		case NodeType.TYPE_MAP_STRING:
 			return Object.values(node.data);
@@ -166,7 +173,7 @@ export const getDataItems = <M extends Model> (node: Node<M>): any[] => {
 	}
 };
 
-const _findNewListItemName = <M extends Model> (node: Node<M>, newName: string, idx: number): string => {
+const _findNewListItemName = (node: Node<Model>, newName: string, idx: number): string => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const fieldName = defaultFieldName(node.model);
 	const items = getDataItems(node);
@@ -180,7 +187,7 @@ const _findNewListItemName = <M extends Model> (node: Node<M>, newName: string, 
 	return fullName;
 };
 
-const _findNewMapKey = <M extends Model> (node: Node<M>, newName: string, idx: number) => {
+const _findNewMapKey = (node: Node<Model>, newName: string, idx: number) => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	if (typeof node.data[fullName] !== 'undefined') {
 		return _findNewMapKey(node, newName, idx + 1);
@@ -188,7 +195,7 @@ const _findNewMapKey = <M extends Model> (node: Node<M>, newName: string, idx: n
 	return fullName;
 };
 
-const _findNewNodeName = <M extends TreeModel> (node: Node<M>, newName: string, idx: number): string => {
+const _findNewNodeName = (node: Node<TreeModel>, newName: string, idx: number): string => {
 	const fullName = (idx === 1) ? newName : (newName + " (" + idx + ")");
 	const children = node.model.children;
 	if (children) {
@@ -203,7 +210,7 @@ const _findNewNodeName = <M extends TreeModel> (node: Node<M>, newName: string, 
 	return fullName;
 };
 
-export const addItem = <M extends Model> (node: Node<M>, requestedName: string) => {
+export const addItem = (node: Node<Model>, requestedName: string) => {
 	const nodeType = getNodeType(node);
 	let item;
 	let dataIndex;
@@ -231,7 +238,7 @@ export const addItem = <M extends Model> (node: Node<M>, requestedName: string) 
 	return {dataIndex, item};
 };
 
-export const addNode = <M extends Model> (node: Node<TreeModel>, requestedName: string, nodeType: NodeType): Node<M> => {
+export const addNode = (node: Node<TreeModel>, requestedName: string, nodeType: NodeType): Node<Model> => {
 	const newName = _findNewNodeName(node, requestedName, 1);
 	let newData;
 	let newModel;
@@ -257,6 +264,7 @@ export const addNode = <M extends Model> (node: Node<TreeModel>, requestedName: 
 			break;
 	}
 	node.model.children.push(newModel);
+	node.schema.properties![slugify(newModel.name)] = _modelToSchema(newModel);
 	node.data[slugify(newModel.name)] = newData;
 	let path = node.path + '/' + slugify(newModel.name);
 	return Object.assign(
@@ -287,8 +295,12 @@ const _getStructNode = (node : Node<Model>) : Node<Model> => {
 export const renameNode = function (node: Node<Model>, name: string) : void {
 	const previousName = node.model.name;
 	node.model.name = name;
+	node.schema.title = name;
 	if (node.parent) {
 		node.parent.data[slugify(name)] = node.parent.data[slugify(previousName)];
+		const schema = node.parent.schema.properties![slugify(previousName)];
+		delete node.parent.schema.properties![slugify(previousName)];
+		node.parent.schema.properties![slugify(name)] = schema;
 		node.path = node.parent.path ? (node.parent.path + '/' + slugify(name)) : slugify(name);
 		node.treePath = node.path;
 		delete node.parent.data[slugify(previousName)];
@@ -325,6 +337,7 @@ export const deleteFieldAt = (node : Node<Model>, fieldIndex : number) : void =>
 		delete node.data[slugify(field.name)];
 	}
 	node.model.fields.splice(fieldIndex, 1);
+	delete node.schema.properties![slugify(field.name)];
 };
 
 export const setValue = (node: Node<Model>, field : Field, value : any) : void  => {
@@ -332,9 +345,16 @@ export const setValue = (node: Node<Model>, field : Field, value : any) : void  
 };
 
 export const updateFieldAt = (node : Node<Model>, fieldIndex : number, field : Field) => {
+	let schemaProperties;
+	if (node.schema.type === Type.TArray) {
+		schemaProperties = node.schema.items!.properties;
+	} else {
+		schemaProperties = node.schema.properties;
+	}
 	if (typeof fieldIndex === 'undefined' || fieldIndex === -1) {
 		// The field does not exist, just compute the new model index
 		fieldIndex = node.model.fields.length;
+		schemaProperties[slugify(field.name)] = fieldToProperty(field);
 	} else {
 		// Field exists already, we need to perform a data refactoring
 		const newField = getField(field);
@@ -342,7 +362,7 @@ export const updateFieldAt = (node : Node<Model>, fieldIndex : number, field : F
 		const structNode = _getStructNode(node);
 		const nodeType = getNodeType(structNode);
 		if (newField.name !== prevField.name
-			&& [NodeType.TYPE_LIST_OBJECT, NodeType.TYPE_MAP_OBJECT].includes(nodeType)
+			&& [NodeType.TYPE_LIST_OBJECT, NodeType.TYPE_MAP_OBJECT, NodeType.TYPE_TREE].includes(nodeType)
 			&& !newField.key) {
 			getDataItems(structNode).forEach(item => {
 				item[slugify(newField.name)] = item[slugify(prevField.name)];
@@ -354,6 +374,8 @@ export const updateFieldAt = (node : Node<Model>, fieldIndex : number, field : F
 				item[slugify(newField.name)] = _convert(item[slugify(newField.name)], prevField.type, newField.type);
 			});
 		}
+		delete schemaProperties[slugify(prevField.name)];
+		schemaProperties[slugify(newField.name)] = fieldToProperty(newField);
 	}
 	// Update the model
 	node.model.fields[fieldIndex] = field;
@@ -398,12 +420,14 @@ const _findNode = (node : Node<Model>, path : string[]) : Node<Model> => {
 			const childModel = parentModel.children[c];
 			if (slugify(childModel.name) === next) {
 				let treePath = (node.path ? (node.path + '/') : '') + next;
-				return _findNode(<Node<Model>> {
+				return _findNode({
 					model: childModel,
+					schema: node.schema.properties![next],
 					data: node.data[next] || (childModel.type === NodeType.TYPE_LIST_OBJECT ? [] : {}),
 					parent: <Node<TreeModel>> node,
 					path: treePath,
 					treePath: treePath,
+					fieldIndex: -1,
 					dataIndex: -1
 				}, path.slice(1));
 			}
@@ -411,23 +435,27 @@ const _findNode = (node : Node<Model>, path : string[]) : Node<Model> => {
 		throw new Error(`Could not find child named ${next} in node ${node.model.name}`);
 	} else if (nodeType === NodeType.TYPE_LIST_OBJECT) {
 		const dataIndex = parseInt(next);
-		return <Node<Model>> {
+		return {
 			model: node.model,
+			schema: node.schema,
 			data: node.data[dataIndex] || {},
 			parent: <Node<TreeModel>> node,
 			path: (node.path ? (node.path + '/') : '') + next,
 			treePath: node.path,
-			dataIndex: dataIndex
+			dataIndex: dataIndex,
+			fieldIndex: -1
 		};
 	} else {
 		// Map
-		return <Node<Model>> {
+		return {
 			model: node.model,
+			schema: node.schema,
 			data: node.data[next] || (nodeType === NodeType.TYPE_MAP_OBJECT ? {} : ""),
 			parent: <Node<TreeModel>> node,
 			path: (node.path ? (node.path + '/') : '') + next,
 			treePath: node.path,
-			dataIndex: next
+			dataIndex: next,
+			fieldIndex: -1
 		};
 	}
 };
@@ -452,7 +480,7 @@ export const modelToSchema = (model): RootSchemaElement => {
 	const root = _modelToSchema(normalizeModel(model));
 	return Object.assign({} as RootSchemaElement, { $schema: schemaVersion }, root);
 };
-const _modelToSchema = (model: Model): SchemaElement => {
+export const _modelToSchema = (model: Model): SchemaElement => {
 	const element: SchemaElement = {type: Type.TObject};
 	element.title = model.name;
 	if (model.type === NodeType.TYPE_TREE) {
@@ -551,6 +579,16 @@ const fieldTypeToSchemaType = (fieldType: FieldType) : Type => {
 			return Type.TString;
 		case FieldType.Boolean:
 			return Type.TBoolean;
+	}
+};
+
+export const migrateSchema = (object) : RootSchemaElement => {
+	// Is this a schema or a old model?
+	if (object.$schema) {
+		return object as RootSchemaElement;
+	} else {
+		// This is an 'model', which is the old representation
+		return modelToSchema(normalizeModel(object));
 	}
 };
 
