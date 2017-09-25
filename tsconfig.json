@@ -16,6 +16,6 @@
     "lib": ["es2017", "dom"]
   },
   "include": [
-    "./app/", "./test"
+    "./app/", "./test", "."
   ]
 }

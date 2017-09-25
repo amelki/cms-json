@@ -4,12 +4,13 @@ import {
 	ListModel,
 	Model,
 	Node,
-	NodeType,
+	NodeType, normalizeModel,
 	ObjectMapModel,
 	Path,
 	StringMapModel,
 	TreeModel
 } from './model';
+import {Format, RootSchemaElement, SchemaElement, SchemaPatternProperty, schemaVersion, Type} from "./schema";
 
 export const getNodeType = <M extends Model>(node: Node<M>): NodeType => {
 	return node.model.type;
@@ -49,6 +50,14 @@ export const isMapType = <M extends Model> (node: Node<M>): boolean => {
 
 export const isKeyField = (field: Field): boolean => {
 	return field.key;
+};
+
+export const getKeyField = (model : ObjectMapModel | StringMapModel) : Field => {
+	return model.fields.find(f => f.key)!;
+};
+
+export const getValueField = (model : StringMapModel) : Field => {
+	return model.fields.find(f => !f.key)!;
 };
 
 export const findNode = <M extends Model> (node: Node<M>, path: any) => {
@@ -438,3 +447,178 @@ export const isItem = (node) => {
 };
 
 const ensureArray = path => typeof path === 'string' ? path.split('/') : path;
+
+export const modelToSchema = (model): RootSchemaElement => {
+	const root = _modelToSchema(normalizeModel(model));
+	return Object.assign({} as RootSchemaElement, { $schema: schemaVersion }, root);
+};
+const _modelToSchema = (model: Model): SchemaElement => {
+	const element: SchemaElement = {type: Type.TObject};
+	element.title = model.name;
+	if (model.type === NodeType.TYPE_TREE) {
+		const treeModel: TreeModel = model as TreeModel;
+		treeModel.children.forEach(child => {
+			const property = slugify(child.name);
+			if (!element.properties) {
+				element.properties = {};
+			}
+			element.properties[property] = _modelToSchema(child);
+		});
+	}
+	if (model.fields.length > 0) {
+		const properties : { [s: string]: SchemaElement; } = {};
+		model.fields.forEach(field => {
+			if (!isKeyField(field) && model.type !== NodeType.TYPE_MAP_STRING) {
+				const property = slugify(field.name);
+				properties[property] = fieldToProperty(field);
+			}
+		});
+		switch (model.type) {
+			case NodeType.TYPE_TREE:
+				element.properties = element.properties ? Object.assign(element.properties, properties) : properties;
+				break;
+			case NodeType.TYPE_LIST_OBJECT:
+				element.type = Type.TArray;
+				element.items = {
+					type: Type.TObject,
+					properties: properties
+				};
+				break;
+			case NodeType.TYPE_MAP_OBJECT:
+				element.patternProperties = {
+					".+": {
+						type: Type.TObject,
+						properties: properties,
+						keyTitle: getKeyField(model).name
+					}
+				};
+				break;
+			case NodeType.TYPE_MAP_STRING:
+				element.patternProperties = {
+					".+": {
+						type: Type.TString,
+						keyTitle: getKeyField(model).name,
+						valueTitle: getValueField(model).name
+					}
+				};
+				break;
+		}
+	}
+	return element;
+};
+
+const fieldToProperty = (field: Field) : SchemaElement => {
+	const property : SchemaElement = {
+		type: fieldTypeToSchemaType(field.type),
+		title: field.name
+	};
+	switch (field.type) {
+		case FieldType.Html:
+			property.format = Format.Html;
+			break;
+		case FieldType.Markdown:
+			property.format = Format.Markdown;
+			break;
+		case FieldType.TextArea:
+			property.format = Format.TextArea;
+			break;
+		default:
+			break;
+	}
+	if (field.className) {
+		property.className = field.className;
+	}
+	if (field.description) {
+		property.description = field.description;
+	}
+	if (field.type === FieldType.Array) {
+		property.items = {
+			type: Type.TString
+		}
+	}
+	return property;
+};
+
+const fieldTypeToSchemaType = (fieldType: FieldType) : Type => {
+	switch (fieldType) {
+		case FieldType.Html:
+		case FieldType.Markdown:
+		case FieldType.TextArea:
+			return Type.TString;
+		case FieldType.Array:
+			return Type.TArray;
+		case FieldType.String:
+			return Type.TString;
+		case FieldType.Boolean:
+			return Type.TBoolean;
+	}
+};
+
+export const schemaToModel = (schema: RootSchemaElement) : Model => {
+	return _schemaToModel(schema as SchemaElement);
+};
+
+const _schemaToModel = (schema: SchemaElement) : Model => {
+	let model : Model;
+	switch (schema.type) {
+		case Type.TObject:
+			if (schema.patternProperties) {
+				const patterns = schema.patternProperties['.+'] as SchemaPatternProperty;
+				if (patterns.type === Type.TObject) {
+					model = new ObjectMapModel(schema.title!, []);
+					model.fields.push(new Field(patterns.keyTitle!, FieldType.String, true, patterns.description));
+					_propertiesToFields(patterns.properties!, model);
+				} else {
+					model = new StringMapModel(schema.title!, []);
+					model.fields.push(new Field(patterns.keyTitle!, FieldType.String, true, patterns.description));
+					model.fields.push(new Field(patterns.valueTitle!, FieldType.String));
+				}
+			} else {
+				model = new TreeModel(schema.title!, [], []);
+			}
+			break;
+		case Type.TArray:
+			model = new ListModel(schema.title!, []);
+			_propertiesToFields(schema.items!.properties!, model);
+			break;
+		default:
+			throw new Error(`Don't know what to do with element named ${schema.title} and type ${schema.type}`);
+	}
+	if (schema.properties) {
+		_propertiesToFields(schema.properties, model);
+	}
+	return model;
+};
+
+const _propertiesToFields = (properties : { [s: string]: SchemaElement; }, model : Model) => {
+	for (let key in properties) {
+		const element = properties[key];
+		switch (element.type) {
+			case Type.TString:
+				let fieldType = FieldType.String;
+				if (element.format === Format.Markdown) {
+					fieldType = FieldType.Markdown;
+				} else if (element.format === Format.Html) {
+					fieldType = FieldType.Html;
+				} else if (element.format === Format.TextArea) {
+					fieldType = FieldType.TextArea;
+				}
+				model.fields.push(new Field(element.title!, fieldType, false, element.description, element.className));
+				break;
+			case Type.TBoolean:
+				model.fields.push(new Field(element.title!, FieldType.Boolean, false, element.description, element.className));
+				break;
+			case Type.TArray:
+				if (element.items!.type === Type.TString) {
+					model.fields.push(new Field(element.title!, FieldType.Array, false, element.description, element.className));
+				} else {
+					(model as TreeModel).children.push(_schemaToModel(element));
+				}
+				break;
+			default:
+				(model as TreeModel).children.push(_schemaToModel(element));
+				break;
+//				throw new Error(`Unknown field type: ${element.type} for element named ${element.title}`);
+		}
+	}
+};

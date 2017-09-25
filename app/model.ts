@@ -1,3 +1,4 @@
+import { SchemaElement, Type } from './schema';
 
 export enum NodeType {
 	TYPE_TREE = 'tree',
@@ -124,8 +125,8 @@ const normalizeField = (field: any) : Field => {
 			field.name,
 			field.type || FieldType.String,
 			field.key || false,
-			field.description || null,
-			field.className || null
+			field.description || undefined,
+			field.className || undefined
 		);
 	}
 };
