@@ -127,7 +127,7 @@ export const load = () => {
 	return (dispatch: Dispatch<ActionCreator<Action>>) => {
 		dispatch(loadStart());
 		dispatch(logInfo('Loading model and data files'));
-		Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
+		Promise.all([axios.get(`/schema.json`), axios.get(`/data.json`)]).then(values => {
 			const model = migrateSchema(values[0].data);
 			const data = values[1].data;
 			dispatch(loadEnd(model, data));
@@ -172,7 +172,7 @@ export const save = () => {
 		let beforeMessage;
 		let afterMessage;
 		if (state.main.schemaStale) {
-			promises.push(axios.post('/model.json', getState().main.tree.schema));
+			promises.push(axios.post('/schema.json', getState().main.tree.schema));
 			if (state.main.dataStale) {
 				beforeMessage = 'Saving schema and data files';
 				afterMessage = 'Schema and data files saved on disk';

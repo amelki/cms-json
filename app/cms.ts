@@ -407,6 +407,8 @@ const _convert = (value : any, prevFieldType : FieldType, newFieldType : FieldTy
 			return value ? "" + value : "";
 		case FieldType.Boolean:
 			return !!value;
+		case FieldType.Number:
+			return parseInt(value);
 		case FieldType.Array:
 			return [value];
 		default:
@@ -596,6 +598,8 @@ const fieldTypeToSchemaType = (fieldType: FieldType) : Type => {
 			return Type.TString;
 		case FieldType.Boolean:
 			return Type.TBoolean;
+		case FieldType.Number:
+			return Type.TNumber;
 	}
 };
 
@@ -662,6 +666,9 @@ const _propertiesToFields = (properties : { [s: string]: SchemaElement; }, model
 				break;
 			case Type.TBoolean:
 				model.fields.push(new Field(element.title!, FieldType.Boolean, false, element.description, element.className));
+				break;
+			case Type.TNumber:
+				model.fields.push(new Field(element.title!, FieldType.Number, false, element.description, element.className));
 				break;
 			case Type.TArray:
 				if (element.items!.type === Type.TString) {

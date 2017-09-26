@@ -13,6 +13,7 @@ import {Path} from '../model';
 import {addChild, addItem, editField} from "../actions";
 import {ReactElement} from "react";
 import {RouterState} from 'react-router-redux';
+import {Link} from 'react-router-dom';
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('../main.scss');
 
@@ -63,6 +64,11 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, dispatc
 		} else if (!itemSelected) {
 			buttons.push(<a id="addBtn" key="addItem" className="btn cmd" onClick={(event) => dispatch(addItem(node))}>Add Item</a>);
 		}
+		if (Cms.isItem(node) && node.dataIndex !== -1) {
+			buttons.push(<Link key="backBtn" id="backBtn" className="btn cmd" to={'/node/' + selection.treePath}>Back to list</Link>);
+		}
+
+
 	}
 	return (
 		<div id="content">
@@ -75,7 +81,7 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, dispatc
 			</aside>
 			<section id="right">
 				{right}
-				{ node && <span>{buttons}</span> }
+				{ node && <div>{buttons}</div> }
 			</section>
 			{editingField && <FieldEditor on={editingField != null}/>}
 			<Confirm/>

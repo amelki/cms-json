@@ -13,7 +13,8 @@ export enum FieldType {
 	Markdown = 'markdown',
 	Array = 'array',
 	TextArea = 'textarea',
-	Html = 'html'
+	Html = 'html',
+	Number = 'number'
 }
 
 export class Model {
@@ -122,9 +123,13 @@ const normalizeField = (field: any) : Field => {
 	if (typeof field === 'string') {
 		return new Field(field, FieldType.String);
 	} else {
+		let fieldType = field.type || FieldType.String;
+		if (fieldType === 'Html') { // Some models had that typo...
+			fieldType = "html";
+		}
 		return new Field(
 			field.name,
-			field.type || FieldType.String,
+			fieldType,
 			field.key || false,
 			field.description || undefined,
 			field.className || undefined

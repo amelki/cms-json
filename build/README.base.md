@@ -51,8 +51,8 @@ Usage: cms-json {OPTIONS}
 
 Standard Options:
 
-    --model, -m    JSON model file.
-                   Default is data/model.json.
+    --schema, -s   JSON schema file.
+                   Default is data/schema.json.
 
     --data, -d     JSON data file.
                    Default is data/data.json.

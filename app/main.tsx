@@ -21,7 +21,7 @@ import {migrateSchema} from "./cms";
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
-Promise.all([axios.get(`/model.json`), axios.get(`/data.json`)]).then(values => {
+Promise.all([axios.get(`/schema.json`), axios.get(`/data.json`)]).then(values => {
 	const initialState = makeAppState(migrateSchema(values[0].data), values[1].data);
 	const store = createStore<AppState>(combineReducers({
 			main: mainReducer,

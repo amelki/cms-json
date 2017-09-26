@@ -24,10 +24,6 @@ const Item: React.SFC<Props> = ({node, selection, dispatch}) => {
 			{
 				(fields.length > 0) && <div className="fields">{fields}</div>
 			}
-			{
-				Cms.isItem(node) &&
-				<Link key="backBtn" id="backBtn" className="btn cmd" to={'/node/' + selection.treePath}>Back to list</Link>
-			}
 		</form>
 	</div>;
 };

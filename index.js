@@ -17,8 +17,8 @@ const cors = require('cors');
  * 		The structure of this JSON file must match the model.
  * 		See an example here: https://github.com/amelki/cms-json/blob/master/default/data.json
  * @param {Object} [options.modelFile]
- * 		A JSON file representing the model to support/ease authoring via the UI. This parameter is mandatory.
- * 		See an example here: https://github.com/amelki/cms-json/blob/master/default/model.json
+ * 		A JSON schema file representing the model to support/ease authoring via the UI. This parameter is mandatory.
+ * 		See an example here: https://github.com/amelki/cms-json/blob/master/default/schema.json
  * @param {Object} [options.port] The server port. 3000 by default
  * @returns {*} The express app
  */
@@ -39,8 +39,8 @@ module.exports.run = function(options) {
 	const app = express();
 	app.use(bodyParser.json());
 	app.use(cors());
-	app.options('/model.json', cors());
-	app.get('/model.json', function (req, res) {
+	app.options('/schema.json', cors());
+	app.get('/schema.json', function (req, res) {
 		fs.readFile(modelFile, 'utf-8', (err, json) => {
 			if (err) throw err;
 			res.send(json);

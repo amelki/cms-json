@@ -36,15 +36,16 @@ class List extends Component {
 				}
 				break;
 		}
-		return (
-			<div>
+		if (rows.length > 0) {
+			return <span>
 				<table>
 					<tbody>
 					{rows}
 					</tbody>
 				</table>
-			</div>
-		);
+			</span>;
+		}
+		return <noscript/>;
 	}
 }
 

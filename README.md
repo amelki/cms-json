@@ -51,8 +51,8 @@ Usage: cms-json {OPTIONS}
 
 Standard Options:
 
-    --model, -m    JSON model file.
-                   Default is data/model.json.
+    --schema, -s   JSON model file.
+                   Default is data/schema.json.
 
     --data, -d     JSON data file.
                    Default is data/data.json.
@@ -82,6 +82,6 @@ Run an Express server embedding a simple UI for editing the content of the given
 | --- | --- | --- |
 | [options] | <code>Object</code> |  |
 | [options.dataFile] | <code>Object</code> | A JSON file with the content. This parameter is mandatory. 		The	content authored from the web site will be saved with that path name. 		The structure of this JSON file must match the model. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/data.json |
-| [options.modelFile] | <code>Object</code> | A JSON file representing the model to support/ease authoring via the UI. This parameter is mandatory. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/model.json |
+| [options.modelFile] | <code>Object</code> | A JSON schema representing the model to support/ease authoring via the UI. This parameter is mandatory. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/schema.json |
 | [options.port] | <code>Object</code> | The server port. 3000 by default |
 
