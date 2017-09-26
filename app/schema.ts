@@ -12,11 +12,14 @@ export enum Format {
 	Html = "html", Markdown = "markdown", TextArea = "textarea"
 }
 
+export type SchemaProperties = { [s: string]: SchemaElement; };
+export type SchemaPatternProperties = { [s: string]: SchemaPatternProperty; };
+
 export interface SchemaElement {
 	type: Type,
 	title?: string,
-	properties?: { [s: string]: SchemaElement; },
-	patternProperties?: { [s: string]: SchemaPatternProperty; },
+	properties?: SchemaProperties,
+	patternProperties?: SchemaPatternProperties,
 	description?: string,
 	minimum?: number,
 	required?: string[],

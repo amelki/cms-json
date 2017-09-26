@@ -28,6 +28,7 @@ const loadTree = () => {
 		let normalizedModel = normalizeModel(JSON.parse(json.model));
 		return {
 			model: normalizedModel,
+			schema: modelToSchema(normalizedModel),
 			data: JSON.parse(json.data)
 		}
 	});

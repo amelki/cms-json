@@ -10,7 +10,10 @@ import {
 	StringMapModel,
 	TreeModel
 } from './model';
-import {Format, RootSchemaElement, SchemaElement, SchemaPatternProperty, schemaVersion, Type} from "./schema";
+import {
+	Format, RootSchemaElement, SchemaElement, SchemaPatternProperty, SchemaProperties, schemaVersion,
+	Type
+} from "./schema";
 
 export const getNodeType = (node: Node<Model>): NodeType => {
 	return node.model.type;
@@ -337,7 +340,20 @@ export const deleteFieldAt = (node : Node<Model>, fieldIndex : number) : void =>
 		delete node.data[slugify(field.name)];
 	}
 	node.model.fields.splice(fieldIndex, 1);
-	delete node.schema.properties![slugify(field.name)];
+	delete getFieldHolder(node).properties![slugify(field.name)];
+};
+
+const getFieldHolder = (node: Node<Model>) : SchemaElement => {
+	let nodeType = getNodeType(node);
+	switch (nodeType) {
+		case NodeType.TYPE_LIST_OBJECT:
+			return node.schema.items!;
+		case NodeType.TYPE_MAP_OBJECT:
+		case NodeType.TYPE_MAP_STRING:
+			return node.schema.patternProperties!['.+']!;
+		case NodeType.TYPE_TREE:
+			return node.schema;
+	}
 };
 
 export const setValue = (node: Node<Model>, field : Field, value : any) : void  => {
@@ -345,16 +361,11 @@ export const setValue = (node: Node<Model>, field : Field, value : any) : void  
 };
 
 export const updateFieldAt = (node : Node<Model>, fieldIndex : number, field : Field) => {
-	let schemaProperties;
-	if (node.schema.type === Type.TArray) {
-		schemaProperties = node.schema.items!.properties;
-	} else {
-		schemaProperties = node.schema.properties;
-	}
+	let fieldHolder = getFieldHolder(node);
 	if (typeof fieldIndex === 'undefined' || fieldIndex === -1) {
 		// The field does not exist, just compute the new model index
 		fieldIndex = node.model.fields.length;
-		schemaProperties[slugify(field.name)] = fieldToProperty(field);
+		fieldHolder.properties![slugify(field.name)] = fieldToProperty(field);
 	} else {
 		// Field exists already, we need to perform a data refactoring
 		const newField = getField(field);
@@ -374,8 +385,14 @@ export const updateFieldAt = (node : Node<Model>, fieldIndex : number, field : F
 				item[slugify(newField.name)] = _convert(item[slugify(newField.name)], prevField.type, newField.type);
 			});
 		}
-		delete schemaProperties[slugify(prevField.name)];
-		schemaProperties[slugify(newField.name)] = fieldToProperty(newField);
+		if (newField.key) {
+			(fieldHolder as SchemaPatternProperty).keyTitle = newField.name;
+		} else if (nodeType === NodeType.TYPE_MAP_STRING) {
+			(fieldHolder as SchemaPatternProperty).valueTitle = newField.name;
+		} else {
+			delete fieldHolder.properties![slugify(prevField.name)];
+			fieldHolder.properties![slugify(newField.name)] = fieldToProperty(newField);
+		}
 	}
 	// Update the model
 	node.model.fields[fieldIndex] = field;
