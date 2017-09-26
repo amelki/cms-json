@@ -1,4 +1,5 @@
 import {normalizeModel} from "../app/model";
+import {modelToSchema} from "../app/cms";
 
 const fs = require("fs");
 const Cms = require("../app/cms");
@@ -10,8 +11,9 @@ test("site_info", () => {
 		.then(results => {
 			const model = normalizeModel(JSON.parse(results[0]));
 			const data = JSON.parse(results[1]);
+			const schema = modelToSchema(model);
 			const path = "site_info".split('/');
-			const node = Cms.findNode({model, data}, path);
+			const node = Cms.findNode({model, data, schema}, path);
 			expect(node.model.name).toBe( "Site Info");
 			expect(node.model.fields[0].name).toBe( "Favicon");
 			expect(node.data).not.toBeNull();
@@ -23,8 +25,9 @@ test("nav/footer", () => {
 		.then(results => {
 			const model = normalizeModel(JSON.parse(results[0]));
 			const data = JSON.parse(results[1]);
+			const schema = modelToSchema(model);
 			const path = "nav/footer".split('/');
-			const node = Cms.findNode({model, data}, path);
+			const node = Cms.findNode({model, data, schema}, path);
 			expect(node.model.name).toBe("Footer");
 			expect(node.model.fields[0].name).toBe("Label");
 			expect(node.model.fields[1].name).toBe("Url");
