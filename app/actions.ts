@@ -165,12 +165,33 @@ export const loadError: ActionCreator<LoadErrorAction> = () : LoadErrorAction =>
 });
 
 export const save = () => {
-	return (dispatch, getState) => {
+	return (dispatch, getState : () => AppState) => {
 		dispatch(saveStart());
-		dispatch(logInfo('Saving model and data files'));
-		axios.post('/data.json', getState().main.data).then(() => {
+		const state = getState();
+		const promises = [] as Promise<any>[];
+		let beforeMessage;
+		let afterMessage;
+		if (state.main.schemaStale) {
+			promises.push(axios.post('/model.json', getState().main.tree.schema));
+			if (state.main.dataStale) {
+				beforeMessage = 'Saving schema and data files';
+				afterMessage = 'Schema and data files saved on disk';
+			} else {
+				beforeMessage = 'Saving schema file';
+				afterMessage = 'Schema file saved on disk';
+			}
+		}
+		if (state.main.dataStale) {
+			promises.push(axios.post('/data.json', getState().main.tree.data));
+			if (!state.main.schemaStale) {
+				beforeMessage = 'Saving data file';
+				afterMessage = 'Data file saved on disk';
+			}
+		}
+		dispatch(logInfo(beforeMessage));
+		Promise.all(promises).then(() => {
 			dispatch(saveEnd());
-			dispatch(logInfo('JSON data file saved on disk'));
+			dispatch(logInfo(afterMessage));
 		}).catch(err => {
 			dispatch(saveError());
 			dispatch(logError('Error while saving JSON file: ' + err));

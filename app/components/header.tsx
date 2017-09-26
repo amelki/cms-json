@@ -1,18 +1,23 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { bindActionCreators } from 'redux'
-import {ActionCreator, connect} from 'react-redux';
+import {connect} from 'react-redux';
 import { load, save } from '../actions';
+import AppState from "../state";
 
-interface Props {
+interface StateProps {
 	enabled: boolean;
 	mode: string,
 	editorLink: string,
+	schemaStale: boolean,
+	dataStale: boolean
+}
+interface Props extends StateProps {
 	load: any,
 	save: any
 }
 
-const Header: React.SFC<Props> = ({enabled, mode, editorLink, load, save}) => (
+const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataStale, load, save}) => (
 	<div id="navbar">
 		<div className="nav">
 			<a href="#"
@@ -32,15 +37,15 @@ const Header: React.SFC<Props> = ({enabled, mode, editorLink, load, save}) => (
 			<Link to={editorLink} className="white">Editor</Link>
 		</div>
 		<div className={'nav tab' + (mode === 'data' ? ' selected' : '')}>
-			<Link to="/json/data" className="white">data.json</Link>
+			<Link to="/json/data" className="white">data.json{dataStale ? ' *' : ''}</Link>
 		</div>
 		<div className={'nav tab' + (mode === 'schema' ? ' selected' : '')}>
-			<Link to="/json/schema" className="white">model.json</Link>
+			<Link to="/json/schema" className="white">schema.json{schemaStale ? ' *' : ''}</Link>
 		</div>
 	</div>
 );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: AppState) : StateProps => {
 	const routerPath = state.router.location.pathname;
 	let mode = 'editor';
 	if (routerPath === '/json/data') {
@@ -49,7 +54,9 @@ const mapStateToProps = state => {
 		mode = 'schema';
 	}
 	return {
-		enabled: ((state.main.stale || state.main.busy) && !state.editingField),
+		enabled: ((state.main.schemaStale || state.main.dataStale || state.main.busy) && !state.editingField),
+		schemaStale: state.main.schemaStale,
+		dataStale: state.main.dataStale,
 		mode: mode,
 		editorLink: state.navigation ? ('/node/' + state.navigation.latestNode) : '/'
 	};

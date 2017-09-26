@@ -65,7 +65,8 @@ export type EditingFieldState = {
 
 export interface MainState {
 	tree: Node<TreeModel>;
-	stale: boolean;
+	schemaStale: boolean;
+	dataStale: boolean;
 	busy: boolean;
 	path: string | null;
 	fieldsInError: Map<string, FieldInError>;
@@ -84,7 +85,8 @@ export const makeMain = (schema?: RootSchemaElement, data?) : MainState => {
 			fieldIndex: -1,
 			dataIndex: -1
 		},
-		stale: false,
+		schemaStale: false,
+		dataStale: false,
 		busy: false,
 		path: '',
 		fieldsInError: new Map()
@@ -107,7 +109,8 @@ export const cloneMain = (main: MainState) : MainState => {
 			fieldIndex: -1,
 			dataIndex: -1
 		},
-		stale: main.stale,
+		schemaStale: main.schemaStale,
+		dataStale: main.dataStale,
 		busy: main.busy,
 		path: main.path,
 		fieldsInError: _fieldsInError

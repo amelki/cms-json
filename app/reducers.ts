@@ -18,16 +18,21 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 	switch (action.type) {
 		case ActionTypes.ADD_ITEM:
 			Cms.addItem(node, "New " + node.model.name);
+			state.dataStale = true;
 			break;
 		case ActionTypes.ADD_CHILD:
 			const newNode = Cms.addNode(node as Node<TreeModel>, "New " + action.childType, action.childType);
 			state.path = newNode.path;
+			state.schemaStale = true;
+			state.dataStale = true;
 			break;
 		case ActionTypes.DELETE_NODE:
 			if (action.selection.treePath && action.selection.treePath.startsWith(node.path)) {
 				state.path = (node.parent && node.parent.path) ? node.parent.path : '';
 			}
 			Cms.deleteNode(node);
+			state.schemaStale = true;
+			state.dataStale = true;
 			break;
 		case ActionTypes.DELETE_ITEM:
 			if (Cms.getNodeType(node) === NodeType.TYPE_LIST_OBJECT) {
@@ -35,12 +40,14 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 			} else {
 				delete node.data[action.dataIndex];
 			}
+			state.dataStale = true;
 			break;
 		case ActionTypes.MOVE_ITEM:
 			const sourceItem = node.data[action.source];
 			const {source, target} = action;
 			node.data[source] = node.data[target];
 			node.data[target] = sourceItem;
+			state.dataStale = true;
 			break;
 		case ActionTypes.INPUT_VALUE:
 			// TODO move to Cms
@@ -68,19 +75,27 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 			} else {
 				node.data[Cms.fieldName(field)] = value;
 			}
+			state.dataStale = true;
 			break;
 		case ActionTypes.SUBMIT_FIELD:
 			Cms.updateFieldAt(node, action.fieldIndex, action.field);
+			state.dataStale = true;
+			state.schemaStale = true;
 			break;
 		case ActionTypes.SUBMIT_NODE:
 			Cms.renameNode(node, action.model.name);
 			state.path = node.path;
+			state.dataStale = true;
+			state.schemaStale = true;
 			break;
 		case ActionTypes.DELETE_FIELD:
 			Cms.deleteFieldAt(node, action.fieldIndex);
+			state.dataStale = true;
+			state.schemaStale = true;
 			break;
 		case ActionTypes.ADD_VALUE:
 			Cms.setValue(node, action.field, action.value);
+			state.dataStale = true;
 			break;
 	}
 };
@@ -171,7 +186,6 @@ export const mainReducer = (state: MainState = makeMain(), action: TreeAction | 
 			// If performance becomes an issue, we could write our own custom deep copy
 			// See https://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-deep-clone-an-object-in-javascript
 			const newState = cloneMain(state);
-			newState.stale = true;
 			newState.busy = false;
 			const newNode = Cms.findNode(newState.tree, action.node.path);
 			apply(action, newState, newNode);
@@ -192,7 +206,8 @@ export const mainReducer = (state: MainState = makeMain(), action: TreeAction | 
 		case ActionTypes.SAVE_END:
 			return {
 				...state,
-				stale: false,
+				schemaStale: false,
+				dataStale: false,
 				busy: false
 			};
 		case ActionTypes.LOAD_ERROR:
