@@ -17,13 +17,13 @@ class List extends Component {
 		const rows = [];
 		const nodeType = Cms.getNodeType(node);
 		switch (nodeType) {
-			case NodeType.TYPE_TREE:
-				if (node.model.children) {
-					for (let i = 0; i < node.model.children.length; i++) {
-						rows.push(<Row key={i} id={i} dataIndex={i} node={node} selection={selection}/>);
-					}
-				}
-				break;
+			// case NodeType.TYPE_TREE:
+			// 	if (node.model.children) {
+			// 		for (let i = 0; i < node.model.children.length; i++) {
+			// 			rows.push(<Row key={i} id={i} dataIndex={i} node={node} selection={selection}/>);
+			// 		}
+			// 	}
+			// 	break;
 			case NodeType.TYPE_LIST_OBJECT:
 				for (let i = 0; i < node.data.length; i++) {
 					rows.push(<Row key={i} id={i} dataIndex={i} node={node} selection={selection}/>);

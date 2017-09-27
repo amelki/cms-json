@@ -101,7 +101,7 @@ const mapStateToProps = (state: AppState): BaseProps => {
 	}
 	const node = (selection.fullPath && selection.fullPath.length > 0)
 		? Cms.findNode(state.main.tree, selection.fullPath)
-		: null;
+		: state.main.tree;
 	return {
 		tree: state.main.tree,
 		selection: selection,
