@@ -6,7 +6,7 @@ A lightweight CMS loading and saving its data from/to a json file
   [![NPM Downloads][downloads-image]][downloads-url]
   [![Build][travis-image]][travis-url]
 
-![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GGidZqT.png)
+![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GMnq2mu.png)
 
 ## Install
 
@@ -67,3 +67,10 @@ Standard Options:
 [downloads-url]: https://npmjs.org/package/cms-json
 [travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=build
 [travis-url]: https://travis-ci.org/amelki/cms-json
+
+## What's new
+
+* The 'model' files are now standard JSON Schema Draft 6 files. See http://json-schema.org/.
+* Added a 'Developer' mode, to add/edit/delete nodes and fields. This mode is activated by default.
+Switching to 'Author' mode disables all schema editing features.
+* On a side note, I switched the entire code to Typescript.

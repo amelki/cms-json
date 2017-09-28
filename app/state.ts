@@ -10,6 +10,7 @@ export default interface AppState {
 	editingNode: EditingNodeState | null;
 	message: MessageState;
 	navigation : NavigationState | null;
+	preferences: PreferencesState;
 	confirm;
 	router: RouterState;
 	field?: any;
@@ -27,10 +28,21 @@ export const makeAppState = (schema: RootSchemaElement, data: object) : AppState
 			level: Level.info
 		},
 		navigation: null,
+		preferences: {
+			mode: ViewMode.developer
+		},
 		confirm: null,
-		router: {}
+		router: {},
 	}
 };
+
+export enum ViewMode {
+	developer, author
+}
+
+export interface PreferencesState {
+	mode: ViewMode;
+}
 
 export interface NavigationState {
 	latestNode: string;

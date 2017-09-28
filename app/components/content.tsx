@@ -8,7 +8,7 @@ import Confirm from './confirm';
 import {connect, Dispatch, DispatchProp} from 'react-redux';
 import {Model, Node, NodeType, TreeModel} from "../model";
 import Tree from './tree';
-import AppState, {EditingFieldState} from "../state";
+import AppState, {EditingFieldState, ViewMode} from "../state";
 import {Path} from '../model';
 import {addChild, addItem, editField} from "../actions";
 import {ReactElement} from "react";
@@ -23,13 +23,14 @@ interface BaseProps {
 	node: Node<Model> | null;
 	editingField: EditingFieldState | null;
 	router: RouterState;
+	isDeveloper: boolean
 }
 
 interface Props extends BaseProps {
 	dispatch: Dispatch<AppState>;
 }
 
-const Content: React.SFC<Props> = ({tree, selection, node, editingField, dispatch, router}) => {
+const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDeveloper, dispatch, router}) => {
 	let right = <noscript/>;
 	const buttons = [] as ReactElement<any>[];
 	if (node) {
@@ -53,10 +54,10 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, dispatc
 				}
 				break;
 		}
-		if (nodeType === NodeType.TYPE_TREE || Cms.isItem(node)) {
+		if ((nodeType === NodeType.TYPE_TREE || Cms.isItem(node)) && isDeveloper) {
 			buttons.push(<a key="addFieldBtn" className="btn cmd" href="#" onClick={() => dispatch(editField(node, -1))}>Add field</a>);
 		}
-		if (Cms.getNodeType(node) === NodeType.TYPE_TREE) {
+		if (Cms.getNodeType(node) === NodeType.TYPE_TREE && isDeveloper) {
 			buttons.push(<a id="addBtn" key="addNode" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_TREE, router.history))}>Add Node</a>);
 			buttons.push(<a id="addBtn" key="addList" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_LIST_OBJECT, router.history))}>Add List</a>);
 			buttons.push(<a id="addBtn" key="addStringMap" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_STRING, router.history))}>Add String Map</a>);
@@ -107,7 +108,8 @@ const mapStateToProps = (state: AppState): BaseProps => {
 		selection: selection,
 		node: node,
 		router: state.router,
-		editingField: state.editingField
+		editingField: state.editingField,
+		isDeveloper: state.preferences.mode === ViewMode.developer
 	};
 };
 

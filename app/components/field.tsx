@@ -7,6 +7,7 @@ import {inputValue, addValue, editField, deleteField} from '../actions';
 import {withRouter} from "react-router";
 import {Field, Model, NodeType} from "../model";
 import {Node} from "../model";
+import {ViewMode} from "../state";
 
 interface Props {
 	field: Field;
@@ -14,10 +15,11 @@ interface Props {
 	dataIndex: any;
 	fieldIndex: number;
 	fieldsInError: any;
+	isDeveloper: boolean;
 	dispatch: Dispatch<any>;
 }
 
-const FieldComponent: React.SFC<Props> = ({field, node, dataIndex, fieldIndex, fieldsInError, dispatch}) => {
+const FieldComponent: React.SFC<Props> = ({field, node, dataIndex, fieldIndex, fieldsInError, isDeveloper, dispatch}) => {
 	const isKey = Cms.isKeyField(field);
 	let className = field.className ? field.className : '';
 	const data = node.data;
@@ -80,18 +82,20 @@ const FieldComponent: React.SFC<Props> = ({field, node, dataIndex, fieldIndex, f
 				<span className="name">{displayName} {isKey && <i className="fa fa-key" title="Key field"/>}</span>
 				<div className="right-block">
 					{typeHelp}
-					<div className="actions">
-						<a href="#" onClick={() => dispatch(editField(node, fieldIndex))}>
-							<i title="Edit Field" className="fa fa-pencil" aria-hidden="true"/>
-						</a>
-						{
-							Cms.canDeleteFieldAt(node, fieldIndex)
-							&&
-							<a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}>
-								<i title="Delete Field" className="fa fa-times" aria-hidden="true"/>
+					{
+						isDeveloper && <div className="actions">
+							<a href="#" onClick={() => dispatch(editField(node, fieldIndex))}>
+								<i title="Edit Field" className="fa fa-pencil" aria-hidden="true"/>
 							</a>
-						}
-					</div>
+							{
+								Cms.canDeleteFieldAt(node, fieldIndex)
+								&&
+								<a href="#" onClick={() => dispatch(deleteField(node, fieldIndex))}>
+									<i title="Delete Field" className="fa fa-times" aria-hidden="true"/>
+								</a>
+							}
+						</div>
+					}
 				</div>
 			</label>
 			{description}
@@ -102,7 +106,8 @@ const FieldComponent: React.SFC<Props> = ({field, node, dataIndex, fieldIndex, f
 
 const mapStateToProps = (state) => {
 	return {
-		fieldsInError: state.main.fieldsInError
+		fieldsInError: state.main.fieldsInError,
+		isDeveloper: state.preferences.mode === ViewMode.developer
 	};
 };
 

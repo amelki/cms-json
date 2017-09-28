@@ -6,7 +6,7 @@ A lightweight CMS loading and saving its data from/to a json file
   [![NPM Downloads][downloads-image]][downloads-url]
   [![Build][travis-image]][travis-url]
 
-![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GGidZqT.png)
+![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GMnq2mu.png)
 
 ## Install
 
@@ -51,7 +51,7 @@ Usage: cms-json {OPTIONS}
 
 Standard Options:
 
-    --schema, -s   JSON model file.
+    --schema, -s   JSON schema file.
                    Default is data/schema.json.
 
     --data, -d     JSON data file.
@@ -68,6 +68,12 @@ Standard Options:
 [travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=build
 [travis-url]: https://travis-ci.org/amelki/cms-json
 
+## What's new
+
+* The 'model' files are now standard JSON Schema Draft 6 files. See http://json-schema.org/.
+* Added a 'Developer' mode, to add/edit/delete nodes and fields. This mode is activated by default.
+Switching to 'Author' mode disables all schema editing features.
+* On a side note, I switched the entire code to Typescript.
 ## API
 
 <a name="run"></a>
@@ -82,6 +88,6 @@ Run an Express server embedding a simple UI for editing the content of the given
 | --- | --- | --- |
 | [options] | <code>Object</code> |  |
 | [options.dataFile] | <code>Object</code> | A JSON file with the content. This parameter is mandatory. 		The	content authored from the web site will be saved with that path name. 		The structure of this JSON file must match the model. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/data.json |
-| [options.modelFile] | <code>Object</code> | A JSON schema representing the model to support/ease authoring via the UI. This parameter is mandatory. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/schema.json |
+| [options.modelFile] | <code>Object</code> | A JSON schema file representing the model to support/ease authoring via the UI. This parameter is mandatory. 		See an example here: https://github.com/amelki/cms-json/blob/master/default/schema.json |
 | [options.port] | <code>Object</code> | The server port. 3000 by default |
 

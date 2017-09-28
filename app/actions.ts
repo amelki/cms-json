@@ -4,7 +4,7 @@ import {actions, ModelAction} from 'react-redux-form';
 import {Field, FieldType, Model, Node, NodeType, normalizeModel, Path, TreeModel} from './model';
 import {ActionCreator, Dispatch} from "react-redux";
 import {Action} from "redux";
-import AppState from "./state";
+import AppState, {ViewMode} from "./state";
 import {migrateSchema, schemaToModel} from "./cms";
 import {RootSchemaElement} from "./schema";
 
@@ -36,6 +36,7 @@ export const enum ActionTypes {
 	CANCEL_CONFIRM,
 	DELETE_NODE,
 	RESET_NAVIGATE_TO,
+	SET_VIEW_MODE,
 	DEFAULT_ACTION = "__any_other_action_type__"
 }
 
@@ -406,4 +407,13 @@ const navigate = (dispatch: (action: Action) => void, getState: () => AppState, 
 		dispatch(resetNavigateTo());
 	}
 };
+
+export interface SetViewModeAction extends Action {
+	type: ActionTypes.SET_VIEW_MODE;
+	mode: ViewMode;
+}
+export const setViewMode : ActionCreator<SetViewModeAction> = (mode: ViewMode) : SetViewModeAction => ({
+	type: ActionTypes.SET_VIEW_MODE,
+	mode: mode
+});
 

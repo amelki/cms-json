@@ -4,7 +4,7 @@ import App from './components/app';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {
 	mainReducer, editingFieldReducer, messageReducer, navigationReducer, confirmReducer,
-	editingNodeReducer
+	editingNodeReducer, preferencesReducer
 } from './reducers';
 import {Provider} from 'react-redux';
 import axios from 'axios';
@@ -29,11 +29,12 @@ Promise.all([axios.get(`/schema.json`), axios.get(`/data.json`)]).then(values =>
 			editingNode: editingNodeReducer,
 			message: messageReducer,
 			navigation: navigationReducer,
+			preferences: preferencesReducer,
 			confirm: confirmReducer,
 			router: routerReducer,
 			...createForms({
-				field: { name: '' },
-				modelNode: { name: '' }
+				field: {name: ''},
+				modelNode: {name: ''}
 			})
 		}),
 		initialState,

@@ -3,14 +3,14 @@ import * as Markdown from './md';
 import {Model, Node, NodeType, TreeModel} from "./model";
 import {
 	cloneMain, ConfirmState, EditingFieldState, EditingNodeState, MainState, makeMain, MessageState,
-	NavigationState
+	NavigationState, PreferencesState, ViewMode
 } from "./state";
 import {
 	LogInfoAction, LogErrorAction, ActionTypes, DefaultAction, NavigateAction, LoadEndAction,
 	AddChildAction, AddItemAction, DeleteItemAction, MoveItemAction, InputValueAction, AddValueAction, SubmitNodeAction,
 	SubmitFieldAction, DeleteFieldAction, DeleteNodeAction, ClearFieldErrorsAction, LoadStartAction, SaveStartAction,
 	SaveEndAction, LoadErrorAction, ResetNavigateToAction, ShowConfirmAction, CancelConfirmAction, EditNodeAction,
-	CancelEditNodeAction, EditFieldAction, CancelEditFieldAction
+	CancelEditNodeAction, EditFieldAction, CancelEditFieldAction, SetViewModeAction
 } from "./actions";
 
 const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
@@ -97,6 +97,15 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 			Cms.setValue(node, action.field, action.value);
 			state.dataStale = true;
 			break;
+	}
+};
+
+export const preferencesReducer = (state: PreferencesState = { mode: ViewMode.developer }, action : SetViewModeAction | DefaultAction) => {
+	switch (action.type) {
+		case ActionTypes.SET_VIEW_MODE:
+			return { mode: action.mode };
+		default:
+			return state;
 	}
 };
 

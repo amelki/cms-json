@@ -8,7 +8,7 @@ import {Control, Form} from "react-redux-form";
 import {NodeType, Model, TreeModel, Node} from '../model';
 import {Path} from '../model';
 import {Action} from "redux";
-import AppState from "../state";
+import AppState, {ViewMode} from "../state";
 
 interface Props {
 	node: Node<Model>;
@@ -17,10 +17,11 @@ interface Props {
 	history: object;
 	editingNode: any;
 	modelNodeFormModel: any;
+	isDeveloper: boolean,
 	dispatch: Dispatch<any>;
 }
 
-const _Tree: React.SFC<Props> = ({node, selection, depth, dispatch, history, editingNode, modelNodeFormModel}) => {
+const _Tree: React.SFC<Props> = ({node, selection, depth, dispatch, history, editingNode, modelNodeFormModel, isDeveloper}) => {
 	const linkClass = (selection.treePath === node.path) ? 'selected' : '';
 	const editing = editingNode && editingNode.path === node.path;
 	const space = (depth === 0) ? '20px' : ((20 * depth) + 'px');
@@ -74,7 +75,7 @@ const _Tree: React.SFC<Props> = ({node, selection, depth, dispatch, history, edi
 						!editing && typeLabel && <span key="type" className="node-type">{typeLabel}</span>
 					}
 					{
-						!editing &&
+						!editing && isDeveloper &&
 						<div className="actions">
 							<span onClick={(event) => handleEditNode(event)}><i className="fa fa-pencil"/></span>
 							{depth > 0 && <span onClick={(event) => handleDeleteNode(event)}><i className="fa fa-times"/></span>}
@@ -97,7 +98,8 @@ const _Tree: React.SFC<Props> = ({node, selection, depth, dispatch, history, edi
 const mapStateToProps = (state : AppState) => {
 	return {
 		modelNodeFormModel: state.forms.modelNode,
-		editingNode: state.editingNode
+		editingNode: state.editingNode,
+		isDeveloper: state.preferences.mode === ViewMode.developer
 	};
 };
 

@@ -1,23 +1,26 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { bindActionCreators } from 'redux'
+import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import { load, save } from '../actions';
-import AppState from "../state";
+import {load, save, setViewMode} from '../actions';
+import AppState, {ViewMode} from "../state";
 
 interface StateProps {
 	enabled: boolean;
 	mode: string,
 	editorLink: string,
 	schemaStale: boolean,
-	dataStale: boolean
-}
-interface Props extends StateProps {
-	load: any,
-	save: any
+	dataStale: boolean,
+	viewMode: ViewMode
 }
 
-const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataStale, load, save}) => (
+interface Props extends StateProps {
+	load: any,
+	save: any,
+	setViewMode: any
+}
+
+const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataStale, viewMode, load, save, setViewMode}) => (
 	<div id="navbar">
 		<div className="nav">
 			<a href="#"
@@ -42,10 +45,18 @@ const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataS
 		<div className={'nav tab' + (mode === 'schema' ? ' selected' : '')}>
 			<Link to="/json/schema" className="white">schema.json{schemaStale ? ' *' : ''}</Link>
 		</div>
+		<div className='right'>
+			<div className={'nav tab' + (viewMode === ViewMode.developer ? ' selected' : '')}>
+				<a href="#" onClick={() => setViewMode(ViewMode.developer)} className="white">Developer</a>
+			</div>
+			<div className={'nav tab' + (viewMode === ViewMode.author ? ' selected' : '')}>
+				<a href="#" onClick={() => setViewMode(ViewMode.author)} className="white">Author</a>
+			</div>
+		</div>
 	</div>
 );
 
-const mapStateToProps = (state: AppState) : StateProps => {
+const mapStateToProps = (state: AppState): StateProps => {
 	const routerPath = state.router.location.pathname;
 	let mode = 'editor';
 	if (routerPath === '/json/data') {
@@ -58,9 +69,10 @@ const mapStateToProps = (state: AppState) : StateProps => {
 		schemaStale: state.main.schemaStale,
 		dataStale: state.main.dataStale,
 		mode: mode,
+		viewMode: state.preferences.mode,
 		editorLink: state.navigation ? ('/node/' + state.navigation.latestNode) : '/'
 	};
 };
-const mapDispatchToProps = dispatch => bindActionCreators({ load, save }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({load, save, setViewMode}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
