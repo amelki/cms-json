@@ -12,7 +12,7 @@ interface Props {
 }
 
 const App: React.SFC<Props> = ({message}) => (
-	<div style={{position: 'relative', textAlign: 'left'}}>
+	<div>
 		<Header/>
 		<Switch>
 			<Route exact path='/' component={Content}/>

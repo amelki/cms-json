@@ -14,6 +14,8 @@ import {addChild, addItem, editField} from "../actions";
 import {ReactElement} from "react";
 import {RouterState} from 'react-router-redux';
 import {Link} from 'react-router-dom';
+import SplitPane from 'react-split-pane';
+
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('../main.scss');
 
@@ -55,35 +57,47 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 				break;
 		}
 		if ((nodeType === NodeType.TYPE_TREE || Cms.isItem(node)) && isDeveloper) {
-			buttons.push(<a key="addFieldBtn" className="btn cmd" href="#" onClick={() => dispatch(editField(node, -1))}>Add field</a>);
+			buttons.push(<a key="addFieldBtn" className="btn cmd" href="#" onClick={() => dispatch(editField(node, -1))}>Add
+				field</a>);
 		}
 		if (Cms.getNodeType(node) === NodeType.TYPE_TREE && isDeveloper) {
-			buttons.push(<a id="addBtn" key="addNode" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_TREE, router.history))}>Add Node</a>);
-			buttons.push(<a id="addBtn" key="addList" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_LIST_OBJECT, router.history))}>Add List</a>);
-			buttons.push(<a id="addBtn" key="addStringMap" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_STRING, router.history))}>Add String Map</a>);
-			buttons.push(<a id="addBtn" key="addObjectMap" className="btn cmd" onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_OBJECT, router.history))}>Add Object Map</a>);
-		} else if (!itemSelected) {
-			buttons.push(<a id="addBtn" key="addItem" className="btn cmd" onClick={(event) => dispatch(addItem(node))}>Add Item</a>);
+			buttons.push(<a id="addBtn" key="addNode" className="btn cmd"
+											onClick={(event) => dispatch(addChild(node, NodeType.TYPE_TREE, router.history))}>Add Node</a>);
+			buttons.push(<a id="addBtn" key="addList" className="btn cmd"
+											onClick={(event) => dispatch(addChild(node, NodeType.TYPE_LIST_OBJECT, router.history))}>Add
+				List</a>);
+			buttons.push(<a id="addBtn" key="addStringMap" className="btn cmd"
+											onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_STRING, router.history))}>Add String
+				Map</a>);
+			buttons.push(<a id="addBtn" key="addObjectMap" className="btn cmd"
+											onClick={(event) => dispatch(addChild(node, NodeType.TYPE_MAP_OBJECT, router.history))}>Add Object
+				Map</a>);
+		} else if (Cms.isItem(node) && !itemSelected) {
+			buttons.push(<a id="addBtn" key="addItem" className="btn cmd" onClick={(event) => dispatch(addItem(node))}>Add
+				Item</a>);
 		}
 		if (Cms.isItem(node) && node.dataIndex !== -1) {
-			buttons.push(<Link key="backBtn" id="backBtn" className="btn cmd" to={'/node/' + selection.treePath}>Back to list</Link>);
+			buttons.push(<Link key="backBtn" id="backBtn" className="btn cmd" to={'/node/' + selection.treePath}>Back to
+				list</Link>);
 		}
 
 
 	}
 	return (
 		<div id="content">
-			<aside id="left">
-				<div className="inner">
-					<nav>
-						<ul><Tree node={tree} selection={selection} depth={0}/></ul>
-					</nav>
+			<SplitPane split="vertical" minSize={100} defaultSize={200}>
+				<div id="left">
+					<div className="inner">
+						<nav>
+							<ul><Tree node={tree} selection={selection} depth={0}/></ul>
+						</nav>
+					</div>
 				</div>
-			</aside>
-			<section id="right">
-				{right}
-				{ node && <div>{buttons}</div> }
-			</section>
+				<div id="right">
+					{right}
+					{node && <div className="buttons">{buttons}</div>}
+				</div>
+			</SplitPane>
 			{editingField && <FieldEditor on={editingField != null}/>}
 			<Confirm/>
 		</div>

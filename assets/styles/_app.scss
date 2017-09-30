@@ -47,104 +47,6 @@ hr {
   background-color: $colorFontLightGray
 }
 
-#left {
-  position: fixed;
-  top: $topNav;
-  bottom: $bottomNav;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  color: $colorFontAlmostWhite;
-  text-align: left;
-  background-color: $colorDark;
-  border-top: 1px solid $colorBorderDark;
-  .inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 200px;
-    overflow-y: auto
-  }
-  header {
-    padding-top: 30px;
-    padding-bottom: 20px;
-    margin-bottom: 15px;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding-left: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    h1 {
-      font-size: 22px
-    }
-  }
-  nav {
-    padding-bottom: 70px;
-    hr {
-      border: none;
-      height: 1px;
-      background-color: rgba(255, 255, 255, 0.1);
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-    li {
-      list-style-type: none;
-      border-bottom: 1px solid #333;
-      position: relative;
-      &:last-of-type {
-        border-bottom: none
-      }
-      &.root {
-        font-size: 22px;
-        & > a {
-          color: $colorFontAlmostWhite;
-        }
-        margin-top: 20px;
-      }
-      & > a {
-        display: block;
-        line-height: 25px;
-        margin-top: 1px;
-        width: 100%;
-        padding: 10px 15px;
-        color: $colorFontLightGray;
-        border-left: 3px solid transparent;
-        &:hover {
-          color: $colorFontSelectedWhite;
-          background-color: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.1);
-          .actions {
-            display: inline-block;
-          }
-        }
-        &.selected {
-          color: $colorFontSelectedWhite;
-          border-color: $colorPastelRed;
-          background-color: $colorSelectedDark;
-        }
-        .actions {
-          display: none;
-          position: absolute;
-          right: 5px;
-          .fa {
-            color: lighten($colorDefaultBackground, 30%);
-            font-size: 14px;
-            margin-left: 5px;
-            &:hover {
-              color: lighten($colorDefaultBackground, 50%);
-            }
-          }
-        }
-      }
-    }
-  }
-  .node-type {
-    display: inline-block;
-    padding-left: 5px;
-    color: rgba(255, 255, 255, 0.3);
-  }
-}
-
 #navbar {
   position: fixed;
   text-align: left;
@@ -185,6 +87,106 @@ hr {
   }
 }
 
+#content {
+  padding-top: $topNav;
+  #left {
+    height: 100%;
+    color: $colorFontAlmostWhite;
+    text-align: left;
+    background-color: $colorDark;
+    border-top: 1px solid $colorBorderDark;
+    overflow-y: auto;
+    header {
+      padding-top: 30px;
+      padding-bottom: 20px;
+      margin-bottom: 15px;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-left: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      h1 {
+        font-size: 22px
+      }
+    }
+    nav {
+      padding-bottom: 70px;
+      hr {
+        border: none;
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      li {
+        list-style-type: none;
+        border-bottom: 1px solid #333;
+        position: relative;
+        &:last-of-type {
+          border-bottom: none
+        }
+        &.root {
+          font-size: 22px;
+          & > a {
+            color: $colorFontAlmostWhite;
+          }
+          margin-top: 20px;
+        }
+        & > a {
+          display: block;
+          line-height: 25px;
+          margin-top: 1px;
+          width: 100%;
+          padding: 10px 15px;
+          color: $colorFontLightGray;
+          border-left: 3px solid transparent;
+          &:hover {
+            color: $colorFontSelectedWhite;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.1);
+            .actions {
+              display: inline-block;
+            }
+          }
+          &.selected {
+            color: $colorFontSelectedWhite;
+            border-color: $colorPastelRed;
+            background-color: $colorSelectedDark;
+          }
+          .actions {
+            display: none;
+            position: absolute;
+            right: 5px;
+            .fa {
+              color: lighten($colorDefaultBackground, 30%);
+              font-size: 14px;
+              margin-left: 5px;
+              &:hover {
+                color: lighten($colorDefaultBackground, 50%);
+              }
+            }
+          }
+        }
+      }
+    }
+    .node-type {
+      display: inline-block;
+      padding-left: 5px;
+      color: rgba(255, 255, 255, 0.3);
+    }
+  }
+  #right {
+    height: 100%;
+    & > div:last-child {
+      padding-bottom: 40px;
+    }
+    padding: $topNav 40px 80px;
+    overflow-y: auto;
+    .buttons {
+      text-align: left;
+    }
+  }
+}
+
 #message {
   background-color: #eeeeee;
   padding: 5px 5px 18px 20px;
@@ -202,19 +204,6 @@ hr {
   height: $bottomNav;
 }
 
-#right {
-  position: absolute;
-  top: $topNav;
-  left: 200px;
-  right: 0;
-  bottom: 0;
-  padding: 40px;
-  & > div:last-child {
-    padding-bottom: 40px;
-  }
-  padding-bottom: 80px;
-}
-
 .modal {
   form {
     .fields {
@@ -222,6 +211,7 @@ hr {
     }
   }
 }
+
 #right {
   form {
     .fields {
@@ -232,7 +222,7 @@ hr {
 
 form {
   .fields {
-    max-width: 700px;
+//    max-width: 700px;
     font-size: 16px;
     padding-bottom: 20px;
     border: 1px solid $colorBorderInput;
@@ -607,3 +597,52 @@ table {
 }
 
 
+.Resizer {
+  background: #000;
+  opacity: .2;
+  z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.Resizer:hover {
+  -webkit-transition: all 2s ease;
+  transition: all 2s ease;
+}
+
+.Resizer.horizontal {
+  height: 11px;
+  margin: -5px 0;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+
+.Resizer.horizontal:hover {
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.vertical {
+  width: 11px;
+  margin: 0 -5px;
+  border-left: 5px solid rgba(255, 255, 255, 0);
+  border-right: 5px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
+}
+
+.Resizer.vertical:hover {
+  border-left: 5px solid rgba(0, 0, 0, 0.5);
+  border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+.Resizer.disabled {
+  cursor: not-allowed;
+}
+.Resizer.disabled:hover {
+  border-color: transparent;
+}
