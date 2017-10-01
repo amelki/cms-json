@@ -12,11 +12,16 @@
   font-size: 14px;
   line-height: 16px;
   letter-spacing: 0;
-  background-color: #1e1e1e;
+  background-color: $colorDark;
+//  background-color: #1e1e1e;
   color: $colorFontAlmostWhite;
   text-align: left;
   padding: 10px 10px 40px;
   border-top: 1px solid $colorBorderDark;
+}
+
+#json-panel #json-pretty {
+  padding: 10px 0 40px;
 }
 
 .json-pretty .json-string {
@@ -33,4 +38,10 @@
 
 .json-pretty .json-number {
   color: $colorPastelGreen;
+}
+
+.json-pretty {
+  .selected {
+    background-color: $colorSelectedDark;
+  }
 }

@@ -15,6 +15,9 @@ import {ReactElement} from "react";
 import {RouterState} from 'react-router-redux';
 import {Link} from 'react-router-dom';
 import SplitPane from 'react-split-pane';
+import prettyPrint from "../pretty";
+import {RootSchemaElement} from "../schema";
+const JSONPretty: any = require('react-json-pretty');
 
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('../main.scss');
@@ -83,6 +86,12 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 
 
 	}
+	const json = prettyPrint(tree.schema as RootSchemaElement, tree.data, node ? node.data : null);
+	const jsonElement = React.createElement('pre', {
+		id: 'json-pretty',
+		className: 'json-pretty',
+		dangerouslySetInnerHTML: { __html: json }
+	});
 	return (
 		<div id="content">
 			<SplitPane split="vertical" minSize={100} defaultSize={200}>
@@ -93,11 +102,14 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 						</nav>
 					</div>
 				</div>
-				<div id="right">
-					{right}
-					{node && <div className="buttons">{buttons}</div>}
-				</div>
-			</SplitPane>
+				<SplitPane split="vertical" minSize={200} defaultSize={800}>
+					<div id="right">
+						{right}
+						{node && <div className="buttons">{buttons}</div>}
+					</div>
+					<div id="json-panel">{jsonElement}</div>
+				</SplitPane>
+		</SplitPane>
 			{editingField && <FieldEditor on={editingField != null}/>}
 			<Confirm/>
 		</div>

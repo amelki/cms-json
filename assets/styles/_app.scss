@@ -185,6 +185,11 @@ hr {
       text-align: left;
     }
   }
+  #json-panel {
+    overflow-y: auto;
+    height: 100%;
+    padding-bottom: $bottomNav;
+  }
 }
 
 #message {
