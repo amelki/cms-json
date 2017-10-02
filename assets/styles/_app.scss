@@ -187,8 +187,15 @@ hr {
   }
   #json-panel {
     overflow-y: auto;
+//    overflow-x: auto;
     height: 100%;
+//    width: 100%;
     padding-bottom: $bottomNav;
+    #json-pretty {
+      padding: 10px 0 40px;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
   }
 }
 
