@@ -57,33 +57,34 @@ hr {
   padding: 0 10px;
   height: $topNav;
   vertical-align: top;
-  .nav {
-    margin: 0;
-    vertical-align: top;
-    display: inline-block;
-    height: 100%;
-    border-bottom: 2px solid $colorNavBar;
-    box-sizing: border-box;
-    padding: 10px 0 0;
-    &.tab {
-      padding: 0;
-      margin-left: 10px;
-      margin-right: 10px;
-      line-height: $topNav;
-      &.selected {
-        border-bottom-color: $colorPastelBlue;
-      }
-      &:hover {
-        border-bottom-color: $colorPastelBlue;
-      }
-      a {
-        display: inline-block;
-        height: 100%;
-      }
-    }
-  }
   .right {
     float: right;
+  }
+}
+
+.nav {
+  margin: 0;
+  vertical-align: top;
+  display: inline-block;
+  height: 100%;
+  border-bottom: 2px solid $colorNavBar;
+  box-sizing: border-box;
+  padding: 10px 0 0;
+  &.tab {
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    line-height: $topNav;
+    &.selected {
+      border-bottom-color: $colorPastelBlue;
+    }
+    &:hover {
+      border-bottom-color: $colorPastelBlue;
+    }
+    a {
+      display: inline-block;
+      height: 100%;
+    }
   }
 }
 
@@ -186,14 +187,16 @@ hr {
     }
   }
   #json-panel {
-    overflow-y: auto;
-//    overflow-x: auto;
     height: 100%;
-//    width: 100%;
-    padding-bottom: $bottomNav;
+    padding-bottom: 80px;
+    #json-navbar {
+      text-align: left;
+      background-color: $colorDark;
+    }
     #json-pretty {
-      padding: 10px 0 40px;
-      overflow-x: auto;
+      padding: 10px 0 60px;
+      overflow: auto;
+      height: 100%;
       white-space: nowrap;
     }
   }

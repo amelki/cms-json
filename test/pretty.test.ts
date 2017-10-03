@@ -2,7 +2,7 @@ import * as Cms from '../app/cms';
 import {modelToSchema, schemaToModel, slugify} from '../app/cms';
 import {Field, FieldType, Node, NodeType, normalizeModel, TreeModel} from "../app/model";
 import {readdirSync} from "fs";
-import prettyPrint from "../app/pretty";
+import { prettyPrintData } from "../app/pretty";
 
 const fs = require("fs");
 const Promise = require("bluebird");
@@ -38,7 +38,7 @@ const loadTree = () => {
 const testPrettyPrint = (file, selection) => {
 	test(`testPrettyPrint(${file})`, () => {
 		return loadTree().then(tree => {
-			let html = prettyPrint(tree.schema, tree.data, eval(selection));
+			let html = prettyPrintData(tree.schema, tree.data, eval(selection));
 			let styles = '<style>.key{ color: red } .string{ color: green } .boolean{ color: blue } .selected { background-color: #ddd }</style>';
 			let all = styles + '<br>' + html;
 			return readFile(file, 'utf-8').then(text => {

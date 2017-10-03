@@ -8,17 +8,15 @@ import Confirm from './confirm';
 import {connect, Dispatch, DispatchProp} from 'react-redux';
 import {Model, Node, NodeType, TreeModel} from "../model";
 import Tree from './tree';
-import AppState, {EditingFieldState, ViewMode} from "../state";
+import AppState, {EditingFieldState, JsonFile, ViewMode} from "../state";
 import {Path} from '../model';
-import {addChild, addItem, editField} from "../actions";
+import {addChild, addItem, editField, setJsonFile} from "../actions";
 import {ReactElement} from "react";
 import {RouterState} from 'react-router-redux';
 import {Link} from 'react-router-dom';
 import SplitPane from 'react-split-pane';
-import prettyPrint from "../pretty";
 import {RootSchemaElement} from "../schema";
 import JsonPretty from "./pretty";
-const JSONPretty: any = require('react-json-pretty');
 
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('../main.scss');
@@ -29,14 +27,15 @@ interface BaseProps {
 	node: Node<Model> | null;
 	editingField: EditingFieldState | null;
 	router: RouterState;
-	isDeveloper: boolean
+	isDeveloper: boolean,
+	isJsonData: boolean
 }
 
 interface Props extends BaseProps {
 	dispatch: Dispatch<AppState>;
 }
 
-const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDeveloper, dispatch, router}) => {
+const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDeveloper, isJsonData, dispatch, router}) => {
 	let right = <noscript/>;
 	const buttons = [] as ReactElement<any>[];
 	if (node) {
@@ -103,10 +102,21 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 						{node && <div className="buttons">{buttons}</div>}
 					</div>
 					<div id="json-panel">
-						<JsonPretty schema={tree.schema as RootSchemaElement} data={tree.data} selection={node ? node.data : null}/>
+						<div id="json-navbar">
+							<div className={'nav tab' + (isJsonData ? ' selected' : '')}>
+								<a href="#" onClick={() => dispatch(setJsonFile(JsonFile.data))} className="white">Data</a>
+							</div>
+							<div className={'nav tab' + (!isJsonData ? ' selected' : '')}>
+								<a href="#" onClick={() => dispatch(setJsonFile(JsonFile.model))} className="white">Schema</a>
+							</div>
+						</div>
+							{isJsonData
+								? <JsonPretty object={tree.data} selection={node ? node.data : null}/>
+								: <JsonPretty object={tree.schema} selection={node ? node.schema : null}/>
+							}
 					</div>
 				</SplitPane>
-		</SplitPane>
+			</SplitPane>
 			{editingField && <FieldEditor on={editingField != null}/>}
 			<Confirm/>
 		</div>
@@ -132,7 +142,8 @@ const mapStateToProps = (state: AppState): BaseProps => {
 		node: node,
 		router: state.router,
 		editingField: state.editingField,
-		isDeveloper: state.preferences.mode === ViewMode.developer
+		isDeveloper: state.preferences.mode === ViewMode.developer,
+		isJsonData: state.preferences.jsonFile === JsonFile.data
 	};
 };
 

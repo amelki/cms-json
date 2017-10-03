@@ -2,7 +2,7 @@ import * as Cms from './cms';
 import * as Markdown from './md';
 import {Model, Node, NodeType, TreeModel} from "./model";
 import {
-	cloneMain, ConfirmState, EditingFieldState, EditingNodeState, MainState, makeMain, MessageState,
+	cloneMain, ConfirmState, EditingFieldState, EditingNodeState, JsonFile, MainState, makeMain, MessageState,
 	NavigationState, PreferencesState, ViewMode
 } from "./state";
 import {
@@ -10,7 +10,7 @@ import {
 	AddChildAction, AddItemAction, DeleteItemAction, MoveItemAction, InputValueAction, AddValueAction, SubmitNodeAction,
 	SubmitFieldAction, DeleteFieldAction, DeleteNodeAction, ClearFieldErrorsAction, LoadStartAction, SaveStartAction,
 	SaveEndAction, LoadErrorAction, ResetNavigateToAction, ShowConfirmAction, CancelConfirmAction, EditNodeAction,
-	CancelEditNodeAction, EditFieldAction, CancelEditFieldAction, SetViewModeAction
+	CancelEditNodeAction, EditFieldAction, CancelEditFieldAction, SetViewModeAction, SetJsonFileAction
 } from "./actions";
 
 const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
@@ -100,10 +100,19 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 	}
 };
 
-export const preferencesReducer = (state: PreferencesState = { mode: ViewMode.developer }, action : SetViewModeAction | DefaultAction) => {
+export const preferencesReducer = (state: PreferencesState = { mode: ViewMode.developer, jsonFile: JsonFile.data },
+																	 action : SetViewModeAction | SetJsonFileAction | DefaultAction) => {
 	switch (action.type) {
 		case ActionTypes.SET_VIEW_MODE:
-			return { mode: action.mode };
+			return {
+				mode: action.mode,
+				jsonFile: state.jsonFile
+			};
+		case ActionTypes.SET_JSON_FILE:
+			return {
+				mode: state.mode,
+				jsonFile: action.jsonFile
+			};
 		default:
 			return state;
 	}

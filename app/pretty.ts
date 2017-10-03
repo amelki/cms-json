@@ -1,30 +1,28 @@
-import * as Cms from './cms';
-import {
-	Field,
-	FieldType,
-	ListModel,
-	Model,
-	Node,
-	NodeType, normalizeModel,
-	ObjectMapModel,
-	Path,
-	StringMapModel,
-	TreeModel
-} from './model';
-import {
-	Format, RootSchemaElement, SchemaElement, SchemaPatternProperty, SchemaProperties, schemaVersion,
-	Type
-} from "./schema";
+import { RootSchemaElement, SchemaElement, Type } from "./schema";
 
-const prettyPrint = (schema: RootSchemaElement, data: object, selection: any): string => {
+export const prettyPrintData = (schema: RootSchemaElement, data: object, selection: any): string => {
 	const out = new PrintWriter();
-	prettyPrintElement(schema, data, out, 0, selection);
+	printData(schema, data, out, 0, selection);
 	return out.toString();
 };
 
-export default prettyPrint;
+export const prettyPrintSchema = (schema: RootSchemaElement, selection: SchemaElement): string => {
+	const out = new PrintWriter();
+	printObject(schema, out, 0, selection);
+	return out.toString();
+};
 
-const prettyPrintElement = (schema: SchemaElement, data: any, out: PrintWriter, idt: number, selection): void => {
+export const prettyPrint = (object: object, selection: object): string => {
+	const out = new PrintWriter();
+	if (Array.isArray(object)) {
+		printArray(object, out, 0, selection);
+	} else {
+		printObject(object, out, 0, selection);
+	}
+	return out.toString();
+};
+
+const printData = (schema: SchemaElement, data: any, out: PrintWriter, idt: number, selection): void => {
 	switch (schema.type) {
 		case Type.TObject:
 			out.print('{');
@@ -46,7 +44,7 @@ const prettyPrintElement = (schema: SchemaElement, data: any, out: PrintWriter, 
 				out.printKey(key);
 				out.print(':');
 				out.space();
-				prettyPrintElement(getSchema(key), data[key], out, idt + 1, selection);
+				printData(getSchema(key), data[key], out, idt + 1, selection);
 				if (i < keys.length - 1) {
 					out.print(',');
 				}
@@ -64,7 +62,7 @@ const prettyPrintElement = (schema: SchemaElement, data: any, out: PrintWriter, 
 						out.printSelectionStart();
 					}
 					out.indent(idt + 1);
-					prettyPrintElement(schema.items, data[i], out, idt + 1, selection);
+					printData(schema.items, data[i], out, idt + 1, selection);
 					if (i < data.length - 1) {
 						out.print(',');
 					}
@@ -82,6 +80,85 @@ const prettyPrintElement = (schema: SchemaElement, data: any, out: PrintWriter, 
 			break;
 	}
 	if (selection === data) {
+		out.printSelectionEndAtNewLine = true;
+	}
+};
+
+const printObject = (object: any, out: PrintWriter, idt: number, selection): void => {
+	out.print('{');
+	out.newLine();
+	let keys = Object.keys(object);
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i];
+		const value = object[key];
+		if (selection === value) {
+			out.printSelectionStart();
+		}
+		out.indent(idt + 1);
+		out.printKey(key);
+		out.print(':');
+		out.space();
+		switch (typeof value) {
+			case 'number':
+				out.printNumber(value);
+				break;
+			case 'boolean':
+				out.printBoolean(value);
+				break;
+			case 'string':
+				out.printString(value);
+				break;
+			case 'object':
+				if (Array.isArray(value)) {
+					printArray(value as any[], out, idt + 1, selection);
+				} else {
+					printObject(value as object, out, idt + 1, selection);
+				}
+				break;
+		}
+		if (i < keys.length - 1) {
+			out.print(',');
+		}
+		out.newLine();
+	}
+	out.indent(idt);
+	out.print('}');
+	if (selection === object) {
+		out.printSelectionEndAtNewLine = true;
+	}
+};
+
+const printArray = (array: any[], out: PrintWriter, idt: number, selection): void => {
+	out.print('[');
+	out.newLine();
+	for (let i = 0; i < array.length; i++) {
+		const value = array[i];
+		if (selection === value) {
+			out.printSelectionStart();
+		}
+		out.indent(idt + 1);
+		switch (typeof value) {
+			case 'number':
+				out.printNumber(value);
+				break;
+			case 'boolean':
+				out.printBoolean(value);
+				break;
+			case 'string':
+				out.printString(value);
+				break;
+			case 'object':
+				printObject(value as object, out, idt + 1, selection);
+				break;
+		}
+		if (i < array.length - 1) {
+			out.print(',');
+		}
+		out.newLine();
+	}
+	out.indent(idt);
+	out.print(']');
+	if (selection === array) {
 		out.printSelectionEndAtNewLine = true;
 	}
 };
@@ -135,6 +212,9 @@ class PrintWriter {
 
 	printBoolean(value: boolean) {
 		this.buffer.push(`<span class="json-boolean">${value}</span>`);
+	}
+	printNumber(value: number) {
+		this.buffer.push(`<span class="json-number">${value}</span>`);
 	}
 
 	printSelectionStart() {
