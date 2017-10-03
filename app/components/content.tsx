@@ -86,8 +86,9 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 
 
 	}
+	const contentClass = isDeveloper ? 'developer' : 'author';
 	return (
-		<div id="content">
+		<div id="content" className={contentClass}>
 			<SplitPane split="vertical" minSize={100} defaultSize={200}>
 				<div id="left">
 					<div className="inner">
@@ -96,26 +97,37 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 						</nav>
 					</div>
 				</div>
-				<SplitPane split="vertical" minSize={200} defaultSize={250} primary="second">
-					<div id="right">
-						{right}
-						{node && <div className="buttons">{buttons}</div>}
-					</div>
-					<div id="json-panel">
-						<div id="json-navbar">
-							<div className={'nav tab' + (isJsonData ? ' selected' : '')}>
-								<a href="#" onClick={() => dispatch(setJsonFile(JsonFile.data))} className="white">Data</a>
+				{
+					isDeveloper
+						?
+						<SplitPane split="vertical" minSize={200} defaultSize={250} primary="second">
+							<div id="right">
+								{right}
+								{node && <div className="buttons">{buttons}</div>}
 							</div>
-							<div className={'nav tab' + (!isJsonData ? ' selected' : '')}>
-								<a href="#" onClick={() => dispatch(setJsonFile(JsonFile.model))} className="white">Schema</a>
+							<div id="json-panel">
+								<div id="json-navbar">
+									<div className={'nav tab' + (isJsonData ? ' selected' : '')}>
+										<a href="#" onClick={() => dispatch(setJsonFile(JsonFile.data))} className="white">Data</a>
+									</div>
+									<div className={'nav tab' + (!isJsonData ? ' selected' : '')}>
+										<a href="#" onClick={() => dispatch(setJsonFile(JsonFile.model))} className="white">Schema</a>
+									</div>
+								</div>
+								{isJsonData
+									? <JsonPretty object={tree.data} selection={node ? node.data : null}/>
+									: <JsonPretty object={tree.schema} selection={node ? node.schema : null}/>
+								}
 							</div>
+						</SplitPane>
+						:
+						<div id="right">
+							{right}
+							{node && <div className="buttons">{buttons}</div>}
 						</div>
-							{isJsonData
-								? <JsonPretty object={tree.data} selection={node ? node.data : null}/>
-								: <JsonPretty object={tree.schema} selection={node ? node.schema : null}/>
-							}
-					</div>
-				</SplitPane>
+
+				}
+
 			</SplitPane>
 			{editingField && <FieldEditor on={editingField != null}/>}
 			<Confirm/>
