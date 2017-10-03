@@ -4,7 +4,7 @@ import {actions, ModelAction} from 'react-redux-form';
 import {Field, FieldType, Model, Node, NodeType, normalizeModel, Path, TreeModel} from './model';
 import {ActionCreator, Dispatch} from "react-redux";
 import {Action} from "redux";
-import AppState, {ViewMode} from "./state";
+import AppState, {JsonFile, ViewMode} from "./state";
 import {migrateSchema, schemaToModel} from "./cms";
 import {RootSchemaElement} from "./schema";
 
@@ -37,6 +37,7 @@ export const enum ActionTypes {
 	DELETE_NODE,
 	RESET_NAVIGATE_TO,
 	SET_VIEW_MODE,
+	SET_JSON_FILE,
 	DEFAULT_ACTION = "__any_other_action_type__"
 }
 
@@ -415,5 +416,14 @@ export interface SetViewModeAction extends Action {
 export const setViewMode : ActionCreator<SetViewModeAction> = (mode: ViewMode) : SetViewModeAction => ({
 	type: ActionTypes.SET_VIEW_MODE,
 	mode: mode
+});
+
+export interface SetJsonFileAction extends Action {
+	type: ActionTypes.SET_JSON_FILE;
+	jsonFile: JsonFile;
+}
+export const setJsonFile : ActionCreator<SetJsonFileAction> = (jsonFile: JsonFile) : SetJsonFileAction => ({
+	type: ActionTypes.SET_JSON_FILE,
+	jsonFile: jsonFile
 });
 

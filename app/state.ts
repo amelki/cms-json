@@ -29,7 +29,8 @@ export const makeAppState = (schema: RootSchemaElement, data: object) : AppState
 		},
 		navigation: null,
 		preferences: {
-			mode: ViewMode.developer
+			mode: ViewMode.developer,
+			jsonFile: JsonFile.data
 		},
 		confirm: null,
 		router: {},
@@ -39,9 +40,13 @@ export const makeAppState = (schema: RootSchemaElement, data: object) : AppState
 export enum ViewMode {
 	developer, author
 }
+export enum JsonFile {
+	data, model
+}
 
 export interface PreferencesState {
 	mode: ViewMode;
+	jsonFile: JsonFile
 }
 
 export interface NavigationState {

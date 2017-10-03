@@ -36,15 +36,6 @@ const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataS
 				Reset
 			</a>
 		</div>
-		<div className={'nav tab' + (mode === 'editor' ? ' selected' : '')}>
-			<Link to={editorLink} className="white">Editor</Link>
-		</div>
-		<div className={'nav tab' + (mode === 'data' ? ' selected' : '')}>
-			<Link to="/json/data" className="white">data.json{dataStale ? ' *' : ''}</Link>
-		</div>
-		<div className={'nav tab' + (mode === 'schema' ? ' selected' : '')}>
-			<Link to="/json/schema" className="white">schema.json{schemaStale ? ' *' : ''}</Link>
-		</div>
 		<div className='right'>
 			<div className={'nav tab' + (viewMode === ViewMode.developer ? ' selected' : '')}>
 				<a href="#" onClick={() => setViewMode(ViewMode.developer)} className="white">Developer</a>
