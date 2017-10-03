@@ -6,7 +6,7 @@ A lightweight CMS loading and saving its data from/to a json file
   [![NPM Downloads][downloads-image]][downloads-url]
   [![Build][travis-image]][travis-url]
 
-![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GMnwiBK.png)
+![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GNhDob9.png)
 
 ## Install
 
@@ -70,10 +70,17 @@ Standard Options:
 
 ## What's new
 
+v0.1.1
+
 * The 'model' files are now standard JSON Schema Draft 6 files. See http://json-schema.org/.
 * Added a 'Developer' mode, to add/edit/delete nodes and fields. This mode is activated by default.
 Switching to 'Author' mode disables all schema editing features.
 * On a side note, I migrated the entire code base to Typescript.
+
+v0.1.3
+
+* Show JSON data and schema on the right and sync with editor
+* Improved author view (removed useless dev stuff)
 ## API
 
 <a name="run"></a>
