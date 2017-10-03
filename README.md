@@ -73,7 +73,7 @@ Standard Options:
 * The 'model' files are now standard JSON Schema Draft 6 files. See http://json-schema.org/.
 * Added a 'Developer' mode, to add/edit/delete nodes and fields. This mode is activated by default.
 Switching to 'Author' mode disables all schema editing features.
-* On a side note, I switched the entire code to Typescript.
+* On a side note, I migrated the entire code base to Typescript.
 ## API
 
 <a name="run"></a>
