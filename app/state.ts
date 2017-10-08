@@ -11,7 +11,7 @@ export default interface AppState {
 	message: MessageState;
 	navigation : NavigationState | null;
 	preferences: PreferencesState;
-	confirm;
+	confirm: ConfirmState;
 	router: RouterState;
 	field?: any;
 	modelNode?: any;
