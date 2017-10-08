@@ -1,5 +1,5 @@
 import * as React from "react";
-import { prettyPrint } from "../pretty";
+import prettyPrint from "json-pretty-html";
 
 interface Props {
 	object: any;
@@ -19,7 +19,7 @@ class JsonPretty extends React.Component<Props, {}> {
 
 	componentDidUpdate() {
 		// Show the selected piece of Json, if any
-		const selection = document.querySelector('#json-pretty .selected');
+		const selection = document.querySelector('#json-pretty .json-selected');
 		const jsonPanel = document.querySelector('#json-panel');
 		const jsonPretty = document.querySelector('#json-pretty');
 		if (jsonPanel && jsonPretty && selection) {

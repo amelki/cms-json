@@ -13,7 +13,7 @@
   line-height: 16px;
   letter-spacing: 0;
   background-color: $colorDark;
-//  background-color: #1e1e1e;
+  //  background-color: #1e1e1e;
   color: $colorFontAlmostWhite;
   text-align: left;
   padding: 10px 10px 40px;
@@ -36,8 +36,6 @@
   color: $colorPastelGreen;
 }
 
-.json-pretty {
-  .selected {
-    background-color: $colorSelectedDark;
-  }
+.json-selected {
+  background-color: $colorSelectedDark;
 }
