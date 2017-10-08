@@ -2,9 +2,10 @@
 
 A lightweight CMS loading and saving its data from/to a json file
 
-  [![NPM Version][npm-image]][npm-url]
-  [![NPM Downloads][downloads-image]][downloads-url]
-  [![Build][travis-image]][travis-url]
+[![Build][travis-image]][travis-url]
+[![Dev dependencies][dependencies-badge]][dependencies]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![MIT][license-badge]][LICENSE]
 
 ![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GNhDob9.png)
 
@@ -61,12 +62,18 @@ Standard Options:
                    Default is 3000.
 
 ```
-[npm-image]: https://img.shields.io/npm/v/cms-json.svg
-[npm-url]: https://npmjs.org/package/cms-json
 [downloads-image]: https://img.shields.io/npm/dm/cms-json.svg
 [downloads-url]: https://npmjs.org/package/cms-json
 [travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=build
 [travis-url]: https://travis-ci.org/amelki/cms-json
+[dependencies-badge]: https://david-dm.org/amelki/cms-json/dev-status.svg
+[dependencies]: https://david-dm.org/amelki/cms-json?type=dev
+[license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license]: https://github.com/amelki/json-pretty-html/blob/master/LICENSE
+[nodejs-badge]: https://img.shields.io/badge/node->=%206.9-blue.svg
+[nodejs]: https://nodejs.org/dist/latest-v6.x/docs/api/
+[npm-badge]: https://img.shields.io/badge/npm->=%203.10.8-blue.svg
+[npm]: https://docs.npmjs.com/
 
 ## What's new
 
