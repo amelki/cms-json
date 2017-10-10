@@ -1,11 +1,13 @@
-const converter = require('../app/md');
+import * as converter from '../app/md';
 
-const md = "# foo\n\n*   bar\n*   hux";
-const html = '<h1>foo</h1>\n<ul>\n<li>bar</li>\n<li>hux</li>\n</ul>\n';
-const actualHtml = converter.html(md);
-const actualMd = converter.md(html);
+const expectedMd = "# foo\n\n*   bar\n*   hux";
+const expectedHtml = '<h1>foo</h1>\n<ul>\n<li>bar</li>\n<li>hux</li>\n</ul>\n';
+const actualHtml = converter.html(expectedMd);
+const actualMd = converter.md(expectedHtml);
 
 test("nav/footer", () => {
-	expect(actualHtml).toBe(html);
-	expect(actualMd).toBe(md);
+	expect(actualHtml).toBe(expectedHtml);
+	expect(actualMd).toBe(expectedMd);
+	expect(converter.html(null)).toBe('');
+	expect(converter.md(null)).toBe('');
 });

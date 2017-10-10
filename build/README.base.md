@@ -3,8 +3,10 @@
 A lightweight CMS loading and saving its data from/to a json file
 
 [![Build][travis-image]][travis-url]
+[![Dev dependencies][dependencies-badge]][dependencies]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![MIT][license-badge]][LICENSE]
+[![Node.js version][nodejs-badge]][nodejs]
 
 ![cms-json: A lightweight CMS loading and saving its data from/to a json file](https://cdn.pbrd.co/images/GNhDob9.png)
 
