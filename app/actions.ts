@@ -7,6 +7,7 @@ import {Action} from "redux";
 import AppState, {JsonFile, ViewMode} from "./state";
 import {migrateSchema, schemaToModel} from "./cms";
 import {RootSchemaElement} from "./schema";
+import * as JSZip from 'jszip';
 
 export const enum ActionTypes {
 	ADD_CHILD,
@@ -129,7 +130,7 @@ export const load = () => {
 	return (dispatch: Dispatch<ActionCreator<Action>>) => {
 		dispatch(loadStart());
 		dispatch(logInfo('Loading model and data files'));
-		Promise.all([axios.get(`/schema.json`), axios.get(`/data.json`)]).then(values => {
+		Promise.all([axios.get(`schema.json`), axios.get(`data.json`)]).then(values => {
 			const model = migrateSchema(values[0].data);
 			const data = values[1].data;
 			dispatch(loadEnd(model, data));
@@ -184,7 +185,7 @@ export const save = () => {
 			}
 		}
 		if (state.main.dataStale) {
-			promises.push(axios.post('/data.json', getState().main.tree.data));
+			promises.push(axios.post('data.json', getState().main.tree.data));
 			if (!state.main.schemaStale) {
 				beforeMessage = 'Saving data file';
 				afterMessage = 'Data file saved on disk';
@@ -199,6 +200,29 @@ export const save = () => {
 			dispatch(logError('Error while saving JSON file: ' + err));
 		});
 	}
+};
+
+export const download = () => {
+	return (dispatch, getState : () => AppState) => {
+		const schema = getState().main.tree.schema;
+		const data = getState().main.tree.data;
+		const zip = new JSZip();
+		zip.file('schema.json', JSON.stringify(schema));
+		zip.file('data.json', JSON.stringify(data));
+		zip.generateAsync({type:"blob"})
+			.then(function(blob) {
+				if (window.navigator.msSaveOrOpenBlob) {  // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+					window.navigator.msSaveBlob(blob, "cms.zip");
+				} else {
+					const a = window.document.createElement("a");
+					a.href = window.URL.createObjectURL(blob);
+					a.download = "cms.zip";
+					document.body.appendChild(a);
+					a.click();  // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+					document.body.removeChild(a);
+				}
+			});
+	};
 };
 
 export interface SaveStartAction extends Action {

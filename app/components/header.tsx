@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux';
-import {load, save, setViewMode} from '../actions';
+import {load, save, setViewMode, download} from '../actions';
 import AppState, {ViewMode} from "../state";
 
 interface StateProps {
@@ -17,10 +17,11 @@ interface StateProps {
 interface Props extends StateProps {
 	load: any,
 	save: any,
+	download: any,
 	setViewMode: any
 }
 
-const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataStale, viewMode, load, save, setViewMode}) => (
+const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataStale, viewMode, load, save, download, setViewMode}) => (
 	<div id="navbar">
 		<div className="nav">
 			<a href="#"
@@ -36,12 +37,22 @@ const Header: React.SFC<Props> = ({enabled, mode, editorLink, schemaStale, dataS
 				Reset
 			</a>
 		</div>
-		<div className='right'>
+		<div className='middle'>
 			<div className={'nav tab' + (viewMode === ViewMode.developer ? ' selected' : '')}>
 				<a href="#" onClick={() => setViewMode(ViewMode.developer)} className="white">Developer</a>
 			</div>
 			<div className={'nav tab' + (viewMode === ViewMode.author ? ' selected' : '')}>
 				<a href="#" onClick={() => setViewMode(ViewMode.author)} className="white">Author</a>
+			</div>
+		</div>
+		<div className='right'>
+			<div className="nav">
+				<a href="#"
+					 className={'btn blue cmd'}
+					 title="Export a zip file of the schema and data JSON files"
+					 onClick={() => download()}>
+					Export
+				</a>
 			</div>
 		</div>
 	</div>
@@ -64,6 +75,6 @@ const mapStateToProps = (state: AppState): StateProps => {
 		editorLink: state.navigation ? ('/node/' + state.navigation.latestNode) : '/'
 	};
 };
-const mapDispatchToProps = dispatch => bindActionCreators({load, save, setViewMode}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({load, save, download, setViewMode}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

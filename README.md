@@ -3,6 +3,7 @@
 A lightweight CMS loading and saving its data from/to a json file
 
 [![Build][travis-image]][travis-url]
+[![Dev dependencies][dependencies-badge]][dependencies]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![MIT][license-badge]][LICENSE]
 [![Node.js version][nodejs-badge]][nodejs]
@@ -14,6 +15,12 @@ A lightweight CMS loading and saving its data from/to a json file
 ```bash
 npm install -g cms-json
 ```
+
+## Playground
+
+You can give cms-json a shot in the [http://headlessify.com.s3-website-us-east-1.amazonaws.com/](playground).
+It runs the CMS with a default JSON and Schema files. The Save functionality is disabled, but you can export
+your work via the 'Export' button.
 
 ## Quick Start
 

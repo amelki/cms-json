@@ -29,6 +29,7 @@ module.exports.run = function(options) {
 	var modelFile = options.modelFile;
 	var dataFile = options.dataFile;
 	const isDeveloping = options.env === 'development';
+	const isPlayground = options.env === 'playground';
 	if (!modelFile) {
 		throw "Model file not provided";
 	}
@@ -39,28 +40,30 @@ module.exports.run = function(options) {
 	const app = express();
 	app.use(bodyParser.json());
 	app.use(cors());
-	app.options('/schema.json', cors());
-	app.get('/schema.json', function (req, res) {
-		fs.readFile(modelFile, 'utf-8', (err, json) => {
-			if (err) throw err;
-			res.send(json);
+	if (!isPlayground) {
+		app.options('/schema.json', cors());
+		app.get('/schema.json', function (req, res) {
+			fs.readFile(modelFile, 'utf-8', (err, json) => {
+				if (err) throw err;
+				res.send(json);
+			});
 		});
-	});
-	app.options('/data.json', cors());
-	app.get('/data.json', function (req, res) {
-		fs.readFile(dataFile, 'utf-8', (err, json) => {
-			if (err) throw err;
-			res.send(json);
+		app.options('/data.json', cors());
+		app.get('/data.json', function (req, res) {
+			fs.readFile(dataFile, 'utf-8', (err, json) => {
+				if (err) throw err;
+				res.send(json);
+			});
 		});
-	});
-	app.post('/data.json', function (req, res) {
-		var json = req.body;
-		fs.writeFile(dataFile, JSON.stringify(json, undefined, 2), function (err) {
-			if (err) console.log(err);
-			console.log("File " + dataFile + " saved");
-			res.send("OK");
+		app.post('/data.json', function (req, res) {
+			var json = req.body;
+			fs.writeFile(dataFile, JSON.stringify(json, undefined, 2), function (err) {
+				if (err) console.log(err);
+				console.log("File " + dataFile + " saved");
+				res.send("OK");
+			});
 		});
-	});
+	}
 
 	if (isDeveloping) {
 		// Include webpack only if needed, so that it is not loaded from modules than only need the production version
