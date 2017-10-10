@@ -18,7 +18,7 @@ npm install -g cms-json
 
 ## Playground
 
-You can give cms-json a shot in the [http://headlessify.com.s3-website-us-east-1.amazonaws.com/](playground).
+You can give cms-json a shot in the [playground](http://headlessify.com.s3-website-us-east-1.amazonaws.com/).
 It runs the CMS with a default JSON and Schema files. The Save functionality is disabled, but you can export
 your work via the 'Export' button.
 
