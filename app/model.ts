@@ -127,6 +127,12 @@ const normalizeField = (field: any) : Field => {
 		if (fieldType === 'Html') { // Some models had that typo...
 			fieldType = "html";
 		}
+		if (fieldType === 'markdown') {
+			// In the case of markdown fields with old models, convert them back to HTML since the values
+			// were automatically converted to HTML.
+			// New fields of type markdown will store the raw markdown text in the corresponding json string
+			fieldType = 'html';
+		}
 		return new Field(
 			field.name,
 			fieldType,

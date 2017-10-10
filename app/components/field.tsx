@@ -55,7 +55,7 @@ const FieldComponent: React.SFC<Props> = ({field, node, dataIndex, fieldIndex, f
 			input = <textarea className={className} name={name} onChange={handleInputValue} value={value || ''}/>;
 			break;
 		case 'markdown':
-			input = <textarea className={className} name={name} onChange={handleInputValue} value={Markdown.md(value || '')}/>;
+			input = <textarea className={className} name={name} onChange={handleInputValue} value={value || ''}/>;
 			typeHelp =
 				<div className="type">
 					<a className="blue" target="_blank" href="http://commonmark.org/help/">(markdown)</a>

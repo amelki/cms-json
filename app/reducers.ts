@@ -54,9 +54,9 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 			const {event, field} = action;
 			let value = event.target.value;
 			switch (field.type) {
-				case 'markdown':
-					value = Markdown.html(value);
-					break;
+				// case 'markdown':
+				// 	value = Markdown.html(value);
+				// 	break;
 				case 'boolean':
 					// Do not try to grab the state from the checkbox itself (event.target.checked has a surprising behavior...)
 					value = !node.data[Cms.fieldName(field)];
