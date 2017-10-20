@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { WithContext as ReactTags } from 'react-tag-input';
+//const ReactTags = require('react-tag-input').WithOutContext;
+//import { WithContext as ReactTags } from 'react-tag-input';
+import { WithOutContext as ReactTags } from 'react-tag-input';
 
 interface Tag {
 	id: number;
