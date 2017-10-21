@@ -4,7 +4,6 @@ A lightweight CMS loading and saving its data from/to a json file
 
 [![Build][travis-image]][travis-url]
 [![Dependencies][dependencies-badge]][dependencies]
-[![Dev dependencies][dev-dependencies-badge]][dev-dependencies]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![MIT][license-badge]][LICENSE]
 [![Node.js version][nodejs-badge]][nodejs]
