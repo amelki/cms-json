@@ -7,7 +7,6 @@ import {
 	editingNodeReducer, preferencesReducer
 } from './reducers';
 import {Provider} from 'react-redux';
-import axios from 'axios';
 import thunkMiddleware from 'redux-thunk';
 import {createForms} from 'react-redux-form';
 
@@ -21,8 +20,8 @@ import {migrateSchema} from "./cms";
 const history = createHistory();
 const historyMiddleware = routerMiddleware(history);
 
-Promise.all([axios.get(`schema.json`), axios.get(`data.json`)]).then(values => {
-	const initialState = makeAppState(migrateSchema(values[0].data), values[1].data);
+export const main = (schema, data) => {
+	const initialState = makeAppState(migrateSchema(schema), data);
 	const store = createStore<AppState>(combineReducers({
 			main: mainReducer,
 			editingField: editingFieldReducer,
@@ -67,4 +66,4 @@ Promise.all([axios.get(`schema.json`), axios.get(`data.json`)]).then(values => {
 		</Provider>,
 		document.getElementById('root')
 	);
-});
+};
