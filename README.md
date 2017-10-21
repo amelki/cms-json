@@ -3,7 +3,8 @@
 A lightweight CMS loading and saving its data from/to a json file
 
 [![Build][travis-image]][travis-url]
-[![Dev dependencies][dependencies-badge]][dependencies]
+[![Dependencies][dependencies-badge]][dependencies]
+[![Dev dependencies][dev-dependencies-badge]][dev-dependencies]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![MIT][license-badge]][LICENSE]
 [![Node.js version][nodejs-badge]][nodejs]
@@ -73,8 +74,10 @@ Standard Options:
 [downloads-url]: https://npmjs.org/package/cms-json
 [travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=build
 [travis-url]: https://travis-ci.org/amelki/cms-json
-[dependencies-badge]: https://david-dm.org/amelki/cms-json/dev-status.svg
-[dependencies]: https://david-dm.org/amelki/cms-json?type=dev
+[dev-dependencies-badge]: https://david-dm.org/amelki/cms-json/dev-status.svg
+[dev-dependencies]: https://david-dm.org/amelki/cms-json?type=dev
+[dependencies-badge]: https://david-dm.org/amelki/cms-json/status.svg
+[dependencies]: https://david-dm.org/amelki/cms-json
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license]: https://github.com/amelki/json-pretty-html/blob/master/LICENSE
 [nodejs-badge]: https://img.shields.io/badge/node->=%206.9-blue.svg
