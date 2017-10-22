@@ -17,6 +17,8 @@ import {Link} from 'react-router-dom';
 import SplitPane from 'react-split-pane';
 import {RootSchemaElement} from "../schema";
 import JsonPretty from "./pretty";
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 // Bypass typescript import to load Css. See https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
 const styles = require('../main.scss');
@@ -159,4 +161,4 @@ const mapStateToProps = (state: AppState): BaseProps => {
 	};
 };
 
-export default connect(mapStateToProps)(Content);
+export default DragDropContext(HTML5Backend)(connect(mapStateToProps)(Content));
