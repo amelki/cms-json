@@ -18,7 +18,7 @@ npm install -g cms-json
 
 ## Playground
 
-You can give cms-json a shot in the <a href="http://tenorcms.com">playground</a>.
+You can give cms-json a shot in the <a target="_blank" href="http://tenorcms.com">playground</a>.
 It runs the CMS with a default JSON and Schema files. The Save functionality is disabled, but you can export
 your work via the 'Export' button.
 
