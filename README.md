@@ -3,7 +3,7 @@
 A lightweight CMS loading and saving its data from/to a json file
 
 [![Build][travis-image]][travis-url]
-[![Dependencies][dependencies-badge]][dependencies]
+[![Dev dependencies][dependencies-badge]][dependencies]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![MIT][license-badge]][LICENSE]
 [![Node.js version][nodejs-badge]][nodejs]
@@ -18,7 +18,7 @@ npm install -g cms-json
 
 ## Playground
 
-You can give cms-json a shot in the <a target="_blank" href="http://tenorcms.com">playground</a>.
+You can give cms-json a shot in the [playground](http://headlessify.com.s3-website-us-east-1.amazonaws.com/).
 It runs the CMS with a default JSON and Schema files. The Save functionality is disabled, but you can export
 your work via the 'Export' button.
 
@@ -73,10 +73,8 @@ Standard Options:
 [downloads-url]: https://npmjs.org/package/cms-json
 [travis-image]: https://img.shields.io/travis/amelki/cms-json/master.svg?label=build
 [travis-url]: https://travis-ci.org/amelki/cms-json
-[dev-dependencies-badge]: https://david-dm.org/amelki/cms-json/dev-status.svg
-[dev-dependencies]: https://david-dm.org/amelki/cms-json?type=dev
-[dependencies-badge]: https://david-dm.org/amelki/cms-json/status.svg
-[dependencies]: https://david-dm.org/amelki/cms-json
+[dependencies-badge]: https://david-dm.org/amelki/cms-json/dev-status.svg
+[dependencies]: https://david-dm.org/amelki/cms-json?type=dev
 [license-badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license]: https://github.com/amelki/json-pretty-html/blob/master/LICENSE
 [nodejs-badge]: https://img.shields.io/badge/node->=%206.9-blue.svg
