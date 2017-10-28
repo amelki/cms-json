@@ -117,8 +117,8 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 									</div>
 								</div>
 								{isJsonData
-									? <JsonPretty object={tree.data} selection={node ? node.data : null}/>
-									: <JsonPretty object={tree.schema} selection={node ? node.schema : null}/>
+									? <JsonPretty object={tree.data} selection={(node && node.parent) ? node.data : null}/>
+									: <JsonPretty object={tree.schema} selection={(node && node.parent) ? node.schema : null}/>
 								}
 							</div>
 						</SplitPane>
