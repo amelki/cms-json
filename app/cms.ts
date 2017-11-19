@@ -500,7 +500,7 @@ export const modelToSchema = (model): RootSchemaElement => {
 	return Object.assign({} as RootSchemaElement, { $schema: schemaVersion }, root);
 };
 export const _modelToSchema = (model: Model): SchemaElement => {
-	const element: SchemaElement = {type: Type.TObject, properties: {}, patternProperties: {} };
+	const element: SchemaElement = {type: Type.TObject, properties: {} };
 	element.title = model.name;
 	if (model.type === NodeType.TYPE_TREE) {
 		const treeModel: TreeModel = model as TreeModel;

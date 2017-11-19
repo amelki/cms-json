@@ -185,7 +185,7 @@ export const save = () => {
 			}
 		}
 		if (state.main.dataStale) {
-			promises.push(axios.post('data.json', getState().main.tree.data));
+			promises.push(axios.post('/data.json', getState().main.tree.data));
 			if (!state.main.schemaStale) {
 				beforeMessage = 'Saving data file';
 				afterMessage = 'Data file saved on disk';

@@ -63,6 +63,14 @@ module.exports.run = function(options) {
 				res.send("OK");
 			});
 		});
+		app.post('/schema.json', function (req, res) {
+			var json = req.body;
+			fs.writeFile(modelFile, JSON.stringify(json, undefined, 2), function (err) {
+				if (err) console.log(err);
+				console.log("File " + modelFile + " saved");
+				res.send("OK");
+			});
+		});
 	}
 
 	if (isDeveloping) {
