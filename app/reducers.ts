@@ -22,6 +22,9 @@ const apply = (action: TreeAction, state: MainState, node: Node<Model>) => {
 			break;
 		case ActionTypes.ADD_CHILD:
 			const newNode = Cms.addNode(node as Node<TreeModel>, "New " + action.childType, action.childType);
+			if (newNode.path.startsWith('/')) {
+				newNode.path = newNode.path.substr(1);
+			}
 			state.path = newNode.path;
 			state.schemaStale = true;
 			state.dataStale = true;
