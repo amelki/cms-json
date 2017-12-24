@@ -130,7 +130,7 @@ export const load = () => {
 	return (dispatch: Dispatch<ActionCreator<Action>>) => {
 		dispatch(loadStart());
 		dispatch(logInfo('Loading model and data files'));
-		Promise.all([axios.get(`schema.json`), axios.get(`data.json`)]).then(values => {
+		Promise.all([axios.get(`/schema.json`), axios.get(`/data.json`)]).then(values => {
 			const model = migrateSchema(values[0].data);
 			const data = values[1].data;
 			dispatch(loadEnd(model, data));
