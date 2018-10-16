@@ -1,1 +1,6 @@
 build
+.idea
+coverage
+test
+assets
+app
