@@ -44,7 +44,6 @@
     "patch": "npm build && npm version patch && npm publish",
     "lint": "tslint -c tslint.json 'app/**/*.{ts,tsx}'",
     "eslint": "eslint .",
-    "jscs": "jscs .",
     "compile": "tsc"
   },
   "dependencies": {
@@ -91,8 +90,7 @@
     "fsevents": "^1.2.4",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^21.2.1",
-    "jscs": "^3.0.7",
-    "jsdoc-to-markdown": "^3.0.0",
+    "jsdoc-to-markdown": "^4.0.1",
     "json-loader": "^0.5.3",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
