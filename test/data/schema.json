@@ -1,11 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-06/schema#",
   "type": "object",
-  "title": "My Web Site",
   "properties": {
     "site_info": {
       "type": "object",
-      "title": "Site Info",
       "properties": {
         "favicon": {
           "type": "string",
@@ -19,14 +17,15 @@
           "type": "string",
           "title": "Copyright"
         }
-      }
+      },
+      "title": "Site Info"
     },
     "nav": {
       "type": "object",
-      "title": "Nav",
       "properties": {
         "header": {
           "type": "array",
+          "properties": {},
           "title": "Header",
           "items": {
             "type": "object",
@@ -44,6 +43,7 @@
         },
         "footer": {
           "type": "array",
+          "properties": {},
           "title": "Footer",
           "items": {
             "type": "object",
@@ -63,10 +63,12 @@
             }
           }
         }
-      }
+      },
+      "title": "Nav"
     },
     "pages": {
       "type": "array",
+      "properties": {},
       "title": "Pages",
       "items": {
         "type": "object",
@@ -113,10 +115,10 @@
     },
     "messages": {
       "type": "object",
-      "title": "Messages",
       "properties": {
         "errors": {
           "type": "object",
+          "properties": {},
           "title": "Errors",
           "patternProperties": {
             ".+": {
@@ -137,6 +139,7 @@
         },
         "tooltips": {
           "type": "object",
+          "properties": {},
           "title": "Tooltips",
           "patternProperties": {
             ".+": {
@@ -146,7 +149,9 @@
             }
           }
         }
-      }
+      },
+      "title": "Messages"
     }
-  }
+  },
+  "title": "My Web Site"
 }

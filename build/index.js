@@ -1,4 +1,3 @@
-var request = require('request');
 var fs = require('fs');
 const jsdoc2md = require('jsdoc-to-markdown');
 

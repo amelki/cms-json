@@ -378,7 +378,7 @@ export const deleteNode = (node : Node<Model>, selection : Path, history) => {
 					node,
 					selection
 				});
-				navigate(dispatch, getState, history);
+				navigate(dispatch as ((action: Action) => Action), getState, history);
 			},
 			title: 'Confirm delete node',
 			body: `Are you sure you want to delete the node '${node.model.name}' ?`

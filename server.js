@@ -17,8 +17,11 @@ program
 	.parse(process.argv);
 
 var port = program.port || 3000;
-var modelFile = program.schema || program.model || 'default/schema.json';
-var dataFile = program.data || 'default/data.json';
+var modelFile = program.schema || program.model || (__dirname + '/default/schema.json');
+var dataFile = program.data || (__dirname + '/default/data.json');
 var env = program.env || 'production';
 
-server.run({ modelFile: modelFile, dataFile: dataFile, port: port, env: env});
+console.log(`Model file: ${modelFile}`);
+console.log(`Data file: ${dataFile}`);
+
+server.run({modelFile: modelFile, dataFile: dataFile, port: port, env: env});

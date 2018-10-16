@@ -49,7 +49,7 @@ const Content: React.SFC<Props> = ({tree, selection, node, editingField, isDevel
 					<span>
 							<Item node={node} selection={selection}/>
 							<List node={node} selection={selection}/>
-						</span>;
+					</span>;
 				break;
 			case NodeType.TYPE_LIST_OBJECT:
 			case NodeType.TYPE_MAP_OBJECT:

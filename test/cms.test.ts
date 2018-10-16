@@ -374,13 +374,13 @@ testRenameNode('messages/errors', 'erreurs');
 
 const testConvertModel2Schema = () => {
 	test(`convertModel2Schema`, () => {
-		Promise.all([readFile('test/data/model.json', 'utf-8'), readFile('test/data/schema.json', 'utf-8')])
+		return Promise.all([readFile('test/data/model.json', 'utf-8'), readFile('test/data/schema.json', 'utf-8')])
 			.then(results => {
 				const model = normalizeModel(JSON.parse(results[0]));
 				const modelStr = JSON.stringify(model, null, 2);
 				let schemaStr = results[1];
 				const schema = JSON.parse(schemaStr);
-				expect(JSON.stringify(modelToSchema(model), null, 2)).toBe(schemaStr.trim());
+				expect(JSON.stringify(modelToSchema(model), null, 2)).toBe(JSON.stringify(JSON.parse(schemaStr), null, 2));
 				expect(JSON.stringify(schemaToModel(modelToSchema(model)), null, 2)).toBe(modelStr.trim());
 				expect(JSON.stringify(schemaToModel(schema), null, 2)).toBe(modelStr.trim());
 			});

@@ -165,7 +165,7 @@ const printArray = (array: any[], out: PrintWriter, idt: number, selection): voi
 
 class PrintWriter {
 	buffer: string[];
-	printSelectionEndAtNewLine: boolean;
+	printSelectionEndAtNewLine: boolean = false;
 
 	constructor() {
 		this.buffer = [];

@@ -17,9 +17,9 @@ export enum FieldType {
 	Number = 'number'
 }
 
-export class Model {
+export abstract class Model {
 	name: string;
-	type: NodeType;
+	abstract type: NodeType;
 	fields: Field[];
 	constructor(name: string, fields: Field[]) {
 		this.name = name;
@@ -43,42 +43,34 @@ export class Model {
 
 export class TreeModel extends Model {
 	children: Model[];
+	type: NodeType = NodeType.TYPE_TREE;
 	constructor(name: string, fields: Field[], children: Model[]) {
 		super(name, fields);
 		this.name = name;
 		this.children = children;
-		this.type = NodeType.TYPE_TREE;
 	}
 }
 
 export class ListModel extends Model {
-	constructor(name: string, fields: Field[]) {
-		super(name, fields);
-		this.type = NodeType.TYPE_LIST_OBJECT;
-	}
+	type: NodeType = NodeType.TYPE_LIST_OBJECT;
 	isItem() {
 		return true;
 	}
 }
 
 export class StringMapModel extends Model {
-	constructor(name: string, fields: Field[]) {
-		super(name, fields);
-		this.type = NodeType.TYPE_MAP_STRING;
-	}
+	type: NodeType = NodeType.TYPE_MAP_STRING;
 	isMap() {
 		return true;
 	}
 	isItem() {
 		return true;
 	}
+
 }
 
 export class ObjectMapModel extends Model {
-	constructor(name: string, fields: Field[]) {
-		super(name, fields);
-		this.type = NodeType.TYPE_MAP_OBJECT;
-	}
+	type: NodeType = NodeType.TYPE_MAP_OBJECT;
 	isMap() {
 		return true;
 	}
