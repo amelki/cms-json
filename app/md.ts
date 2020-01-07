@@ -1,7 +1,16 @@
 import MarkdownIt from 'markdown-it';
-import toMarkdown from 'to-markdown';
+import TurndownService from 'turndown';
 
 const mdIt = new MarkdownIt();
+
+const turndownService = new TurndownService();
+
+turndownService.addRule('hr', {
+	filter: 'hr',
+	replacement: function (content) {
+		return '---'
+	}
+});
 
 export const html = (md) => {
 	if (!md) {
@@ -14,14 +23,5 @@ export const md = (html) => {
 	if (!html) {
 		return "";
 	}
-	return toMarkdown(html, {
-		converters: [
-			{
-				filter: 'hr',
-				replacement: function (content) {
-					return '---';
-				}
-			}
-		]
-	});
+	return turndownService.turndown(html);
 };

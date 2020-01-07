@@ -73,7 +73,7 @@
     "react-tag-input": "^4.7.2",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
-    "to-markdown": "^3.0.3"
+    "turndown": "^5.0.3"
   },
   "devDependencies": {
     "@types/jest": "^23.3.5",
