@@ -63,7 +63,7 @@ module.exports = {
 					loader: "less-loader" // compiles Less to CSS
 				}]
 			},
-			{ test: /\.(t|j)sx?$/, use: { loader: 'awesome-typescript-loader' } },
+			{ test: /\.(t|j)sx?$/, use: { loader: 'awesome-typescript-loader'}, exclude: /node_modules/, },
 			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
 		]
 	}
