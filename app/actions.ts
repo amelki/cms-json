@@ -7,7 +7,7 @@ import {Action} from "redux";
 import AppState, {JsonFile, ViewMode} from "./state";
 import {migrateSchema, schemaToModel} from "./cms";
 import {RootSchemaElement} from "./schema";
-import * as JSZip from 'jszip';
+import JSZip from 'jszip';
 
 export const enum ActionTypes {
 	ADD_CHILD,
