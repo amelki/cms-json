@@ -211,7 +211,7 @@ export const download = () => {
 		zip.file('data.json', JSON.stringify(data));
 		zip.generateAsync({type:"blob"})
 			.then(function(blob) {
-				if (window.navigator.msSaveOrOpenBlob) {  // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+				if (!!window.navigator.msSaveOrOpenBlob) {  // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
 					window.navigator.msSaveBlob(blob, "cms.zip");
 				} else {
 					const a = window.document.createElement("a");

@@ -50,7 +50,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "colors": "^1.1.2",
-    "commander": "^2.9.0",
+    "commander": "^4.1.0",
     "cors": "^2.8.4",
     "express": "^4.16.1",
     "history": "^4.7.2",
@@ -69,12 +69,13 @@
     "react-split-pane": "^0.1.66",
     "react-tag-input": "^4.7.2",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
+    "redux-thunk": "^2.1.2",
     "turndown": "^5.0.3"
   },
   "devDependencies": {
     "@types/jest": "^23.3.5",
     "@types/jszip": "^3.1.7",
+    "@types/node": "^13.1.5",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
     "awesome-typescript-loader": "^3.5.0",
@@ -105,7 +106,7 @@
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "ts-jest": "^24.3.0",
-    "typescript": "^3.1.3",
+    "typescript": "^3.6.4",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-middleware": "^3.7.2",
