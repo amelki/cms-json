@@ -1,42 +1,36 @@
 'use strict';
 
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: [
-    path.join(__dirname, 'app/index.tsx')
-  ],
-  output: {
-    path: path.join(__dirname, '/dist/'),
-    filename: '[name]-[hash].min.js',
-    publicPath: '/'
-  },
+ 	mode: 'production',
+ 	entry: [
+		path.join(__dirname, 'app/index.tsx')
+	],
+	output: {
+		path: path.join(__dirname, '/dist/'),
+		filename: '[name]-[hash].min.js',
+		publicPath: '/'
+ 	},
 	resolve: {
 		// Add '.ts' and '.tsx' as resolvable extensions.
 		extensions: [".ts", ".tsx", ".js", ".json"]
 	},
 	plugins: [
-    new HtmlWebpackPlugin({
-      template: 'app/index.tpl.html',
-      inject: 'body',
-      filename: 'index.html'
-    }),
-    new ExtractTextPlugin('[name]-[hash].min.css'),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-        screw_ie8: true
-      }
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    })
-  ],
+		new HtmlWebpackPlugin({
+			template: 'app/index.tpl.html',
+			inject: 'body',
+			filename: 'index.html'
+		}),
+		new MiniCssExtractPlugin({
+			 filename: '[name]-[hash].min.css'
+		}),
+ 	],
 	module: {
-		loaders: [
+		rules: [
 			{test: /\.json$/, loader: "json-loader"},
 			{test: /\.styl$/, loader: "style-loader!css-loader!stylus-loader"},
 			{
@@ -63,7 +57,7 @@ module.exports = {
 					loader: "less-loader" // compiles Less to CSS
 				}]
 			},
-			{ test: /\.(t|j)sx?$/, use: { loader: 'awesome-typescript-loader' } },
+			{ test: /\.(t|j)sx?$/, use: { loader: 'awesome-typescript-loader' }, exclude: /node_modules/ },
 			{ enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
 		]
 	}

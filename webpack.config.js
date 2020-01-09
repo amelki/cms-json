@@ -6,6 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 const hotMiddlewareScript = 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true';
 
 module.exports = {
+	mode: 'development',
 	devtool: 'source-map',
 	entry: {app: [path.join(__dirname, 'app/index.tsx'), hotMiddlewareScript]},
 	output: {
@@ -36,7 +37,7 @@ module.exports = {
 		})
 	],
 	module: {
-		loaders: [
+		rules: [
 			{test: /\.json$/, loader: "json-loader"},
 			{test: /\.styl$/, loader: "style-loader!css-loader!stylus-loader"},
 			{
