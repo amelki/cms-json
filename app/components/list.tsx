@@ -43,7 +43,7 @@ const List: React.SFC<Props> = ({node, selection, dispatch}) => {
 			case NodeType.TYPE_MAP_OBJECT:
 			case NodeType.TYPE_MAP_STRING:
 				for (let p in node.data) {
-					rows.push(<Row key={p} dataIndex={Number(p)} node={node} selection={selection} highlight={false}/>);
+					rows.push(<Row key={p} dataIndex={p} node={node} selection={selection} highlight={false}/>);
 				}
 				break;
 		}

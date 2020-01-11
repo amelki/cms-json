@@ -119,7 +119,7 @@ const rowTarget: DropTargetSpec<RowProps> = {
 
 interface RowProps {
 	node: Node<Model>;
-	dataIndex: number;
+	dataIndex:  number | string;
 	isDragging?: boolean;
 	connectDragSource?: ConnectDragSource;
 	connectDropTarget?: any;
