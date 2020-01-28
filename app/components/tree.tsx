@@ -1,7 +1,8 @@
 import * as React from "react";
 import {Link} from 'react-router-dom';
 import * as Cms from '../cms';
-import {connect, Dispatch} from "react-redux";
+import {connect} from "react-redux";
+import {Dispatch} from 'redux';
 import {cancelEditNode, deleteNode, editNode, submitNode} from "../actions";
 import {withRouter} from "react-router";
 import {Control, Form} from "react-redux-form";

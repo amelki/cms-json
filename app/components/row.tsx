@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import * as Cms from '../cms';
 import { Link } from 'react-router-dom';
 import { findDOMNode } from 'react-dom';
-import {connect, Dispatch} from "react-redux";
+import {connect} from "react-redux";
+import {Dispatch} from 'redux';
 import { deleteItem, moveItem } from '../actions';
 import {Model, Node, NodeType, Path, TreeModel} from "../model";
 import {

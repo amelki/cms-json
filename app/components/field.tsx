@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as Cms from '../cms';
 import * as Markdown from '../md';
 import Tags from "./tags";
-import {connect, Dispatch} from 'react-redux'
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import {inputValue, addValue, editField, deleteField} from '../actions';
 import {withRouter} from "react-router";
 import {Field, Model, NodeType} from "../model";

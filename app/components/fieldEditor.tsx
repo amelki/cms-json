@@ -1,5 +1,6 @@
 import React from 'react';
-import {connect, Dispatch} from 'react-redux';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 import {Control, Form} from 'react-redux-form';
 import {submitField, cancelEditField} from '../actions';
 

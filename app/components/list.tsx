@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import {connect, Dispatch} from 'react-redux'
+import {connect} from 'react-redux'
+import {Dispatch} from 'redux';
 import {addItem, addChild} from '../actions';
 import Row from './row';
 import * as Cms from '../cms';

@@ -2,7 +2,8 @@ import React, {ReactElement} from 'react';
 import {Link} from 'react-router-dom';
 import Field from './field';
 import * as Cms from "../cms";
-import {connect, Dispatch} from "react-redux";
+import {connect} from "react-redux";
+import {Dispatch} from 'redux';
 import {editField} from "../actions";
 import {Model, Node, Path} from "../model";
 
